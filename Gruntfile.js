@@ -292,7 +292,24 @@ module.exports = function (grunt) {
           ]
         }
       }
-    }
+    },
+    //https://github.com/iamchrismiller/grunt-casper
+    casper : {
+     yourTask : {
+        options : {
+          test : true
+        },
+        files : {
+          'xunit/casper-results.xml' : ['phantomCss/phantomcss.js.js']
+        }
+      }
+    },
+
+    exec: {
+      phantomCss: {
+        command: 'cd phantomCss && phantomjs test/testsuite.js && cd ..' 
+      }
+}
   });
 
   grunt.registerTask('server', function (target) {
@@ -314,7 +331,8 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma',
+    'exec:phantomCss'
   ]);
 
   grunt.registerTask('build', [
@@ -337,4 +355,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.loadNpmTasks('grunt-exec');
 };
