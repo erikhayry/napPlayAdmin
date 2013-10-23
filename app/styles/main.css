@@ -13,6 +13,7 @@ body {
     background-color: #eee;
     border-radius: 6px;
     padding: 60px;
+    background-color: red;
 }
 
 .hero-unit h1 {
