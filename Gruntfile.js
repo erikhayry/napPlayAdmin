@@ -293,23 +293,43 @@ module.exports = function (grunt) {
         }
       }
     },
-    //https://github.com/iamchrismiller/grunt-casper
-    casper : {
-     yourTask : {
-        options : {
-          test : true
-        },
-        files : {
-          'xunit/casper-results.xml' : ['phantomCss/phantomcss.js.js']
-        }
-      }
-    },
 
     exec: {
       phantomCss: {
         command: 'cd phantomCss && phantomjs test/testsuite.js && cd ..' 
+        /*
+          not happy with having to cd in and out but currently have to run phantomjs from the root folder of resemble.js 
+          otherwise timed out.
+        */
       }
-}
+    },
+
+    /*
+      used in the index file to be able to include or not include parts of the html
+
+      https://github.com/jsoverson/grunt-preprocess
+
+    */
+
+    preprocess : {
+      dev : {
+          options : {
+              context : { ENV : 'dev' }
+          },
+          src  : '<%= yeoman.dist %>/index.html',
+          dest : '<%= yeoman.dist %>/index.html'
+      },
+      production : {
+          options : {
+              context : { ENV : 'production' }
+          },
+          src  : '<%= yeoman.dist %>/index.html',
+          dest : '<%= yeoman.dist %>/index.html'
+      }
+    }
+
+
+    
   });
 
   grunt.registerTask('server', function (target) {
@@ -347,7 +367,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'preprocess:production'
   ]);
 
   grunt.registerTask('default', [
@@ -357,4 +378,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.loadNpmTasks('grunt-exec');
+
+  grunt.loadNpmTasks('grunt-preprocess');
+
 };

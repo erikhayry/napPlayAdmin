@@ -7,6 +7,12 @@ phantom.casperPath = 'CasperJs';
 phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
 phantom.injectJs('jquery.js');
 
+phantom.addCookie({
+    'name':     'test',   			
+    'value':    'true',  				
+    'domain':   'localhost'
+});
+
 var casper = require('casper').create({
 	viewportSize: {
 		width: 1027,
@@ -19,7 +25,7 @@ var casper = require('casper').create({
 */
 
 var phantomcss = require('./phantomcss.js');
-var url = 'http://127.0.0.1:9000/';
+var url = 'http://127.0.0.1:9000/#/test/';
 
 phantomcss.init({
 	screenshotRoot: './screenshots',
@@ -33,7 +39,7 @@ phantomcss.init({
 casper.
 	start( url ).
 	then(function(){
-		phantomcss.screenshot('#hero', 'hero');
+		phantomcss.screenshot('#div', 'div');
 	})/*.
 	then(function(){
 		casper.click('#coffee-machine-button');

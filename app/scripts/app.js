@@ -1,22 +1,15 @@
 'use strict';
+var $routeProviderReference;
 
-angular.module('napPlayAdminApp', [])
+var app = angular.module('napPlayAdminApp', ['ngCookies'])
   .config(function ($routeProvider) {
+    $routeProviderReference = $routeProvider;
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
       
-      /*
-        url for template testing. TODO figure out jhow to disable on live  
-      */
-
-
-      .when('/test/', {
-        templateUrl: 'templates/test.html',
-        controller: 'templateCtrl'
-      })
       .otherwise({
         redirectTo: '/'
       });
@@ -28,4 +21,6 @@ angular.module('napPlayAdminApp', [])
         templateUrl : 'templates/test.html',
         replace : true
       }
-    })
+    });
+
+
