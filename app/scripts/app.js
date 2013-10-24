@@ -5,22 +5,26 @@ var app = angular.module('napPlayAdminApp', ['ngCookies'])
   .config(function ($routeProvider) {
     $routeProviderReference = $routeProvider;
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+      .when('/notifications', {
+        templateUrl: 'views/notifications.html',
+        controller: 'NotificationpageCtrl'
+      })
+
+      .when('/stats', {
+        templateUrl: 'views/stats.html'
       })
       
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/notifications'
       });
   })
 
-  .directive('test', function(){
-      return {
-        restrict : 'E',
-        templateUrl : 'templates/test.html',
-        replace : true
-      }
-    });
+  .directive('appNav', function(){
+    return {
+      restrict : 'E',
+      templateUrl : 'templates/appNav.html',
+      replace : true,
+    }
+  });
 
 

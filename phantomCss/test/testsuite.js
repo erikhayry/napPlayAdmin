@@ -25,7 +25,7 @@ var casper = require('casper').create({
 */
 
 var phantomcss = require('./phantomcss.js');
-var url = 'http://127.0.0.1:9000/#/test/';
+var url = 'http://127.0.0.1:9000/#/test/template/app-nav';
 
 phantomcss.init({
 	screenshotRoot: './screenshots',
@@ -39,7 +39,7 @@ phantomcss.init({
 casper.
 	start( url ).
 	then(function(){
-		phantomcss.screenshot('#div', 'div');
+		phantomcss.screenshot('.m-app-nav', 'm-app-nav');
 	})/*.
 	then(function(){
 		casper.click('#coffee-machine-button');

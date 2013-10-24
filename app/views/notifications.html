@@ -1,0 +1,19 @@
+<!-- (.l-navigation>app-nav)+.l-content|c	 -->
+
+<div class="l-navigation">
+	<app-nav></app-nav>
+</div>
+<!-- /.l-navigation -->
+<div class="l-content">
+	<h2>notifiactions page test</h2>
+	<ul>
+		<li ng-repeat="notification in notifications">
+			<ul>
+				<li>{{notification.created_at}}</li>
+				<li>{{notification.id}}</li>
+				<li>{{notification.description}}</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<!-- /.l-content -->

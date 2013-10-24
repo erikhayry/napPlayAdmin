@@ -299,7 +299,7 @@ module.exports = function (grunt) {
         command: 'cd phantomCss && phantomjs test/testsuite.js && cd ..' 
         /*
           not happy with having to cd in and out but currently have to run phantomjs from the root folder of resemble.js 
-          otherwise timed out.
+          otherwise timed out due to error.
         */
       }
     },
@@ -352,7 +352,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma',
-    'exec:phantomCss'
+    'exec:phantomCss' //added by Erik Portin
   ]);
 
   grunt.registerTask('build', [
@@ -368,7 +368,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'preprocess:production'
+    'preprocess:production' //added by Erik Portin
   ]);
 
   grunt.registerTask('default', [
