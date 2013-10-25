@@ -8,13 +8,16 @@ describe('Service: NotificationFactory', function () {
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($injector, $templateCache) {
+    //needed to prevent Error: Unexpected request: GET views/notifications.html
     $templateCache.put('views/notifications.html', '.<template-goes-here />');
     
     // Set up the mock http service responses
     $httpBackend = $injector.get('$httpBackend');
 
     // backend definition common for all tests
-    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(['item1', 'item2'])
+    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(200, ['item1', 'item2']);
+
+
 
   }));
   
@@ -25,11 +28,15 @@ describe('Service: NotificationFactory', function () {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
+  /*
+    tests
+  */
+
+
   it('getNotification should get data', inject(function (NotificationFactory) {
-    var data = []
     
     NotificationFactory.getNotification.then(function(data){
-      data = data.data;
+      var data = data.data;
       expect(data.length).toBe(2);
     });
 
