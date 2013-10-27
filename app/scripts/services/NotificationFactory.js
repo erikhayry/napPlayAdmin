@@ -8,7 +8,9 @@ angular.module('napPlayAdminApp')
     // Public API here
     return {
       
-      getNotification: $http.get('https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master'),
+      getNotification: function(){
+        return $http.get('https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master');
+      },
 
       setNotificaton: function (){
         var _deferred = $q.defer(),

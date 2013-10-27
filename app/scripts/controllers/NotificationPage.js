@@ -5,16 +5,22 @@ angular.module('napPlayAdminApp')
   	var _init = function(){
 
   		$scope.status = 'test'
-  		NotificationFactory.getNotification.then(function(data){
-  			_gotData();
-  			$scope.notifications = data.data;
+  		NotificationFactory.getNotification().success(function(data){
+  			$scope.notifications = data;
   		});
 
-  	},
+  	};
 
-  	_gotData = function(){
-  		$scope.status = 'tets'
-  	}	
+    $scope.getData = function(){
+      $scope.status = 'getting data';
+      
+      NotificationFactory.getNotification().success(function(data){
+        $scope.notifications = data;
+        $scope.status = '';
+      }).error(function() {
+        $scope.status = 'ERROR!';
+      });  
+    }	
 
   	_init();
 

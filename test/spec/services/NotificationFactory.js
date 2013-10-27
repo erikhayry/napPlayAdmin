@@ -35,8 +35,8 @@ describe('Service: NotificationFactory', function () {
 
   it('getNotification should get data', inject(function (NotificationFactory) {
     
-    NotificationFactory.getNotification.then(function(data){
-      var data = data.data;
+    NotificationFactory.getNotification().success(function(data){
+      var data = data;
       expect(data.length).toBe(2);
     });
 

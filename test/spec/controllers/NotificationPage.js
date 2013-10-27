@@ -7,7 +7,8 @@ describe('Controller: NotificationpageCtrl', function () {
 
   var $httpBackend,
       NotificationpageCtrl,
-      scope;
+      scope,
+      createController;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($injector, $controller, $rootScope, $templateCache) {
@@ -18,13 +19,13 @@ describe('Controller: NotificationpageCtrl', function () {
     $httpBackend = $injector.get('$httpBackend');
 
     // backend definition common for all tests
-    $httpBackend.expect('GET', "https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(['data1', 'data2']);
+    $httpBackend.when('GET', "https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(['data1', 'data2']);
 
     scope = $rootScope.$new();
     
-    NotificationpageCtrl = $controller('NotificationpageCtrl', {
-      $scope: scope
-    });
+    createController = function() { 
+      return $controller('NotificationpageCtrl', {$scope: scope});
+    };
 
   }));
   
@@ -35,10 +36,32 @@ describe('Controller: NotificationpageCtrl', function () {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.status).toBeDefined();
-
+  it('should get data on init', function(){
+    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(201, '');
+    var controller = createController();
+    expect(scope.notifications).toBeUndefined();
     $httpBackend.flush();
-  });
+    expect(scope.notifications).toBeDefined();
+  })
+
+  it('should get data on init', function(){
+    var controller = createController();
+    $httpBackend.flush();
+    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(201, '');
+    scope.getData()
+    expect(scope.status).toBe('getting data');
+    $httpBackend.flush();
+    expect(scope.status).toBe('');
+  })
+
+  it('should get get an error status', function(){
+    var controller = createController();
+    $httpBackend.flush();
+    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(500, '');
+    scope.getData()
+    expect(scope.status).toBe('getting data');
+    $httpBackend.flush();
+    expect(scope.status).toBe('ERROR!');
+  })
 
 });
