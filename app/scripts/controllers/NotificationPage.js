@@ -3,9 +3,11 @@
 angular.module('napPlayAdminApp')
   .controller('NotificationpageCtrl', function ($scope, NotificationFactory) {
   	var _init = function(){
-
-  		$scope.status = 'test'
-  		NotificationFactory.getNotification().success(function(data){
+      $scope.pageName = 'Notification Page';
+  		
+      $scope.status = '';
+  		
+      NotificationFactory.getNotification().success(function(data){
   			$scope.notifications = data;
   		});
 

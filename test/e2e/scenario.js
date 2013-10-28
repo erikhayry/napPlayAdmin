@@ -1,4 +1,8 @@
 describe('app scenario Test', function(){
+
+    /*
+        App navigation
+    */
     
     describe('app navigation', function(){            
             
@@ -20,6 +24,26 @@ describe('app scenario Test', function(){
             	element('#notifications-page-link').click();
             	expect(browser().location().url()).toEqual('/notifications');
             });
-    });        
+    });
 
+    /*
+        Pages
+    */
+
+    describe('Pages', function(){
+        
+        describe('Notification Page', function(){
+            it('Should have the correct title', function(){
+                browser().navigateTo('/#/notifications');
+                expect(element('#page-title').text()).toEqual('Notification Page');
+            });
+        });
+
+        describe('Stats Page', function(){
+            it('Should have the correct title', function(){
+                browser().navigateTo('/#/stats');
+                expect(element('#page-title').text()).toEqual('Stats Page');
+            });
+        });
+    })
 });

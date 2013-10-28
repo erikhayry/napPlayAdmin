@@ -11,7 +11,8 @@ var app = angular.module('napPlayAdminApp', ['ngCookies'])
       })
 
       .when('/stats', {
-        templateUrl: 'views/stats.html'
+        templateUrl: 'views/stats.html',
+        controller: 'StatspageCtrl'
       })
       
       .otherwise({

@@ -43,7 +43,8 @@
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "grunt-preprocess": "~3.0.1",
     "grunt-exec": "~0.4.2",
-    "karma-ios-launcher": "0.0.3"
+    "karma-ios-launcher": "0.0.3",
+    "karma-safari-launcher": "~0.1.1"
   },
   "engines": {
     "node": "~=0.8.0"

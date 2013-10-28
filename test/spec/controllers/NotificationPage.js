@@ -19,7 +19,7 @@ describe('Controller: NotificationpageCtrl', function () {
     $httpBackend = $injector.get('$httpBackend');
 
     // backend definition common for all tests
-    $httpBackend.when('GET', "https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(['data1', 'data2']);
+    $httpBackend.when('GET', "https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(201, '');
 
     scope = $rootScope.$new();
     
@@ -34,6 +34,13 @@ describe('Controller: NotificationpageCtrl', function () {
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
+  });
+
+  it('should set the page name', function () {
+    $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(201, '');
+    var controller = createController();
+    expect(scope.pageName).toBe('Notification Page');
+    $httpBackend.flush();
   });
 
   it('should get data on init', function(){
