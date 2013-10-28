@@ -267,6 +267,10 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
+      },
+      e2e: {
+        configFile: 'karma-e2e.conf.js',
+        singleRun: true
       }
     },
     cdnify: {
@@ -351,8 +355,8 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma',
-    'exec:phantomCss' //added by Erik Portin
+    'karma'
+    //'exec:phantomCss' //added by E.P
   ]);
 
   grunt.registerTask('build', [
@@ -368,7 +372,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'preprocess:production' //added by Erik Portin
+    'preprocess:production' //added by E.P
   ]);
 
   grunt.registerTask('default', [
