@@ -1,4 +1,3 @@
-
 var phantomcss = require('phantomcss.js');
 
 phantomcss.init({

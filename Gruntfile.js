@@ -333,7 +333,7 @@ module.exports = function (grunt) {
     },
 
     casperjs: {
-      files: ['test/css/testsuite.js']
+      files: ['./test/css/testsuite.js']
     }
 
     
