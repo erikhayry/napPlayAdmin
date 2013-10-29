@@ -79,6 +79,16 @@ module.exports = function (grunt) {
           ]
         }
       },
+      csstest: {
+        options: {
+          port: 9002,
+          base: [
+            '.tmp',
+            'test',
+            '<%= yeoman.app %>'
+          ]
+        }
+      },
       dist: {
         options: {
           base: '<%= yeoman.dist %>'
@@ -320,8 +330,11 @@ module.exports = function (grunt) {
           src  : '<%= yeoman.dist %>/index.html',
           dest : '<%= yeoman.dist %>/index.html'
       }
-    }
+    },
 
+    casperjs: {
+      files: ['test/css/testsuite.js']
+    }
 
     
   });
@@ -340,7 +353,16 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('testCasperJs', [
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'connect:csstest',
+    'casperjs'
+  ]);
+
   grunt.registerTask('test', [
+    'testCasperJs',
     'clean:server',
     'concurrent:test',
     'autoprefixer',
@@ -369,6 +391,8 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.loadNpmTasks('grunt-casperjs');
 
   grunt.loadNpmTasks('grunt-exec');
 

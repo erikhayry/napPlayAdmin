@@ -7,14 +7,13 @@ phantomcss.init({
 });
 
 var casper = require("casper").create();
-var url = 'http://127.0.0.1:9000/';
+var url = 'http://127.0.0.1:9002/';
  
 casper
 	.start(url)
 	.then(function(){
-		this.echo('Hello, World! The Page title on '+ url +' is ' + this.getTitle());
 		phantomcss.screenshot('.m-app-nav', 'm-app-nav');
-		//phantomcss.screenshot('.m-app-nav-item', 'm-app-nav-item');
+		phantomcss.screenshot('.m-app-nav-item', 'm-app-nav-item');
 	});
 
 casper.

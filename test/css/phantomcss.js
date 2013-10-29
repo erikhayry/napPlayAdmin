@@ -345,19 +345,19 @@ function initClient(){
 }
 
 function _onPass(testValues){
-	casper.test.begin('my test suite', 2, function(test) {
+	casper.test.begin('Screenshot test', 1, function(test) {
 	   test.assert(true, 'No changes found for screenshot ' + testValues.filename);
 	   test.done();
 	});	
 }
 function _onFail(testValues){
-	casper.test.begin('my test suite', 2, function(test) {
+	casper.test.begin('Screenshot test', 1, function(test) {
 	   test.fail('Visual change found for screenshot ' + testValues.filename + ' (' + testValues.mismatch + '% mismatch)');
 	   test.done();
 	});	
 }
 function _onTimeout(testValues){
-	casper.test.begin('my test suite', 2, function(test) {
+	casper.test.begin('Screenshot test', 1, function(test) {
 	   test.fail('Could not complete image comparison for ' + testValues.filename);
 	   test.done();
 	});	
