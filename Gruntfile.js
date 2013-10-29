@@ -298,16 +298,6 @@ module.exports = function (grunt) {
       }
     },
 
-    exec: {
-      phantomCss: {
-        command: 'cd phantomCss && phantomjs test/testsuite.js && cd ..' 
-        /*
-          not happy with having to cd in and out but currently have to run phantomjs from the root folder of resemble.js 
-          otherwise timed out due to error.
-        */
-      }
-    },
-
     /*
       used in the index file to be able to include or not include parts of the html
 
@@ -356,7 +346,6 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma'
-    //'exec:phantomCss' //added by E.P
   ]);
 
   grunt.registerTask('build', [
