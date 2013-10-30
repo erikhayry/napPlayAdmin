@@ -28,4 +28,9 @@ var app = angular.module('napPlayAdminApp', ['ngCookies'])
     }
   });
 
-
+app.config(function ($routeProvider) {
+    $routeProvider
+      .when('/test/template/app-nav', {
+        templateUrl: 'views/test/appNav.html'
+      })
+  })

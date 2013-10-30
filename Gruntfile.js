@@ -332,8 +332,21 @@ module.exports = function (grunt) {
       }
     },
 
+    /*
+      https://github.com/ronaldlokers/grunt-casperjs
+    */
+
     casperjs: {
-      files: ['./test/css/testsuite.js']
+      compare : {
+        files : {
+          src : ['./test/css/test-compare.js']
+        }
+      },
+      capture : {
+        files : {
+          src : ['./test/css/test-screenshot-viewports.js']
+        }
+      }
     }
 
     
@@ -353,16 +366,20 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('testCasperJs', [
+  grunt.registerTask('testserver', [
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:csstest',
-    'casperjs'
+    'connect:csstest'
+  ]);
+
+  grunt.registerTask('compare', [
+    'testserver',
+    'casperjs:compare'
   ]);
 
   grunt.registerTask('test', [
-    'testCasperJs',
+    'compare',
     'clean:server',
     'concurrent:test',
     'autoprefixer',

@@ -217,7 +217,7 @@ function compareAll(test, exclude){
 			tests.push(test);
 		} else {
 			casper.
-			thenOpen ("./test/css/resemblejscontainer.html" , function (){
+			thenOpen ("./test/css/html/resemblejscontainer.html" , function (){
 				asyncCompare(baseFile, file, function(isSame, mismatch){
 					if(!isSame){
 
@@ -289,7 +289,7 @@ function compareAll(test, exclude){
 function initClient(){
 
 	console.log('inject : resemble.js')
-	var resemble = casper.page.injectJs('./test/css/resemble.js');
+	var resemble = casper.page.injectJs('./test/css/scripts/resemble.js');
 
 	casper.evaluate(function(){
 		var result;
