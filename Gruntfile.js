@@ -347,9 +347,16 @@ module.exports = function (grunt) {
           src : ['./test/css/test-screenshot-viewports.js']
         }
       }
+    },
+
+    exec: {
+      sendEmail: {
+        cmd: function(email, api) {
+          return 'node ./test/css/sendEmail.js ' + email 
+        }
+      }
     }
 
-    
   });
 
   grunt.registerTask('server', function (target) {
@@ -372,6 +379,13 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:csstest'
   ]);
+
+  grunt.registerTask('send', 'desc', function(email, api) {
+    grunt.task.run(
+    'casperjs:capture',
+    'exec:sendEmail:' + email + ':' + api
+    );
+  });
 
   grunt.registerTask('compare', [
     'testserver',

@@ -104,33 +104,25 @@ var fs = require('fs'),
 
 getLatestScreenshots().then(function(data) {
 	buildHtml(data).then(function(html){
-		fs.writeFile("test.html", html, function(err) {
-							    if(err) {
-							        console.log(err);
-							    } else {
-							        sendEmail("test.html")
-							    }
-							});
-
+		sendEmail(html)
 	})
-
-
 });
 
- 
-
 //https://npmjs.org/package/postmark
-function sendEmail(file){
-	var postmark = require("postmark")("POSTMARK_API_TEST");
+function sendEmail(html){
+	var base64data = new Buffer(html).toString('base64'),
+		api = process.argv[3] || "POSTMARK_API_TEST",
+		postmark = require("postmark")(api);//test api 
+		to = process.argv[2] || "erikportin@gmail.com",
 	    postmark.send({
 	        "From": "erik.portin@net-a-porter.com", 
-	        "To": "erikportin@gmail.com", 
+	        "To": to, 
 	        "Subject": "Test", 
-	        "TextBody": "Test Message",
+    		"TextBody": "test",
 	        "Attachments": [
 		        {
-		            "Name": "test.html",
-					"Content": "dGVzdCBjb250ZW50",
+		            "Name": 'previewer.html',
+					"Content": base64data,
       				"ContentType": "text/html"
 		        }
 		    ]
@@ -139,6 +131,6 @@ function sendEmail(file){
 	            console.error("Unable to send via postmark: " + error.message);
 	            return;
 	        }
-	        console.info("Sent to postmark for delivery")
+	        console.info("Sent to postmark for delivery to " + to)
 	    });
 }
