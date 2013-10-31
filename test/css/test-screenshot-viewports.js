@@ -9,16 +9,23 @@ var casper = require("casper").create(),
         [320,480],
         [1440,900]
     ],
+    //previwer = require('previewer.js'),
     baseUrl = 'http://127.0.0.1:9000/', //when running grunt server
     //url = 'http://127.0.0.1:9002/', //when running grunt test 
     urls = [
         'stats',
-        'notificatios'
-    ]
+        'notifications'
+    ],
+    screenshots = {},
+    currentTime = new Date(),
+    month = currentTime.getMonth() + 1,
+    day = currentTime.getDate(),
+    year = currentTime.getFullYear(),
+    time = currentTime.getHours() + '.' + currentTime.getMinutes() + '.' + currentTime.getSeconds(),
+    saveDir = 'screenshots-viewports/' + currentTime.getTime() + '-' + time + '-' + day + '-' + month + '-' + year;   
 
-    saveDir = 'screenshots-viewports';
-  
-casper.start().each(urls, function(self, url) {
+    casper.start()
+    .each(urls, function(self, url) {
         var newUrl = baseUrl + '#/' + url;
         self.then(function(self) {
             this.each(viewportSizes, function(self, viewportSize) {
@@ -49,9 +56,14 @@ casper.start().each(urls, function(self, url) {
                 });     
             });    
         });
-});
+    })
+    .then(function(){
+        /*var fs = require('fs');
+        var myfile = "data-"+year + "-" + month + "-" + day+".html";
+        fs.write(myfile, 'test', 'w');*/
+    });
 
- 
-casper.run(function() {
-    this.echo('Finished captures for ').exit();
-});
+     
+    casper.run(function() {
+        this.echo('Finished captures for ').exit();
+    });
