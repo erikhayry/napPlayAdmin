@@ -352,7 +352,7 @@ module.exports = function (grunt) {
     exec: {
       sendEmail: {
         cmd: function(email, api) {
-          return 'node ./test/css/sendEmail.js ' + email 
+          return 'node ./test/css/scripts/sendEmail.js ' + email 
         }
       }
     }
