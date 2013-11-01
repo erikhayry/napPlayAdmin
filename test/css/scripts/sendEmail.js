@@ -2,7 +2,9 @@ var fs = require('fs'),
 	q = require('q'),
 	screenshotDir = './screenshots-viewports',
 	imageUrls = {},
-	latestUrl = {id : 0};
+	latestUrl = {id : 0},
+	zipFilePath = './example-output.zip',
+	htmlFilePath = 'index.html';
 
 	getLatestScreenshots = function() {
 	  	var deferred = q.defer();
@@ -29,12 +31,16 @@ var fs = require('fs'),
 				    console.error('Unable to read files in subdir' + ' ' + error.message);
 				    return;
 				}
-				var imagePaths = []
+				var imagePaths = [],
+					undoneFolders = [];
 
 				for (var j = 0; j < dirs.length; j++) {
-
+					
+					
 					(function(dir, isLast, path) {
-						if(dir.indexOf('.') != 0){ //ignore hidden files					
+						if(dir.indexOf('.') != 0){ //ignore hidden files
+							undoneFolders.push(dir)					
+							
 							fs.readdir(path, function(error, images){
 
 								if(error) {
@@ -47,9 +53,21 @@ var fs = require('fs'),
 									tempArr.push(path + '/' + images[k])
 								};
 
-								imagePaths.push([dir, tempArr]);
+								imagePaths.push([dir, tempArr]);								
+								undoneFolders.splice(undoneFolders.indexOf(dir), 1);
 
-								if(isLast) deferred.resolve(imagePaths);	
+								if(isLast) {
+									if(undoneFolders.length == 0) deferred.resolve(imagePaths);
+									else {
+										 function wait(){
+										 	setTimeout(function(){
+										 		console.log('wait')
+										 		if(undoneFolders.length == 0) deferred.resolve(imagePaths);
+										 		else wait();
+										 	}, 1000)
+										 }
+									}
+								}	
 
 							});
 						}
@@ -66,6 +84,7 @@ var fs = require('fs'),
 			getHtml = function(){
 				var html = '';
 				for(var section in htmlObject){
+					console.log(section)
 					var sectionHtml = '<h2>' + section + '</h2>',
 						imagesHtml = '';
 					
@@ -77,8 +96,16 @@ var fs = require('fs'),
 				return html;
 			}
 
+		var undoneSections = [],
+			done = function(){
+				console.log('done')
+				var html = getHtml();
+				deferred.resolve(html);		
+			};	
+
 		for (var i = 0; i < screenshots.length; i++) {
 			(function(section, images, isLast){
+				undoneSections.push[section]
 			    htmlObject[section] = [];
 
 				for (var j = 0; j < images.length; j++) {
@@ -86,12 +113,25 @@ var fs = require('fs'),
 					var str = str.substr( (str.lastIndexOf('/')+1) )
 					var imageTag = '<img src="' + section + '-' + str + '" />';
 					htmlObject[section].push(imageTag);
+					
 					archive.append(fs.createReadStream(images[j]), { name: section + '-' + str })
 				};
 
-				var html = getHtml();
-				deferred.resolve(html);
+				undoneSections.splice(undoneSections.indexOf(section), 1);
+				
+				if(isLast){
+					if(undoneSections.length == 0) done();
+					else {
+						 function wait(){
+						 	setTimeout(function(){
+						 		console.log('wait')
+						 		if(undoneSections.length == 0) done();
+						 		else wait();
+						 	}, 1000)
+						 }
+					}
 
+				}
 			})(screenshots[i][0], screenshots[i][1], (i == screenshots.length - 1))
 		};
 		return deferred.promise;
@@ -99,7 +139,7 @@ var fs = require('fs'),
 
 var archiver = require('archiver');
 
-var output = fs.createWriteStream('./example-output.zip');
+var output = fs.createWriteStream(zipFilePath);
 var archive = archiver('zip');
 
 output.on('close', function() {
@@ -115,23 +155,21 @@ archive.pipe(output);
 getLatestScreenshots().then(function(data) {
 	buildHtml(data).then(function(html){
  		console.log(html)
- 		fs.writeFile('index.html', html, function (err) {
+ 		fs.writeFile(htmlFilePath, html, function (err) {
 		  if (err) throw err;
- 			archive.append(fs.createReadStream('index.html'), { name: 'index.html' });
+ 			archive.append(fs.createReadStream(htmlFilePath), { name: htmlFilePath });
 
 			archive.finalize(function(err, bytes) {
 		  		if (err) {
 		    		throw err;
 		  		}
 
-		  	console.log(bytes + ' total bytes');
-		  	sendEmail()
+			  	console.log(bytes + ' total bytes');
 
-		});		
-	});
+			  	sendEmail()
 
-
-
+			});		
+		});
 	})
 });
 
@@ -144,7 +182,8 @@ function sendEmail(){
 		postmark = require('postmark')(api);
 
 
-		fs.readFile('./example-output.zip', function(err, data) {
+		fs.readFile(zipFilePath, function(err, data) {
+		   	
 		   	var base64data = new Buffer(data).toString('base64');
 		    postmark.send({
 		        'From': 'erik.portin@net-a-porter.com', 
@@ -155,7 +194,7 @@ function sendEmail(){
 			        {
 			            'Name': 'previewer.zip',
 						'Content': base64data,
-		  				'ContentType': 'application/octet-stream'
+		  				'ContentType': 'application/zip'
 			        }
 			    ]
 		    }, function(error, success) {
@@ -164,7 +203,10 @@ function sendEmail(){
 		            return;
 		        }
 		        console.info('Sent to postmark for delivery to ' + to)
+		        fs.unlinkSync(zipFilePath)
+		        fs.unlinkSync(htmlFilePath)
 		    });		
+
 		});
 
 
