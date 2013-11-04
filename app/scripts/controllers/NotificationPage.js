@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('napPlayAdminApp')
-  .controller('NotificationpageCtrl', function ($scope, NotificationFactory) {
+  .controller('NotificationpageCtrl', ['$scope', 'NotificationFactory', function ($scope, NotificationFactory) {
   	var _init = function(){
       $scope.pageName = 'Notification Page';
   		
@@ -26,4 +26,4 @@ angular.module('napPlayAdminApp')
 
   	_init();
 
-  });
+  }]);

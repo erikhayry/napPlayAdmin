@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('napPlayAdminApp')
-  .factory('NotificationFactory', function ($http, $q) {
+  .factory('NotificationFactory', ['$http', '$q', function ($http, $q) {
     // Service logic
     var _notifications = [];
 
@@ -22,4 +22,4 @@ angular.module('napPlayAdminApp')
 
     };
 
-  });
+  }]);

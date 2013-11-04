@@ -2,7 +2,6 @@
   "name": "napplayadmin",
   "version": "0.0.1",
   "dependencies": {
-    "grunt-casper": "~0.1.3",
     "gzippo": "~0.2.0",
     "express": "~3.4.2"
   },
