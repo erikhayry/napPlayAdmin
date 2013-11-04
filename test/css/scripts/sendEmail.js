@@ -3,7 +3,7 @@ var fs = require('fs'),
 	screenshotDir = './screenshots-viewports',
 	imageUrls = {},
 	latestUrl = {id : 0},
-	zipFilePath = './example-output.zip',
+	zipFilePath = './screenshots-viewports.zip',
 	htmlFilePath = 'index.html';
 
 	getLatestScreenshots = function() {
@@ -61,7 +61,6 @@ var fs = require('fs'),
 									else {
 										 function wait(){
 										 	setTimeout(function(){
-										 		console.log('wait')
 										 		if(undoneFolders.length == 0) deferred.resolve(imagePaths);
 										 		else wait();
 										 	}, 1000)
@@ -84,7 +83,6 @@ var fs = require('fs'),
 			getHtml = function(){
 				var html = '';
 				for(var section in htmlObject){
-					console.log(section)
 					var sectionHtml = '<h2>' + section + '</h2>',
 						imagesHtml = '';
 					
@@ -98,7 +96,6 @@ var fs = require('fs'),
 
 		var undoneSections = [],
 			done = function(){
-				console.log('done')
 				var html = getHtml();
 				deferred.resolve(html);		
 			};	
@@ -124,7 +121,6 @@ var fs = require('fs'),
 					else {
 						 function wait(){
 						 	setTimeout(function(){
-						 		console.log('wait')
 						 		if(undoneSections.length == 0) done();
 						 		else wait();
 						 	}, 1000)
@@ -154,7 +150,6 @@ archive.pipe(output);
 
 getLatestScreenshots().then(function(data) {
 	buildHtml(data).then(function(html){
- 		console.log(html)
  		fs.writeFile(htmlFilePath, html, function (err) {
 		  if (err) throw err;
  			archive.append(fs.createReadStream(htmlFilePath), { name: htmlFilePath });
@@ -164,9 +159,9 @@ getLatestScreenshots().then(function(data) {
 		    		throw err;
 		  		}
 
-			  	console.log(bytes + ' total bytes');
+			  	fs.unlinkSync(htmlFilePath)
 
-			  	sendEmail()
+			  	//sendEmail()
 
 			});		
 		});
@@ -185,6 +180,7 @@ function sendEmail(){
 		fs.readFile(zipFilePath, function(err, data) {
 		   	
 		   	var base64data = new Buffer(data).toString('base64');
+
 		    postmark.send({
 		        'From': 'erik.portin@net-a-porter.com', 
 		        'To': to, 
@@ -204,7 +200,6 @@ function sendEmail(){
 		        }
 		        console.info('Sent to postmark for delivery to ' + to)
 		        fs.unlinkSync(zipFilePath)
-		        fs.unlinkSync(htmlFilePath)
 		    });		
 
 		});
