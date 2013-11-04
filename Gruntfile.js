@@ -393,8 +393,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test', [
-    'compare',
-    'clean:server',
+    //'compare', currently only works local and not on codeship
     'concurrent:test',
     'autoprefixer',
     'connect:test',
