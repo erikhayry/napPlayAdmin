@@ -20,6 +20,15 @@ var app = angular.module('napPlayAdminApp', ['ngCookies'])
       });
   })
 
+  /*
+    config below fixes this http bug
+    http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is  
+  */
+
+  .config(function($httpProvider){
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  })
+
   .directive('appNav', function(){
     return {
       restrict : 'E',
