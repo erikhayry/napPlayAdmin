@@ -1,7 +1,13 @@
 'use strict';
-
+/**
+ * @ngdoc service
+ * @name napPlayAdminApp.NotificationFactory
+ * @function
+ * @description
+ * NotificationFactory desc goes here
+ *
+ */
 angular.module('napPlayAdminApp')
-  /** @module NotificationFactory */
   .factory('NotificationFactory', ['$http', '$q', function ($http, $q) {
     // Service logic
     var _notifications = [];

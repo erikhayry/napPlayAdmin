@@ -331,9 +331,28 @@ module.exports = function (grunt) {
         }
     },
 
-ngdocs: {
-  all: ['app/scripts/**/*.js']
-}
+    ngdocs: {
+      options: {
+        dest: 'docs',
+        html5Mode: false,
+        startPage: '/docs/#/api',
+        title: "napplayadmin",
+        titleLink: "/docs/#/api",
+        bestMatch: true
+      },
+      directives: {
+        src: ['app/scripts/app.js'],
+        title: 'Directives'
+      },
+      controllers: {
+        src: ['app/scripts/controllers/*.js'],
+        title: 'Controllers'
+      },
+      services: {
+        src: ['app/scripts/services/*.js'],
+        title: 'Services'
+      }
+    }
 
   });
 

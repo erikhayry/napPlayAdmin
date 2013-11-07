@@ -2,7 +2,7 @@
 
 describe('Controller: StatspageCtrl', function () {
 
-/*  // load the controller's module
+  // load the controller's module
   beforeEach(module('napPlayAdminApp'));
 
   var StatspageCtrl,
@@ -18,5 +18,5 @@ describe('Controller: StatspageCtrl', function () {
 
   it('should set the page name', function () {
     expect(scope.pageName).toBe('Stats Page');
-  });*/
+  });
 });
