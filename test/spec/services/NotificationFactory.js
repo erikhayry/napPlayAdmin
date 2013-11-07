@@ -17,8 +17,6 @@ describe('Service: NotificationFactory', function () {
     // backend definition common for all tests
     $httpBackend.expectGET("https://api.github.com/repos/erikportin/napPlayAdmin/statuses/master").respond(200, ['item1', 'item2']);
 
-
-
   }));
   
   //make sure no expectations were missed in your tests.

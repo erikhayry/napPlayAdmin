@@ -1,4 +1,13 @@
 'use strict';
+/**
+ * @ngdoc object
+ * @name napPlayAdminApp.NotificationpageCtrl
+ * @function
+ *
+ * @description
+ * Notification page controller
+ *
+ */
 
 angular.module('napPlayAdminApp')
   .controller('NotificationpageCtrl', ['$scope', 'NotificationFactory', function ($scope, NotificationFactory) {
@@ -21,11 +30,17 @@ angular.module('napPlayAdminApp')
       .then(function(notification){
         console.log(notification)
       })
-
-
-
   	};
 
+    /**
+     * @ngdoc method
+     * @name napPlayAdminApp.NotificationpageCtrl#$scope.getData
+     * @methodOf napPlayAdminApp.NotificationpageCtrl
+     *
+     * @description
+     * Gets data
+     *
+     */
     $scope.getData = function(){
       $scope.status = 'getting data';
       

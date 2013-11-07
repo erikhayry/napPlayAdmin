@@ -320,10 +320,21 @@ module.exports = function (grunt) {
           src  : '<%= yeoman.dist %>/index.html',
           dest : '<%= yeoman.dist %>/index.html'
       }
-    }
+    },
 
+    jsdoc : {
+        dist : {
+            src: ['app/scripts/**/*.js', 'test/*.js'], 
+            options: {
+                destination: 'doc'
+            }
+        }
+    },
 
-    
+ngdocs: {
+  all: ['app/scripts/**/*.js']
+}
+
   });
 
   grunt.registerTask('server', function (target) {
@@ -373,5 +384,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.loadNpmTasks('grunt-preprocess');
+
+  grunt.loadNpmTasks('grunt-ngdocs');
 
 };
