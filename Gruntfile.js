@@ -331,17 +331,22 @@ module.exports = function (grunt) {
         }
     },
 
+    /*
+      https://github.com/m7r/grunt-ngdocs
+      https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation
+     */
     ngdocs: {
       options: {
         dest: 'docs',
         html5Mode: false,
-        startPage: '/docs/#/api',
-        title: "napplayadmin",
-        titleLink: "/docs/#/api",
+        startPage: '/api',
+        styles: ['app/styles/css/main.css'],
+        title: 'napplayadmin',
+        titleLink: '/api',
         bestMatch: true
       },
       directives: {
-        src: ['app/scripts/app.js'],
+        src: ['app/scripts/directives/*.js'],
         title: 'Directives'
       },
       controllers: {
