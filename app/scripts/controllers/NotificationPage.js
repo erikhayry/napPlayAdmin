@@ -1,6 +1,14 @@
 'use strict';
 /**
- * @ngdoc object
+ * @ngdoc overview
+ * @name index
+ * @description
+ * This is the overview for controllers
+ */
+
+
+/**
+ * @ngdoc service
  * @name napPlayAdminApp.NotificationpageCtrl
  * @function
  *

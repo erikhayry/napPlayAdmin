@@ -1,5 +1,12 @@
 'use strict';
 /**
+ * @ngdoc overview
+ * @name index
+ * @description
+ * This is the overview for directives
+ */
+
+/**
 * @ngdoc directive
 * @name napPlayAdminApp.directive:navigation
 * @element div

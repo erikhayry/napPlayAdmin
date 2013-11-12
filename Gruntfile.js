@@ -339,11 +339,15 @@ module.exports = function (grunt) {
       options: {
         dest: 'docs',
         html5Mode: false,
-        startPage: '/api',
+        startPage: '/docs/#/api',
         styles: ['app/styles/css/main.css'],
         title: 'napplayadmin',
-        titleLink: '/api',
+        titleLink: '/docs/#/api',
         bestMatch: true
+      },
+      api: {
+        src: ['app/scripts/app.js'],
+        title: 'App'
       },
       directives: {
         src: ['app/scripts/directives/*.js'],

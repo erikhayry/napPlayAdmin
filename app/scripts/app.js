@@ -1,4 +1,23 @@
 'use strict';
+
+/**
+ * @ngdoc overview
+ * @name index
+ * @description
+ * main app overview
+ */
+
+/**
+ * @ngdoc object
+ * @name napPlayAdminApp
+ * @function
+ *
+ * @description
+ * Main app
+ *
+ */
+
+
 var $routeProviderReference;
 
 var app = angular.module('napPlayAdminApp', ['ngCookies'])

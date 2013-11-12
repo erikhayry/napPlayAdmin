@@ -4,7 +4,7 @@
  * @name napPlayAdminApp.RenderValue
  * @function
  * @description
- * Service talking to the The Graphite Render URL API (http://graphite.readthedocs.org/en/latest/render_api.html)
+ * Desc goes here
  *
  */
 
@@ -19,8 +19,8 @@ angular.module('napPlayAdminApp')
           drawNullAsZero : '',
 
           //dimensions
-          height : '300px',
-          width : '400px',
+          height : '300', //without px
+          width : '400', //without px
 
           //colours
           bgcolor : '',

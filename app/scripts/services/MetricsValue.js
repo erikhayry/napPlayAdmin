@@ -9,5 +9,5 @@
  */
 angular.module('napPlayAdminApp')	
 	.value('MetricsValue', {
-		loves : 'consumer_live.1.love.add.anon.ok.count'
+		loves : 'consumer.naplive.love.count'
 	});

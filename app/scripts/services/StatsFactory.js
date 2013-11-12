@@ -1,4 +1,12 @@
 'use strict';
+
+/**
+ * @ngdoc overview
+ * @name index
+ * @description
+ * This is the overview for services
+ */
+
 /**
  * @ngdoc service
  * @name napPlayAdminApp.StatsFactory
@@ -21,6 +29,7 @@ angular.module('napPlayAdminApp')
          * Returning the render values in the correct Render URL API format
          * @return {string} - Render api parameters
          */
+        
         _render = function(){
           var _renderQuery = '';
           
@@ -34,6 +43,7 @@ angular.module('napPlayAdminApp')
         }
 
     return {
+      
       /**
        * @ngdoc method
        * @name napPlayAdminApp.StatsFactory#getGraph
@@ -46,6 +56,7 @@ angular.module('napPlayAdminApp')
        *
        * @return {string} Image url to graph
        */
+     
       getGraph: function(target) {
         return _baseUrl + '?target=' + target + _render();
       }
