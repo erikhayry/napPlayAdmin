@@ -9,17 +9,19 @@
 
 /**
  * @ngdoc service
- * @name napPlayAdminApp.StatsFactory
+ * @name napPlayAdminApp.GraphiteFactory
  * @function
  * @requires $http 
- * @requires napPlayAdminApp.RenderValue
+ * @requires napPlayAdminApp.GraphiteValue
  * @description
  * Service talking to the {@link http://graphite.readthedocs.org/en/latest/render_api.html|The Graphite Render URL API}
  *
  */
 
+//http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12
+
 angular.module('napPlayAdminApp')
-  .factory('StatsFactory', ['$http', 'RenderValue', function($http, RenderValue) {
+  .factory('GraphiteFactory', ['$http', 'GraphiteValue', function($http, GraphiteValue) {
 
     var _id = '15b47d85',
         _key = '6d3a3e1c-b072-44cf-b879-71f2d9aff58b',
@@ -33,9 +35,9 @@ angular.module('napPlayAdminApp')
         _render = function(){
           var _renderQuery = '';
           
-          for(var key in RenderValue){           
-            if(RenderValue[key]){
-              _renderQuery += '&' + key + '=' + RenderValue[key];
+          for(var key in GraphiteValue){           
+            if(GraphiteValue[key]){
+              _renderQuery += '&' + key + '=' + GraphiteValue[key];
             }
           }
 
@@ -46,8 +48,8 @@ angular.module('napPlayAdminApp')
       
       /**
        * @ngdoc method
-       * @name napPlayAdminApp.StatsFactory#getGraph
-       * @methodOf napPlayAdminApp.StatsFactory
+       * @name napPlayAdminApp.GraphiteFactory#getGraph
+       * @methodOf napPlayAdminApp.GraphiteFactory
        *
        * @description
        * Returns graph image

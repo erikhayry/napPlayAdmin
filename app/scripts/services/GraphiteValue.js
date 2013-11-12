@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc service
- * @name napPlayAdminApp.RenderValue
+ * @name napPlayAdminApp.GraphiteValue
  * @function
  * @description
  * Desc goes here
@@ -9,8 +9,8 @@
  */
 
 angular.module('napPlayAdminApp')
-	/** @module RenderValue */
-  	.value('RenderValue', 
+	/** @module GraphiteValue */
+  	.value('GraphiteValue', 
         {
           from : '',
           until : '',

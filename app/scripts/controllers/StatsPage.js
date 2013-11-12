@@ -10,14 +10,14 @@
  */
 
 angular.module('napPlayAdminApp')
-  .controller('StatspageCtrl', ['$scope', 'StatsFactory', 'MetricsValue', function ($scope, StatsFactory, MetricsValue) {
+  .controller('StatspageCtrl', ['$scope', 'GraphiteFactory', 'MetricsValue', function ($scope, GraphiteFactory, MetricsValue) {
     
     var _init = function(){
     	var _target = MetricsValue.loves;
     	
     	$scope.pageName = 'Stats Page';
     	
-    	$scope.imageSrc = StatsFactory.getGraph(_target);
+    	$scope.imageSrc = GraphiteFactory.getGraph(_target);
     }
 
     _init();
