@@ -18,8 +18,6 @@
  *
  */
 
-//http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12
-
 angular.module('napPlayAdminApp')
   .factory('GraphiteFactory', ['$http', 'GraphiteValue', function($http, GraphiteValue) {
 
