@@ -17,10 +17,9 @@
  *
  */
 
-
 var $routeProviderReference;
 
-var app = angular.module('napPlayAdminApp', ['ngCookies'])
+var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute'])
   .config(function ($routeProvider) {
     $routeProviderReference = $routeProvider;
     $routeProvider

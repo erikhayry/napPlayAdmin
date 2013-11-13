@@ -18,4 +18,12 @@ angular.module('napPlayAdminApp')
         _baseUrl = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=' + _accessCode + '&apiKey=' + _apiKey + '&startDate=' + FlurryValue.startDate + '&endDate=' + FlurryValue.endDate;
     
     // AngularJS will instantiate a singleton by calling "new" on this function
+  
+    var ctx = document.getElementById("myChart").getContext("2d");
+	//var myNewChart = new Chart(ctx).PolarArea(data);
+
+
+
   }]);
+
+

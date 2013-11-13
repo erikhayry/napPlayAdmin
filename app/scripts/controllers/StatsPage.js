@@ -10,7 +10,7 @@
  */
 
 angular.module('napPlayAdminApp')
-  .controller('StatspageCtrl', ['$scope', 'GraphiteFactory', 'MetricsValue', function ($scope, GraphiteFactory, MetricsValue) {
+  .controller('StatspageCtrl', ['$scope', 'GraphiteFactory', 'FlurryFactory', 'MetricsValue', function ($scope, GraphiteFactory, FlurryFactory, MetricsValue) {
     
     var _init = function(){
     	var _target = MetricsValue.loves;
