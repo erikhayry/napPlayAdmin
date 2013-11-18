@@ -24,37 +24,44 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
-/* line 28, ../sass/base/_elements.scss */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
+/* line 27, ../sass/base/_elements.scss */
+body {
+  line-height: 1;
+  padding: 30px;
 }
 
 /* line 31, ../sass/base/_elements.scss */
-body {
-  line-height: 1;
-}
-
-/* line 34, ../sass/base/_elements.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 37, ../sass/base/_elements.scss */
+/* line 34, ../sass/base/_elements.scss */
 blockquote, q {
   quotes: none;
 }
 
-/* line 41, ../sass/base/_elements.scss */
+/* line 38, ../sass/base/_elements.scss */
 blockquote:before, blockquote:after,
 q:before, q:after {
   content: '';
   content: none;
 }
 
-/* line 45, ../sass/base/_elements.scss */
+/* line 42, ../sass/base/_elements.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+/*
+	Module chart
+ */
+/* line 5, ../sass/modules/_chart.scss */
+.m-chart {
+  margin: 20px 0;
+}
+
+/* line 9, ../sass/modules/_chart.scss */
+.m-chart-title {
+  margin-bottom: 20px;
 }

@@ -57,8 +57,41 @@ angular.module('napPlayAdminApp')
        * @return {string} Image url to graph
        */
      
-      getGraph: function(target) {
+      getGraphImage: function(target) {
         return _baseUrl + '?target=' + target + _render();
-      }
-    };
+      },
+
+      getGraphData: function(target){
+        return $http.get(_baseUrl + '?target=' + target + '&format=json');
+      },
+
+      format: function(data){
+        var data = data.data[0],
+            days = [],
+            labels = [],
+            nth = Math.ceil(data.datapoints.length / 20);
+
+        for (var i = 0; i < data.datapoints.length; i++) {
+          if(i%nth == 0){
+            days.push(parseInt(data.datapoints[i][0]));
+            labels.push(data.datapoints[i][1]);            
+          }
+
+        };
+        
+        return {
+          labels : labels,
+          datasets : [
+            {
+              fillColor : "rgba(220,220,220,0.5)",
+              strokeColor : "rgba(220,220,220,1)",
+              pointColor : "rgba(220,220,220,1)",
+              pointStrokeColor : "#000",
+              data : days
+            }
+          ]
+         }
+
+      }   
+    }
   }]);

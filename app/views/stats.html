@@ -6,9 +6,10 @@
 <!-- /.l-navigation -->
 <div class="l-content">
 	<h1 id="page-title">{{pageName}}</h1>
-	<img ng-src="{{imageSrc}}"/>
 
-	<canvas id="myChart" width="400" height="400"></canvas>
+	<graphite-chart npa-target="consumer_live.1.love.add.anon.ok.count"></graphite-chart>
+
+	<flurry-chart from="2013-10-01" to="2013-11-12" metrics="ActiveUsers"></flurry-chart>
 
 </div>
 <!-- /.l-content -->

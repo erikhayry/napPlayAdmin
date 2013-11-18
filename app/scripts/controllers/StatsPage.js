@@ -17,7 +17,7 @@ angular.module('napPlayAdminApp')
     	
     	$scope.pageName = 'Stats Page';
     	
-    	$scope.imageSrc = GraphiteFactory.getGraph(_target);
+    	//$scope.imageSrc = GraphiteFactory.getGraph(_target);
     }
 
     _init();
