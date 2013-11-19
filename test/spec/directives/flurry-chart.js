@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 describe('Directive: flurryChart', function () {
 
@@ -18,3 +18,4 @@ describe('Directive: flurryChart', function () {
     expect(element.text()).toBe('this is the flurryChart directive');
   }));
 });
+*/

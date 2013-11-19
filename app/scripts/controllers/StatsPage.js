@@ -1,5 +1,13 @@
 'use strict';
 /**
+ * @ngdoc overview
+ * @name index
+ * @description
+ * NAP Play Controllers
+ */
+
+
+/**
  * @ngdoc service
  * @name napPlayAdminApp.StatspageCtrl
  * @function
@@ -10,14 +18,10 @@
  */
 
 angular.module('napPlayAdminApp')
-  .controller('StatspageCtrl', ['$scope', 'GraphiteFactory', 'FlurryFactory', 'MetricsValue', function ($scope, GraphiteFactory, FlurryFactory, MetricsValue) {
+  .controller('StatspageCtrl', ['$scope', 'FlurryFactory', function ($scope, FlurryFactory) {
     
-    var _init = function(){
-    	var _target = MetricsValue.loves;
-    	
-    	$scope.pageName = 'Stats Page';
-    	
-    	//$scope.imageSrc = GraphiteFactory.getGraph(_target);
+    var _init = function(){    	
+    	$scope.pageName = 'Stats Page';    	
     }
 
     _init();

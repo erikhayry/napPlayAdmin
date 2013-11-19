@@ -4,37 +4,31 @@
  * @ngdoc overview
  * @name index
  * @description
- * main app overview
+ * NAP Play Admin Tool
+ * - github https://github.com/erikportin/napPlayAdmin
  */
 
 /**
  * @ngdoc object
  * @name napPlayAdminApp
  * @function
- *
+ * @requires ngCookies 
+ * @requires ngRoute
  * @description
- * Main app
+ * Main app configuration
  *
  */
 
-var $routeProviderReference;
-
 var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute'])
   .config(function ($routeProvider) {
-    $routeProviderReference = $routeProvider;
     $routeProvider
-      .when('/notifications', {
-        templateUrl: 'views/notifications.html',
-        controller: 'NotificationpageCtrl'
-      })
-
       .when('/stats', {
         templateUrl: 'views/stats.html',
         controller: 'StatspageCtrl'
       })
       
       .otherwise({
-        redirectTo: '/notifications'
+        redirectTo: '/stats'
       });
   })
 

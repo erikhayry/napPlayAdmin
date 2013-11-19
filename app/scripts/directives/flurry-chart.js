@@ -51,18 +51,39 @@ angular.module('napPlayAdminApp')
       replace: 'true',
       scope: {},
       link: function postLink(scope, element, attrs) {
-        
-        scope.title = 'Flurry: ' + attrs.metrics;
+        scope.title = 'Flurry: ' + attrs.flurrymetrics;
+
+        var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
       	
         FlurryFactory.getGraphData({
-      		from : attrs.from,
-      		to : attrs.to,
-      		metrics : attrs.metrics
+      		from : attrs.flurryfrom,
+      		to : attrs.flurryto,
+      		metrics : _metrics
       	})
+
       	.then(function(data){
-      		  var ctx = element[0].querySelectorAll('canvas')[0].getContext("2d"),
-      			myNewChart = new Chart(ctx).Line(FlurryFactory.format(data));
-      	});
+      		var _context = element[0].querySelectorAll('canvas')[0].getContext("2d"),
+              _chart,
+              _setChart = function(type){
+                switch(type){
+                  case 'bar':
+                    _chart = new Chart(_context).Bar(FlurryFactory.getChartJSData(data, type));
+                    break;
+
+                  default:
+                    _chart = new Chart(_context).Line(FlurryFactory.getChartJSData(data, type));
+                    break;
+                }
+              },
+              _initChart = function(){
+                _setChart(attrs.flurrytype);
+              };
+
+          _initChart();
+
+      	}, function(error){
+          console.log(error)
+        });
       }
     }
   }]);
