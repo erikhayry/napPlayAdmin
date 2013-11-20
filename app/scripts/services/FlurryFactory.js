@@ -55,9 +55,11 @@ angular.module('napPlayAdminApp')
                 $http.get(_baseUrl(_metrics[index]) + '&startDate=' + attrs.from + '&endDate=' + attrs.to)
                 .success(function(data){
                   _data.push(data);
+                  
                   if(_data.length >= _metrics.length) {
                     _deferred.resolve(_data);
                   }
+                  
                 })
                 .error(function(){
                   _deferred.reject('error');
