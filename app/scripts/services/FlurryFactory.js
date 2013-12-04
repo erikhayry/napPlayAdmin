@@ -59,7 +59,7 @@ angular.module('napPlayAdminApp')
                   if(_data.length >= _metrics.length) {
                     _deferred.resolve(_data);
                   }
-                  
+
                 })
                 .error(function(){
                   _deferred.reject('error');
@@ -67,7 +67,6 @@ angular.module('napPlayAdminApp')
               }, 3000 * i); //need a timeout to not call the api too much
             })(i);                
         };    
-
 
       	return _deferred.promise;
       },
@@ -96,7 +95,7 @@ angular.module('napPlayAdminApp')
           _days = [];
           _labels = [];
 
-          var _nth = Math.floor(_data.day.length / 20); //show a maximum of;
+          var _nth = Math.ceil(_data.day.length / 20); //show a maximum of;
 
           for (var j = 0; j < _data.day.length; j++) {
             if(j%_nth == 0){
@@ -110,7 +109,9 @@ angular.module('napPlayAdminApp')
             labels: _labels
           });
 
-        };    
+        };
+
+        //console.log(JSON.stringify(_metrics))    
             
       	return {
           labels : _labels,

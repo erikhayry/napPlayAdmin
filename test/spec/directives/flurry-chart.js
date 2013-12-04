@@ -1,21 +1,29 @@
-/*'use strict';
-
-describe('Directive: flurryChart', function () {
-
-  // load the directive's module
+'use strict';
+ 
+describe('Directive: flurry-chart', function() {
   beforeEach(module('napPlayAdminApp'));
-
-  var element,
-    scope;
-
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
+ 
+  var element, scope;
+ 
+  beforeEach(module('templates/chart.html'));
+ 
+  beforeEach(inject(function($rootScope, $compile) {
+    element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="line"></flurry-chart>');
+ 
+    scope = $rootScope;
+    $compile(element)(scope);
+    scope.$digest();
   }));
+ 
+  it("should have a title", function() {
+    var title = element.find('h2');
+    expect(title.text()).toBe('Flurry: ActiveUsers, Sessions');
+  });
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<flurry-chart></flurry-chart>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the flurryChart directive');
-  }));
+  it("should have a canvas element", function() {
+    var canvasEl = element.find('canvas');
+    expect(canvasEl).toBeDefined();
+  });
+
+
 });
-*/

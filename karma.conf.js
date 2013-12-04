@@ -20,8 +20,18 @@ module.exports = function(config) {
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       //'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/**/*.js',
+      // if you wanna load template files in nested directories, you must use this
+      'app/templates/*.html'
     ],
+
+    preprocessors : {
+      'app/templates/*.html': 'ng-html2js'
+    },
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app/'
+    },
 
     // list of files / patterns to exclude
     exclude: [],
