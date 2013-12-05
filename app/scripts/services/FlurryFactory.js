@@ -110,8 +110,6 @@ angular.module('napPlayAdminApp')
           });
 
         };
-
-        //console.log(JSON.stringify(_metrics))    
             
       	return {
           labels : _labels,

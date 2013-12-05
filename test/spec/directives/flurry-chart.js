@@ -24,6 +24,5 @@ describe('Directive: flurry-chart', function() {
     var canvasEl = element.find('canvas');
     expect(canvasEl).toBeDefined();
   });
-
-
+  
 });

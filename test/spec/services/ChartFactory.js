@@ -27,4 +27,19 @@ describe('Service: ChartFactory', function () {
       expect(metrics[1].days[0]).toBe(chartData[1].data[0]);
     });
   });
+
+  describe('getOptions', function(){
+    it('should return and chart options object', function(){
+      var barOptions = ChartFactory.getOptions('bar'),
+          lineOptions = ChartFactory.getOptions('line'),
+          emptyOptions = ChartFactory.getOptions('foo');
+
+      expect(barOptions).toEqual(jasmine.any(Object));    
+      expect(lineOptions).toEqual(jasmine.any(Object));
+      expect(emptyOptions).not.toBeDefined(); 
+
+    })
+  })
+
+
 });

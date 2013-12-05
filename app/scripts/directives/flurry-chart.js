@@ -44,7 +44,7 @@
 */
 
 angular.module('napPlayAdminApp')
-  .directive('flurryChart', ['FlurryFactory', function (FlurryFactory) {
+  .directive('flurryChart', ['FlurryFactory', 'ChartFactory', function (FlurryFactory, ChartFactory) {
     return {
       templateUrl: 'templates/chart.html',
       restrict: 'E',
@@ -65,13 +65,14 @@ angular.module('napPlayAdminApp')
       		var _context = element[0].querySelectorAll('canvas')[0].getContext("2d"),
               _chart,
               _setChart = function(type){
+
                 switch(type){
                   case 'bar':
                     _chart = new Chart(_context).Bar(FlurryFactory.getChartJSData(data, type));
                     break;
 
                   default:
-                    _chart = new Chart(_context).Line(FlurryFactory.getChartJSData(data, type));
+                    _chart = new Chart(_context).Line(FlurryFactory.getChartJSData(data, type), ChartFactory.getOptions('line'));
                     break;
                 }
               },

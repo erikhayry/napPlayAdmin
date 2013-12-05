@@ -25,6 +25,7 @@ module.exports = function(config) {
       'app/templates/*.html'
     ],
 
+    // preprocessor for html templates. Needed when testing directives
     preprocessors : {
       'app/templates/*.html': 'ng-html2js'
     },
