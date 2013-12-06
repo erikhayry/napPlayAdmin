@@ -9,3 +9,20 @@
 .m-chart-title{
 	margin-bottom: 20px;
 }
+
+/*
+	temp d3 styling
+ */
+
+.x.axis .tick {
+	text{
+	  transform: rotate(90deg);
+	}
+}
+
+.bar{
+	fill: #ccc;
+	&:hover{
+		fill: #555;
+	}
+}

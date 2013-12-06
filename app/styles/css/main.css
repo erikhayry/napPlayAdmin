@@ -65,3 +65,20 @@ table {
 .m-chart-title {
   margin-bottom: 20px;
 }
+
+/*
+	temp d3 styling
+ */
+/* line 18, ../sass/modules/_chart.scss */
+.x.axis .tick text {
+  transform: rotate(90deg);
+}
+
+/* line 23, ../sass/modules/_chart.scss */
+.bar {
+  fill: #ccc;
+}
+/* line 25, ../sass/modules/_chart.scss */
+.bar:hover {
+  fill: #555;
+}
