@@ -19,7 +19,7 @@
  *
  */
 
-var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute'])
+var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/stats', {
@@ -39,5 +39,8 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute'])
 
   .config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  })
+  });
+
+
+  angular.module('d3', []);
 

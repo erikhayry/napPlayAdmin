@@ -51,6 +51,9 @@ angular.module('napPlayAdminApp')
       replace: 'true',
       scope: {},
       link: function postLink(scope, element, attrs) {
+        
+
+
         scope.title = 'Flurry: ' + attrs.flurrymetrics;
 
         var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
@@ -62,6 +65,7 @@ angular.module('napPlayAdminApp')
       	})
 
       	.then(function(data){
+         
           /*
             Using Chart.js
            */  
@@ -85,25 +89,31 @@ angular.module('napPlayAdminApp')
               };
 
           _initChart();
+          
+
+
+          D3Factory.d3().then(function(d3) {
+          
 
           /*
             Using D3.js
            */
           
           var _svgEl = element[0].querySelectorAll('svg')[0];
+          
           var _data = data[1].day;
           
-          var margin = {top: 20, right: 30, bottom: 130, left: 40},
-              width = 960,// - margin.left - margin.right,
-              height = 500// - margin.top - margin.bottom;
+          var _margin = D3Factory.getMargins(),
+              _width = D3Factory.getDimensions().width,
+              _height = D3Factory.getDimensions().height;
 
 
           var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1)
+            .rangeRoundBands([0, _width], .1)
             .domain(_data.map(function(d) { return d['@date'];}))
 
           var y = d3.scale.linear()
-              .range([height, 0])
+              .range([_height, 0])
               .domain([0, d3.max(_data, function(d) { return d['@value']; })]);
 
           var xAxis = d3.svg.axis()
@@ -117,14 +127,14 @@ angular.module('napPlayAdminApp')
 
 
           var chart = d3.select(_svgEl)
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
+              .attr("width", _width + _margin.left + _margin.right)
+              .attr("height", _height + _margin.top + _margin.bottom)
               .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                .attr("transform", "translate(" + _margin.left + "," + _margin.top + ")")
 
               chart.append("g")
                   .attr("class", "x axis")
-                  .attr("transform", "translate(0," + height + ")")
+                  .attr("transform", "translate(0," + _height + ")")
                   .call(xAxis)
                   .selectAll('text')
                     .style('text-anchor', 'start')
@@ -145,11 +155,14 @@ angular.module('napPlayAdminApp')
                   })
                   .attr('class', 'bar')
                   .attr("y", function(d) { return y(d['@value']); })
-                  .attr("height", function(d) { return height - y(d['@value']); })
+                  .attr("height", function(d) { return _height - y(d['@value']); })
                   .attr("width", x.rangeBand());
 
 
 
+          });
+
+          
 
       	}, function(error){
           console.log(error)
