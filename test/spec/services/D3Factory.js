@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: D3factory', function () {
+describe('Service: D3Factory', function () {
 
   // load the service's module
-  beforeEach(module('NapplayadminApp'));
+  beforeEach(module('napPlayAdminApp'));
 
   // instantiate service
-  var D3factory;
-  beforeEach(inject(function(_D3factory_) {
-    D3factory = _D3factory_;
+  var D3Factory;
+  beforeEach(inject(function(_D3Factory_) {
+    D3Factory = _D3Factory_;
   }));
 
   it('should do something', function () {
-    expect(!!D3factory).toBe(true);
+    expect(!!D3Factory).toBe(true);
   });
 
 });

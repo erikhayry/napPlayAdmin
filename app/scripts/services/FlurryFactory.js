@@ -10,15 +10,15 @@
  * Service talking to the {@link http://support.flurry.com/index.php?title=API/Code|The Flurry Metrics Api}
  *
  * 	- ActiveUsers	 			    Total number of unique users who accessed the application per day.
-   	- ActiveUsersByWeek	 		Total number of unique users who accessed the application per week. Only returns data for dates which specify at least a complete calendar week.
-   	- ActiveUsersByMonth		Total number of unique users who accessed the application per month. Only returns info for dates which specify at least a complete calendar month.
-   	- NewUsers	 				    Total number of unique users who used the application for the first time per day.
-   	- MedianSessionLength		Median length of a user session per day.
-    - AvgSessionLength	 		Average length of a user session per day.
-    - Sessions	 				    The total number of times users accessed the application per day.
-    - RetainedUsers	 			  Total number of users who remain active users of the application per day.
-    - PageViews	 				    Total number of page views per day.
-    - AvgPageViewsPerSession	Average page views per session for each day.
+ * 	- ActiveUsersByWeek	 		Total number of unique users who accessed the application per week. Only returns data for dates which specify at least a complete calendar week.
+ * 	- ActiveUsersByMonth		Total number of unique users who accessed the application per month. Only returns info for dates which specify at least a complete calendar month.
+ * 	- NewUsers	 				    Total number of unique users who used the application for the first time per day.
+ * 	- MedianSessionLength		Median length of a user session per day.
+ *  - AvgSessionLength	 		Average length of a user session per day.
+ *  - Sessions	 				    The total number of times users accessed the application per day.
+ *  - RetainedUsers	 			  Total number of users who remain active users of the application per day.
+ *  - PageViews	 				    Total number of page views per day.
+ *  - AvgPageViewsPerSession	Average page views per session for each day.
  *
  * 
  */
@@ -34,8 +34,9 @@ angular.module('napPlayAdminApp')
     return {
       
       /**
-       * @ngdoc method
-       * @name napPlayAdminApp.FlurryValue#getGraphData
+       * @ngdoc function
+       * @name napPlayAdminApp.FlurryFactory#getGraphData
+       * @methodOf napPlayAdminApp.FlurryFactory
        * 
        * @description
        * Get Flurry data as a json file
@@ -72,8 +73,9 @@ angular.module('napPlayAdminApp')
       },
 
       /**
-       * @ngdoc method
-       * @name napPlayAdminApp.FlurryValue#getInChartFormat
+       * @ngdoc function
+       * @name napPlayAdminApp.FlurryFactory#getInChartFormat
+       * @methodOf napPlayAdminApp.FlurryFactory
        *
        * @description
        * Returns flurry data formatted for the Graph library

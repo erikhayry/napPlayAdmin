@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: Scriptloader', function () {
+describe('Service: ScriptLoader', function () {
 
   // load the service's module
-  beforeEach(module('NapplayadminApp'));
+  beforeEach(module('napPlayAdminApp'));
 
   // instantiate service
-  var Scriptloader;
-  beforeEach(inject(function(_Scriptloader_) {
-    Scriptloader = _Scriptloader_;
+  var ScriptLoader;
+  beforeEach(inject(function(_ScriptLoader_) {
+    ScriptLoader = _ScriptLoader_;
   }));
 
   it('should do something', function () {
-    expect(!!Scriptloader).toBe(true);
+    expect(!!ScriptLoader).toBe(true);
   });
 
 });

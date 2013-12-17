@@ -1,0 +1,23 @@
+@import "base/settings";
+@import "helpers";
+
+/*
+	module nav
+ */
+
+.m-nav{
+	font-size: $fs-m;
+	overflow: hidden;
+	background-color: $c-1;
+}
+
+.m-nav-item{
+	
+	&.is-active{
+		
+	}
+
+	@include screen($bp-s) {
+		float: left;
+	}
+}

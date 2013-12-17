@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: StatspageCtrl', function () {
+describe('Controller: StatsPageCtrl', function () {
 
   // load the controller's module
   beforeEach(module('napPlayAdminApp'));
 
-  var StatspageCtrl,
+  var StatsPageCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    StatspageCtrl = $controller('StatspageCtrl', {
+    StatsPageCtrl = $controller('StatsPageCtrl', {
       $scope: scope
     });
   }));

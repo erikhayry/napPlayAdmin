@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('napPlayAdminApp')  
-  .factory('ScriptLoader', ['$document', '$q', '$rootScope', function($document, $q, $rootScope) {
+  .factory('ScriptLoader', ['$document', '$q', '$rootScope', function ScriptLoader($document, $q, $rootScope) {
     var _loaded = [];
 
     return {

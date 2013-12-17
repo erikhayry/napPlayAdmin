@@ -9,7 +9,7 @@
 
 /**
  * @ngdoc service
- * @name napPlayAdminApp.StatspageCtrl
+ * @name napPlayAdminApp.StatsPageCtrl
  * @function
  *
  * @description
@@ -18,7 +18,7 @@
  */
 
 angular.module('napPlayAdminApp')
-  .controller('StatspageCtrl', ['$scope', 'FlurryFactory', function ($scope, FlurryFactory) {
+  .controller('StatsPageCtrl', ['$scope', 'FlurryFactory', function ($scope, FlurryFactory) {
     
     var _init = function(){    	
     	$scope.pageName = 'Stats Page';    	

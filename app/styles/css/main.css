@@ -27,7 +27,7 @@ time, mark, audio, video {
 /* line 27, ../sass/base/_elements.scss */
 body {
   line-height: 1;
-  padding: 30px;
+  padding: 0;
 }
 
 /* line 31, ../sass/base/_elements.scss */
@@ -51,6 +51,28 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+/* line 1, ../sass/layout/_app.scss */
+.l-heading {
+  margin-bottom: 20px;
+}
+
+/*
+	module nav
+ */
+/* line 8, ../sass/modules/_nav.scss */
+.m-nav {
+  font-size: 1em;
+  overflow: hidden;
+  background-color: #222222;
+}
+
+@media (min-width: 580px) {
+  /* line 14, ../sass/modules/_nav.scss */
+  .m-nav-item {
+    float: left;
+  }
 }
 
 /*

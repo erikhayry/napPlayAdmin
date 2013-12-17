@@ -20,15 +20,24 @@
  */
 
 var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider, AppConfig) {
+    $locationProvider.html5Mode(!AppConfig.hash)
+    
     $routeProvider
-      .when('/stats', {
+      .when('/stats/test', {
         templateUrl: 'views/stats.html',
-        controller: 'StatspageCtrl'
+        controller: 'StatsPageCtrl'
       })
-      
+      .when('/user-relationships', {
+        templateUrl: 'views/user-relationships.html',
+        controller: 'UserRelationshipsPageCtrl'
+      })
+      .when('/notifications', {
+        templateUrl: 'views/notifications.html',
+        controller: 'NotificationsPageCtrl'
+      })            
       .otherwise({
-        redirectTo: '/stats'
+        redirectTo: '/stats/test'
       });
   })
 
@@ -42,5 +51,9 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
   });
 
 
+  /*
+    load third party modules
+   */
+  
   angular.module('d3', []);
 
