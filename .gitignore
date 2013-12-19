@@ -7,3 +7,8 @@ screenshots-viewports
 screenshots
 docs
 npm-debug.log
+.bowerrc
+.editorconfig
+.gitattributes
+.jshintrc
+.travis.yml
