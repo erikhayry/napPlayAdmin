@@ -27,8 +27,12 @@ module.exports = function (grunt) {
         tasks: ['coffee:test']
       },
       styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        files: ['<%= yeoman.app %>/styles/**/*.css'],
         tasks: ['copy:styles', 'autoprefixer']
+      },
+      sass: {
+        files: ['<%= yeoman.app %>/styles/**/*.scss'],
+        tasks: ['sass', 'copy:styles', 'autoprefixer']
       },
       livereload: {
         options: {
@@ -361,6 +365,22 @@ module.exports = function (grunt) {
         src: ['app/scripts/services/*.js'],
         title: 'Services'
       }
+    },
+
+    sass: {                             
+      dist: {                            
+        options: {                       
+          style: 'compact',
+          sourcemap: true //requires sass 3.3 > sudo gem install sass --version=3.3.0.alpha.184 --source https://rubygems.org
+        },
+        files: [{
+          expand: true,
+          cwd: 'app/styles/sass',
+          src: ['*.scss'],
+          dest: 'app/styles/css/',
+          ext: '.css'
+        }]       
+      }
     }
 
   });
@@ -414,5 +434,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-preprocess');
 
   grunt.loadNpmTasks('grunt-ngdocs');
+
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
 };

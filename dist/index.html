@@ -11,9 +11,9 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/f3b12f69.main.css">
+        <link rel="stylesheet" href="styles/f930e47a.main.css">
 </head>
-  <body ng-app="napPlayAdminApp">
+  <body ng-app="napPlayAdminApp" ng-controller="AppCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -23,8 +23,19 @@
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
+    <div class="l-nav">
+      <ul class="m-nav">
+        <li class="m-nav-item"><a href="{{hash}}/stats">Stats</a></li>
+        <li class="m-nav-item"><a href="{{hash}}/user-relationships">User relationships</a></li>
+        <li class="m-nav-item"><a href="{{hash}}/notifications">Notifications</a></li>
+      <ul>  
+    </ul></ul></div>
+  
+
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="l-view" ng-view="">
+      
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -38,11 +49,11 @@
     </script>
 
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
 
-        <script src="scripts/6b865daa.modules.js"></script>
+        <script src="scripts/f8dc454d.modules.js"></script>
 
-        <script src="scripts/2fd8315c.scripts.js"></script>
+        <script src="scripts/ade4c248.scripts.js"></script>
 
 </body>
 </html>

@@ -19,9 +19,9 @@
 
 angular.module('napPlayAdminApp')
   .controller('StatsPageCtrl', ['$scope', 'FlurryFactory', function ($scope, FlurryFactory) {
-    
     var _init = function(){    	
-    	$scope.pageName = 'Stats Page';    	
+    	$scope.pageName = 'Stats'; 
+    	$scope.metrics = FlurryFactory.getAppMetrics();
     }
 
     _init();

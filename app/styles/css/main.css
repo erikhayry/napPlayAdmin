@@ -1,106 +1,51 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
+/* http://meyerweb.com/eric/tools/css/reset/  v2.0 | 20110126 License: none (public domain)
 */
-/* line 18, ../sass/base/_elements.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 
-/* line 27, ../sass/base/_elements.scss */
-body {
-  line-height: 1;
-  padding: 0;
-}
+body { line-height: 1; padding: 0; color: #222222; font-family: Times, "Times New Roman", Georgia, serif; }
 
-/* line 31, ../sass/base/_elements.scss */
-ol, ul {
-  list-style: none;
-}
+a { color: #222222; }
+a:hover { color: #6f6f6f; }
 
-/* line 34, ../sass/base/_elements.scss */
-blockquote, q {
-  quotes: none;
-}
+ol, ul { list-style: none; }
 
-/* line 38, ../sass/base/_elements.scss */
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
+blockquote, q { quotes: none; }
 
-/* line 42, ../sass/base/_elements.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 
-/* line 1, ../sass/layout/_app.scss */
-.l-heading {
-  margin-bottom: 20px;
-}
+table { border-collapse: collapse; border-spacing: 0; }
 
 /*
-	module nav
- */
-/* line 8, ../sass/modules/_nav.scss */
-.m-nav {
-  font-size: 1em;
-  overflow: hidden;
-  background-color: #222222;
-}
+	headings
+*/
+h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #222222; }
 
-@media (min-width: 580px) {
-  /* line 14, ../sass/modules/_nav.scss */
-  .m-nav-item {
-    float: left;
-  }
-}
+* { box-sizing: border-box; }
+
+.l-nav { padding: 20px; }
+@media (min-width: 580px) { .l-nav { float: left; width: 20%; } }
+
+.l-view { padding: 20px; }
+@media (min-width: 580px) { .l-view { float: left; width: calc(100% - 20%); } }
 
 /*
-	Module chart
- */
-/* line 5, ../sass/modules/_chart.scss */
-.m-chart {
-  margin: 20px 0;
-}
+	module nav */
+.m-nav { font-size: 1em; overflow: hidden; background-color: #fefefe; text-transform: uppercase; text-align: center; padding: 10px 0; }
 
-/* line 9, ../sass/modules/_chart.scss */
-.m-chart-title {
-  margin-bottom: 20px;
-}
+.m-nav-item { margin-bottom: 10px; }
+.m-nav-item a { text-decoration: none; }
 
 /*
-	temp d3 styling
- */
-/* line 18, ../sass/modules/_chart.scss */
-.x.axis .tick text {
-  transform: rotate(90deg);
-}
+	Module chart */
+.m-chart { margin: 20px 0; }
 
-/* line 23, ../sass/modules/_chart.scss */
-.bar {
-  fill: #ccc;
-}
-/* line 25, ../sass/modules/_chart.scss */
-.bar:hover {
-  fill: #555;
-}
+.m-chart-title { margin-bottom: 20px; }
+
+/*
+	temp d3 styling */
+.x.axis .tick text { transform: rotate(90deg); }
+
+.bar { fill: #ccc; }
+.bar:hover { fill: #555; }
+
+/*# sourceMappingURL=main.css.map */

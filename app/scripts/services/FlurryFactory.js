@@ -32,6 +32,20 @@ angular.module('napPlayAdminApp')
         }
   
     return {
+      getAppMetrics: function(){
+        return [
+         {value : 'ActiveUsers', name : 'Active Users'},
+         {value : 'ActiveUsersByWeek', name : 'Active Users By Week'},
+         {value : 'ActiveUsersByMonth', name : 'Active Users By Month'},
+         {value : 'NewUsers', name : 'New Users'},
+         {value : 'MedianSessionLength', name : 'New Users'},
+         {value : 'AvgSessionLength', name : 'Avg Session Length'},
+         {value : 'Sessions', name : 'Sessions'},
+         {value : 'RetainedUsers', name : 'Retained Users'},
+         {value : 'PageViews', name : 'Page Views'},
+         {value : 'AvgPageViewsPerSession', name : 'Avg Page Views Per Session'}
+        ]
+      },
       
       /**
        * @ngdoc function

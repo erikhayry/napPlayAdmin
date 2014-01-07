@@ -65,33 +65,6 @@ angular.module('napPlayAdminApp')
       	})
 
       	.then(function(data){
-         
-          /*
-            Using Chart.js
-           */  
-
-      		var _context = element[0].querySelectorAll('canvas')[0].getContext("2d"),
-              _chart,
-              _setChart = function(type){
-
-                switch(type){
-                  case 'bar':
-                    _chart = new Chart(_context).Bar(FlurryFactory.getChartJSData(data, type));
-                    break;
-
-                  default:
-                    _chart = new Chart(_context).Line(FlurryFactory.getChartJSData(data, type), ChartFactory.getOptions('line'));
-                    break;
-                }
-              },
-              _initChart = function(){
-                _setChart(attrs.flurrytype);
-              };
-
-          _initChart();
-          
-
-
           D3Factory.d3().then(function(d3) {
           
 

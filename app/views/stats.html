@@ -1,5 +1,14 @@
 <div class="l-content">
 	<h1 id="page-title">{{pageName}}</h1>
+	
+	<ul class="m-metrics-menu">
+		<li ng-repeat="metric in metrics">
+			<input id="{{metric.value}}" type="checkbox" />
+			<label for="{{metric.value}}">{{metric.name}}</label>
+		</li>		
+	</ul>
+
+
 	<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="line"></flurry-chart>
 </div>
 <!-- /.l-content -->
