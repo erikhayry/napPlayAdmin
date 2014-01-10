@@ -10,7 +10,7 @@ describe('app scenario Test', function(){
         });
 
         it('redirects to stats page as default', function(){
-        	expect(browser().location().url()).toEqual('/stats');
+        	expect(browser().location().url()).toEqual('/stats/flurry');
         });
     });
 
@@ -22,7 +22,7 @@ describe('app scenario Test', function(){
         describe('Stats Page', function(){
             it('Should have the correct title', function(){
                 browser().navigateTo('/#/stats');
-                expect(element('#page-title').text()).toEqual('Stats Page');
+                expect(element('#page-title').text()).toEqual('Stats - Flurry');
             });
         });
     })

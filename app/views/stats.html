@@ -3,7 +3,7 @@
 	
 	<ul class="m-metrics-menu">
 		<li ng-repeat="metric in metrics">
-			<input id="{{metric.value}}" type="checkbox" />
+			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false" ng-change="change()"/>
 			<label for="{{metric.value}}">{{metric.name}}</label>
 		</li>		
 	</ul>

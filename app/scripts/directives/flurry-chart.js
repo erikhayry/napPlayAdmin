@@ -49,97 +49,170 @@ angular.module('napPlayAdminApp')
       templateUrl: 'templates/chart.html',
       restrict: 'E',
       replace: 'true',
-      scope: {},
+      scope :{
+        flurrymetrics:'@',
+        flurryfrom: '@',
+        flurryto: '@'  
+      },
       link: function postLink(scope, element, attrs) {
         
-
+        // watch the attributes for any changes        
+        scope.$watch('flurrymetrics + flurryfrom + flurryto', function() {
+          if(attrs.flurrymetrics, attrs.flurryfrom, attrs.flurryto) _drawGraph();
+        });
 
         scope.title = 'Flurry: ' + attrs.flurrymetrics;
 
-        var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
-      	
-        FlurryFactory.getGraphData({
-      		from : attrs.flurryfrom,
-      		to : attrs.flurryto,
-      		metrics : _metrics
-      	})
-
-      	.then(function(data){
-          D3Factory.d3().then(function(d3) {
+        var _drawGraph = function(){
+          var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
           
+          FlurryFactory.getGraphData({
+            from : attrs.flurryfrom,
+            to : attrs.flurryto,
+            metrics : _metrics
+          })
 
-          /*
-            Using D3.js
-           */
-          
-          var _svgEl = element[0].querySelectorAll('svg')[0];
-          
-          var _data = data[1].day;
-          
-          var _margin = D3Factory.getMargins(),
-              _width = D3Factory.getDimensions().width,
-              _height = D3Factory.getDimensions().height;
+          .then(function(data){
+            D3Factory.d3().then(function(d3) {
+            
 
+            /*
+              Using D3.js
+             */
+            
+            var _svgEl = element[0].querySelectorAll('svg')[0];
 
-          var x = d3.scale.ordinal()
-            .rangeRoundBands([0, _width], .1)
-            .domain(_data.map(function(d) { return d['@date'];}))
+            //delete g eleemnt here
+            while (_svgEl.firstChild) {
+                //The list is LIVE so it will re-index each call
+                _svgEl.removeChild(_svgEl.firstChild);
+            };
+            
+            var svgWidth = 1500,
+                svgHeight = 600,
+                padding = {'top': 30, 'right': 30, 'bottom': 30, 'left': 60},
+                chartWidth = svgWidth - padding.right - padding.left,
+                chartHeight = svgHeight - padding.top - padding.bottom;
 
-          var y = d3.scale.linear()
-              .range([_height, 0])
-              .domain([0, d3.max(_data, function(d) { return d['@value']; })]);
+            var format = d3.time.format("%Y-%m-%d");
 
-          var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom");
+            function getStartDay(days){
+              return d3.min(days, function(d){return format.parse(d['@date'])}) 
+            }
 
-          var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left");
+            function getEndDate(days){
+              return d3.max(days, function(d){return format.parse(d['@date'])})
+            }
 
+            function getMaxVal(days){
+              return d3.max(days, function(d){return +d['@value']}) // + converts stringt to int
+            }
 
+            var lineFunction = d3.svg.line()
+              .x(function(d) { 
+                return xScale(format.parse(d['@date'])); 
+              })
+              .y(function(d) { 
+                return yScale(d['@value']); 
+              })
+              .interpolate("monotone");
 
-          var chart = d3.select(_svgEl)
-              .attr("width", _width + _margin.left + _margin.right)
-              .attr("height", _height + _margin.top + _margin.bottom)
-              .append("g")
-                .attr("transform", "translate(" + _margin.left + "," + _margin.top + ")")
+            var xScale = d3.time.scale()
+                           .domain([
+                                    d3.min(data, function(d) {return getStartDay(d.day)}), 
+                                    d3.max(data, function(d) {return getEndDate(d.day)})
+                                   ])
+                        .range([padding.left, chartWidth - padding.right])
+                        
 
-              chart.append("g")
-                  .attr("class", "x axis")
-                  .attr("transform", "translate(0," + _height + ")")
-                  .call(xAxis)
-                  .selectAll('text')
-                    .style('text-anchor', 'start')
-                    .attr('dx', '20px')
-                    .attr('dy', '0')
+            var yScale = d3.scale.linear()
+                           .domain([
+                                    0, 
+                                    d3.max(data, function(d) {return getMaxVal(d.day)})
+                                   ])
+                        .range([chartHeight - padding.top, padding.bottom]);
+                        
+            var xAxis = d3.svg.axis()
+                          .scale(xScale)
+                          .orient("bottom")
+                          .ticks(9)
+                          .tickFormat(function(d) { return format(d)});
 
+            var yAxis = d3.svg.axis()
+                          .scale(yScale)
+                          .orient("left")
+                          .ticks(5); 
 
-              chart.append("g")
-                  .attr("class", "y axis")
-                  .call(yAxis);
+            var svg = d3.select("svg")
+              .attr("width", svgWidth)
+              .attr("height", svgHeight)
+              .append('g')
+              .attr("class", "m-chart-inner")
 
+            svg.append("g")
+                .attr("class", "m-chart-axis-x")
+                .attr("transform", "translate(0," + (chartHeight - padding.bottom) + ")")
+                .call(xAxis);
 
-          var bar = chart.selectAll(".bar")
-              .data(_data)
-              .enter().append("rect")
-                  .attr("x", function(d) { 
-                    return x(d['@date']); 
+            svg.append("g")
+                .attr("class", "m-chart-axis-x")
+                .attr("transform", "translate(" + padding.left + ",0)")
+                .call(yAxis);
+
+            svg.selectAll(".m-chart-line")
+                .data(data)
+                .enter()
+                .append("path")
+                .attr("class", "line-group")
+                .attr("d", function(d){
+                  return lineFunction(d.day)
+                });
+            
+   
+            /**
+             * emmet code for below: g.m-chart-dots>(g.m-chart-dot-holder[data-date data-value transform]>circle.m-chart-dot[r]+text.m-chart-dot-label[transform=translate(10,-10)])*x
+             */
+            svg.selectAll(".m-chart-dots")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr("class", "m-chart-dots")
+                .selectAll(".m-chart-dot-holder")
+                  .data(function(d) { return d.day; })
+                  .enter()
+                  .append("g")
+                  .attr("class", "m-chart-dot-holder")
+                  .attr("data-date", function(d){
+                    return d['@date']
                   })
-                  .attr('class', 'bar')
-                  .attr("y", function(d) { return y(d['@value']); })
-                  .attr("height", function(d) { return _height - y(d['@value']); })
-                  .attr("width", x.rangeBand());
+                  .attr("data-value", function(d){
+                    return d['@value']
+                   })
+                  .attr("transform", function(d){
+                    return "translate(" + xScale(format.parse(d['@date'])) + "," + yScale(d['@value']) + ")";
+                  })
+                  .append("circle")
+                  .attr("class", "m-chart-dot")
+                  .attr("r", 5);
+
+            svg.selectAll(".m-chart-dots")
+                .selectAll(".m-chart-dot-holder")
+                .data(function(d) { return d.day; })
+                  .append("text")
+                  .attr("class", "m-chart-dot-label")
+                  .attr("transform", "translate(10,-10)")
+                  .text(function(d){
+                    return d['@date'] + ' : ' + d['@value']
+                  })
 
 
+            });
+          }, function(error){
+            console.log(error.message)
+          });          
+        }
 
-          });
 
-          
-
-      	}, function(error){
-          console.log(error)
-        });
       }
     }
   }]);

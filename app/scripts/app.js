@@ -19,15 +19,23 @@
  *
  */
 
-var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
+var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap'])
   .config(function ($routeProvider, $locationProvider, AppConfig) {
     $locationProvider.html5Mode(!AppConfig.hash)
     
     $routeProvider
-      .when('/stats/test', {
-        templateUrl: 'views/stats.html',
-        controller: 'StatsPageCtrl'
+      /*
+        Stats Pages
+      */
+      .when('/stats/flurry', {
+        templateUrl: 'views/stats/flurry.html',
+        controller: 'FlurryPageCtrl'
       })
+
+      /*
+        Other pages
+      */
+
       .when('/user-relationships', {
         templateUrl: 'views/user-relationships.html',
         controller: 'UserRelationshipsPageCtrl'
@@ -35,9 +43,10 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
       .when('/notifications', {
         templateUrl: 'views/notifications.html',
         controller: 'NotificationsPageCtrl'
-      })            
+      })
+
       .otherwise({
-        redirectTo: '/stats/test'
+        redirectTo: '/stats/flurry'
       });
   })
 
@@ -56,4 +65,3 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3'])
    */
   
   angular.module('d3', []);
-

@@ -26,6 +26,22 @@ describe('Service: FlurryFactory', function () {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
+  describe('getAppMetrics', function () {
+    it('should return an array of flurry metrics', function () {
+      var flurryMetrics = FlurryFactory.getAppMetrics();
+
+      //current amount of different flurry metrics
+      expect(flurryMetrics.length).toBe(10);
+
+      //all array values should be an object with keys value and name
+      for (var i = 0; i < flurryMetrics.length; i++) {
+        expect(flurryMetrics[i].value).toEqual(jasmine.any(String));
+        expect(flurryMetrics[i].name).toEqual(jasmine.any(String));  
+      };
+    });
+  });
+
+
   describe("getGraphData", function() {
       var flag, data;
       

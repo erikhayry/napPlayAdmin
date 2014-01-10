@@ -27,7 +27,12 @@
 
     <div class="l-nav">
       <ul class="m-nav">
-        <li class="m-nav-item"><a href="{{hash}}/stats">Stats</a></li>
+        <li class="m-nav-item">
+          <a href="{{hash}}/stats">Stats</a>
+          <ul class="m-nav-sub">
+            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry">Flurry</a></li>
+          </ul>  
+        </li>
         <li class="m-nav-item"><a href="{{hash}}/user-relationships">User relationships</a></li>
         <li class="m-nav-item"><a href="{{hash}}/notifications">Notifications</a></li>
       <ul>  
@@ -62,9 +67,10 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/vendor/Chart.min.js"></script>
+        <script src="scripts/vendor/ui-bootstrap-custom-tpls-0.9.0.min.js"></script>
 
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/StatsPage.js"></script>
+        <script src="scripts/controllers/FlurryPage.js"></script>
         <script src="scripts/services/FlurryFactory.js"></script>
         <script src="scripts/directives/flurry-chart.js"></script>
         <script src="scripts/services/ChartFactory.js"></script>

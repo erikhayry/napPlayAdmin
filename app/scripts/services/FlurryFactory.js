@@ -7,6 +7,8 @@
  * @requires $http
  * @requires ChartFactory
  * @description
+ * 
+ * #AppMetrics
  * Service talking to the {@link http://support.flurry.com/index.php?title=API/Code|The Flurry Metrics Api}
  *
  * 	- ActiveUsers	 			    Total number of unique users who accessed the application per day.
@@ -20,6 +22,15 @@
  *  - PageViews	 				    Total number of page views per day.
  *  - AvgPageViewsPerSession	Average page views per session for each day.
  *
+ *  Flurry api restrictions:
+ *  - Start date cannot be before 2008-01-01
+ *  - You can only request a year's worth of data at a time
+ *
+ * #App info
+ * http://api.flurry.com/appInfo/getApplication?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM
+ *
+ * #Eventinfo
+ * Should we include?
  * 
  */
 
@@ -32,13 +43,22 @@ angular.module('napPlayAdminApp')
         }
   
     return {
+      /**
+       * @name napPlayAdminApp.FlurryFactory#getAppMetrics
+       * @methodOf napPlayAdminApp.FlurryFactory
+       * 
+       * @description
+       * Return all available flurry metrics (not sure this is the right way to go)
+       *  
+       * @return {Array} flurry metrics
+       */
       getAppMetrics: function(){
         return [
          {value : 'ActiveUsers', name : 'Active Users'},
          {value : 'ActiveUsersByWeek', name : 'Active Users By Week'},
          {value : 'ActiveUsersByMonth', name : 'Active Users By Month'},
          {value : 'NewUsers', name : 'New Users'},
-         {value : 'MedianSessionLength', name : 'New Users'},
+         {value : 'MedianSessionLength', name : 'Median Session Length'},
          {value : 'AvgSessionLength', name : 'Avg Session Length'},
          {value : 'Sessions', name : 'Sessions'},
          {value : 'RetainedUsers', name : 'Retained Users'},
@@ -76,8 +96,9 @@ angular.module('napPlayAdminApp')
                   }
 
                 })
-                .error(function(){
-                  _deferred.reject('error');
+                .error(function(data){
+                  console.log(data)
+                  _deferred.reject(data);
                 });                
               }, 3000 * i); //need a timeout to not call the api too much
             })(i);                

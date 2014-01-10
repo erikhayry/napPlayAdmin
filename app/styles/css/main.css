@@ -41,11 +41,14 @@ h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-
 
 .m-chart-title { margin-bottom: 20px; }
 
-/*
-	temp d3 styling */
-.x.axis .tick text { transform: rotate(90deg); }
+.m-chart-data path { fill: none; stroke: #222; stroke-width: 2px; }
+.m-chart-data line { fill: black; }
 
-.bar { fill: #ccc; }
-.bar:hover { fill: #555; }
+.m-chart-axis-x path, .m-chart-axis-x line, .m-chart-axis-y path, .m-chart-axis-y line { stroke: #222; stroke-width: 1; }
+
+text { font-family: arial; font-size: 12px; }
+
+.circle-holder circle:hover + text { display: block; }
+.circle-holder text { display: none; }
 
 /*# sourceMappingURL=main.css.map */

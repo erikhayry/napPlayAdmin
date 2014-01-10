@@ -1,0 +1,29 @@
+<div class="l-content">
+	<h1 id="page-title">{{pageName}}</h1>
+	
+	<ul class="m-metrics-menu">
+		<li ng-repeat="metric in metrics">
+			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false" ng-change="change()"/>
+			<label for="{{metric.value}}">{{metric.name}}</label>
+		</li>		
+	</ul>
+    
+	<!-- http://angular-ui.github.io/bootstrap/#/datepicker -->
+	<div class="m-date-picker">
+		From: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+		<button ng-click="openFrom($event)">Show</button>
+	</div>
+
+	<div class="m-date-picker">
+		To: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+		<button ng-click="openTo($event)">Show</button>
+	</div>	
+
+	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">Get graph</button>
+	
+	<h2>{{graph.metrics}}</h2>
+
+	<flurry-chart flurryFrom="{{graph.from}}" flurryTo="{{graph.to}}" flurryMetrics="{{graph.metrics}}" flurryType="line"></flurry-chart>
+
+</div>
+<!-- /.l-content -->

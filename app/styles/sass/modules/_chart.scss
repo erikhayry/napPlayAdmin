@@ -10,19 +10,46 @@
 	margin-bottom: 20px;
 }
 
-/*
-	temp d3 styling
- */
+.m-chart-data{
+	path {
+	  fill: none;
+	  stroke: #222;
+	  stroke-width: 2px;
+	}
 
-.x.axis .tick {
-	text{
-	  transform: rotate(90deg);
+	line {
+	  fill: black;
 	}
 }
 
-.bar{
-	fill: #ccc;
-	&:hover{
-		fill: #555;
+.m-chart-axis-x, 
+.m-chart-axis-y{
+	path, line{
+	  	stroke: #222;
+  		stroke-width: 1;
 	}
+}
+
+
+
+
+text {
+  font-family: arial;
+  font-size: 12px;
+}
+
+.axis path,
+.axis line {
+
+}
+.circle-holder{
+  
+  circle:hover{
+    & + text{
+      display: block;
+    }
+  }
+  text{
+    display: none;
+  }
 }
