@@ -2,9 +2,10 @@
 @import 'base/settings';
 
 $body-padding : 20px;
-$nav-width: 20%;
+$nav-width: 0%;
 
 .l-nav{
+	display: none;
 	padding: $body-padding;
 	@include screen($bp-s) {
 		float: left;

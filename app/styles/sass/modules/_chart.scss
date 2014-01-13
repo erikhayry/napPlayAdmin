@@ -1,55 +1,120 @@
+@import "helpers";
+@import "base/settings";
+
 /*
 	Module chart
  */
 
-.m-chart{
+.m-chart {
 	margin: 20px 0;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: none;
+
+	//states
+	&.is-loading{
+		display: block;
+	}
+	&.is-loading:after{
+		content: '';
+		display: block;
+		left: 50%;
+		top: 50%;
+		position: absolute;
+		background-color: $c-2;
+		width: 20px;
+		height: 20px;
+		border-radius: 100%;
+		@include animation(pulse-loading, 3s, infinite);	
+	}
+	&.is-loaded:after{
+		opacity: 0;
+	}
+	&.is-loaded{
+		display: block;
+	}
 }
 
 .m-chart-title{
 	margin-bottom: 20px;
 }
 
-.m-chart-data{
-	path {
-	  fill: none;
-	  stroke: #222;
-	  stroke-width: 2px;
-	}
 
-	line {
-	  fill: black;
+//chart line, labels and axis etc. (currently the svg)
+.m-chart-data{
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	.is-loaded &{
+		opacity: 1;
 	}
 }
 
+//chart axis
 .m-chart-axis-x, 
 .m-chart-axis-y{
+	font-size: $fs-s;
 	path, line{
-	  	stroke: #222;
+	  	stroke: $c-2;
   		stroke-width: 1;
+  		shape-rendering: crispEdges;
+  		fill: none;
+  		color: $c-2;
+	}
+	text{
+		fill: $c-2;
+	}
+}
+
+//chart labels
+.m-chart-label{
+  fill: $c-2;
+  font-size: $fs-s;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-label-#{$i}{
+        fill: nth($ccs, $i);
+    }
+}
+
+
+//chart line
+.m-chart-line{
+	fill: none;
+	stroke: $c-2;
+	stroke-width: 2;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-line-#{$i}{
+        stroke: nth($ccs, $i);
+    }
+}
+
+//chart dots
+.m-chart-dot{
+	fill: $c-2;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-dots-#{$i} {
+    	.m-chart-dot{
+        	fill: nth($ccs, $i);
+    	}
+	    .m-chart-dot-label{
+	    	fill: nth($ccs, $i);
+	    }
 	}
 }
 
 
-
-
-text {
-  font-family: arial;
-  font-size: 12px;
+.m-chart-dot-label{
+	display: none;
+	font-size: $fs-s;
 }
 
-.axis path,
-.axis line {
-
-}
-.circle-holder{
-  
-  circle:hover{
-    & + text{
-      display: block;
-    }
-  }
-  text{
-    display: none;
-  }
+//show label when hovering over dot
+.m-chart-dot:hover + .m-chart-dot-label{
+	display: block;
 }

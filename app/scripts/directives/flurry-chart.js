@@ -55,7 +55,8 @@ angular.module('napPlayAdminApp')
         flurryto: '@'  
       },
       link: function postLink(scope, element, attrs) {
-        
+        scope.status = '';
+
         // watch the attributes for any changes        
         scope.$watch('flurrymetrics + flurryfrom + flurryto', function() {
           if(attrs.flurrymetrics, attrs.flurryfrom, attrs.flurryto) _drawGraph();
@@ -64,8 +65,9 @@ angular.module('napPlayAdminApp')
         scope.title = 'Flurry: ' + attrs.flurrymetrics;
 
         var _drawGraph = function(){
+          scope.status = 'is-loading';
           var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
-          
+
           FlurryFactory.getGraphData({
             from : attrs.flurryfrom,
             to : attrs.flurryto,
@@ -77,136 +79,176 @@ angular.module('napPlayAdminApp')
             
 
             /*
-              Using D3.js
+              D3.js
              */
             
             var _svgEl = element[0].querySelectorAll('svg')[0];
 
-            //delete g eleemnt here
+            //delete any previous chart
             while (_svgEl.firstChild) {
-                //The list is LIVE so it will re-index each call
                 _svgEl.removeChild(_svgEl.firstChild);
             };
+
+            /*
+              chart variables
+             */
             
-            var svgWidth = 1500,
-                svgHeight = 600,
-                padding = {'top': 30, 'right': 30, 'bottom': 30, 'left': 60},
-                chartWidth = svgWidth - padding.right - padding.left,
-                chartHeight = svgHeight - padding.top - padding.bottom;
+            var _svgWidth = 1500,
+                _svgHeight = 600,
+                _padding = {'top': 60, 'right': 30, 'bottom': 30, 'left': 60},
+                _chartWidth = _svgWidth - _padding.right - _padding.left,
+                _chartHeight = _svgHeight - _padding.top - _padding.bottom;
 
-            var format = d3.time.format("%Y-%m-%d");
+            /*
+              helper function
+             */
 
-            function getStartDay(days){
-              return d3.min(days, function(d){return format.parse(d['@date'])}) 
-            }
+            var _format = d3.time.format("%Y-%m-%d"),
+                
+                _getStartDay = function(days){
+                  return d3.min(days, function(d){return _format.parse(d['@date'])}) 
+                },
+                
+                _getEndDate = function(days){
+                  return d3.max(days, function(d){return _format.parse(d['@date'])})
+                },
 
-            function getEndDate(days){
-              return d3.max(days, function(d){return format.parse(d['@date'])})
-            }
+                _getMaxVal = function(days){
+                  return d3.max(days, function(d){return +d['@value']}) // + converts stringt to int
+                },
 
-            function getMaxVal(days){
-              return d3.max(days, function(d){return +d['@value']}) // + converts stringt to int
-            }
+                _lineFunction = d3.svg.line()
+                  .x(function(d) { 
+                    return _xScale(_format.parse(d['@date'])); 
+                  })
+                  .y(function(d) { 
+                    return _yScale(d['@value']); 
+                  })
+                  .interpolate("monotone"),
 
-            var lineFunction = d3.svg.line()
-              .x(function(d) { 
-                return xScale(format.parse(d['@date'])); 
-              })
-              .y(function(d) { 
-                return yScale(d['@value']); 
-              })
-              .interpolate("monotone");
+                _xScale = d3.time.scale()
+                  .domain([
+                            d3.min(data, function(d) {return _getStartDay(d.day)}), 
+                            d3.max(data, function(d) {return _getEndDate(d.day)})
+                           ])
+                  .range([_padding.left, _chartWidth - _padding.right]),
 
-            var xScale = d3.time.scale()
-                           .domain([
-                                    d3.min(data, function(d) {return getStartDay(d.day)}), 
-                                    d3.max(data, function(d) {return getEndDate(d.day)})
-                                   ])
-                        .range([padding.left, chartWidth - padding.right])
+                _yScale = d3.scale.linear()
+                  .domain([
+                          0, 
+                          d3.max(data, function(d) {return _getMaxVal(d.day)})
+                         ])
+                  .range([_chartHeight - _padding.bottom, _padding.top]),
                         
-
-            var yScale = d3.scale.linear()
-                           .domain([
-                                    0, 
-                                    d3.max(data, function(d) {return getMaxVal(d.day)})
-                                   ])
-                        .range([chartHeight - padding.top, padding.bottom]);
-                        
-            var xAxis = d3.svg.axis()
-                          .scale(xScale)
+                _xAxis = d3.svg.axis()
+                          .scale(_xScale)
                           .orient("bottom")
                           .ticks(9)
-                          .tickFormat(function(d) { return format(d)});
+                          .tickFormat(function(d) { return _format(d)}),
 
-            var yAxis = d3.svg.axis()
-                          .scale(yScale)
+                _yAxis = d3.svg.axis()
+                          .scale(_yScale)
                           .orient("left")
                           .ticks(5); 
+            /*
+              build the chart
+             */              
+                          
+            var _svg = d3.select("svg")
+                .attr("width", _svgWidth)
+                .attr("height", _svgHeight)
+                .append('g')
+                  .attr("class", "m-chart-inner")
 
-            var svg = d3.select("svg")
-              .attr("width", svgWidth)
-              .attr("height", svgHeight)
-              .append('g')
-              .attr("class", "m-chart-inner")
-
-            svg.append("g")
+            //add x and y axis        
+            _svg.append("g")
                 .attr("class", "m-chart-axis-x")
-                .attr("transform", "translate(0," + (chartHeight - padding.bottom) + ")")
-                .call(xAxis);
+                .attr("transform", "translate(0," + (_chartHeight - _padding.bottom) + ")")
+                .call(_xAxis)
+                .selectAll("text")  
+                  .style("text-anchor", "end")
+                  .attr("dx", "-.8em")
+                  .attr("dy", ".15em")
+                  .attr("transform", function(d) {
+                    return "rotate(-65)" 
+                  });
 
-            svg.append("g")
+            _svg.append("g")
                 .attr("class", "m-chart-axis-x")
-                .attr("transform", "translate(" + padding.left + ",0)")
-                .call(yAxis);
+                .attr("transform", "translate(" + _padding.left + ",0)")
+                .call(_yAxis);
 
-            svg.selectAll(".m-chart-line")
+            //add label
+            _svg.append("text")
+              .attr("class", "m-chart-labels")
+              .attr("transform", "translate(0," + (_padding.top / 2) + ")")
+              .selectAll(".m-chart-label")
+              .data(data)
+              .enter()
+              .append("tspan")
+                .attr("class", function(d, i){
+                  return "m-chart-label m-chart-label-" + (i + 1); // add one to make it easier to use in sass which loops from index 1
+                })
+                .text(function(d){
+                  return d["@metric"] + ' '; 
+                })  
+
+            //add lines                    
+            _svg.selectAll(".m-chart-line")
                 .data(data)
                 .enter()
                 .append("path")
-                .attr("class", "line-group")
-                .attr("d", function(d){
-                  return lineFunction(d.day)
-                });
+                  .attr("class", function(d, i){
+                    return "m-chart-line m-chart-line-" + (i + 1); // add one to make it easier to use in sass which loops from index 1
+                  })
+                  .attr("d", function(d){
+                    return _lineFunction(d.day)
+                  });
             
-   
             /**
              * emmet code for below: g.m-chart-dots>(g.m-chart-dot-holder[data-date data-value transform]>circle.m-chart-dot[r]+text.m-chart-dot-label[transform=translate(10,-10)])*x
              */
-            svg.selectAll(".m-chart-dots")
+            
+            //add dots
+            _svg.selectAll(".m-chart-dots")
                 .data(data)
                 .enter()
                 .append("g")
-                .attr("class", "m-chart-dots")
-                .selectAll(".m-chart-dot-holder")
+                .attr("class", function(d, i){
+                    return "m-chart-dots m-chart-dots-" + (i + 1); // add one to make it easier to use in sass which loops from index 1
+                  })
+                  .selectAll(".m-chart-dot-holder")
                   .data(function(d) { return d.day; })
                   .enter()
                   .append("g")
-                  .attr("class", "m-chart-dot-holder")
-                  .attr("data-date", function(d){
-                    return d['@date']
-                  })
-                  .attr("data-value", function(d){
-                    return d['@value']
-                   })
-                  .attr("transform", function(d){
-                    return "translate(" + xScale(format.parse(d['@date'])) + "," + yScale(d['@value']) + ")";
-                  })
-                  .append("circle")
-                  .attr("class", "m-chart-dot")
-                  .attr("r", 5);
+                    .attr("class", "m-chart-dot-holder")
+                    .attr("data-date", function(d){
+                      return d['@date']
+                    })
+                    .attr("data-value", function(d){
+                      return d['@value']
+                     })
+                    .attr("transform", function(d){
+                      return "translate(" + _xScale(_format.parse(d['@date'])) + "," + _yScale(d['@value']) + ")";
+                    })
+                    .append("circle")
+                      .attr("class", "m-chart-dot")
+                      .attr("r", 5);
 
-            svg.selectAll(".m-chart-dots")
+            //add dot label            
+            _svg.selectAll(".m-chart-dots")
                 .selectAll(".m-chart-dot-holder")
                 .data(function(d) { return d.day; })
-                  .append("text")
+                .append("text")
                   .attr("class", "m-chart-dot-label")
                   .attr("transform", "translate(10,-10)")
                   .text(function(d){
                     return d['@date'] + ' : ' + d['@value']
                   })
-
-
             });
+            
+            scope.status = 'is-loaded';
+
           }, function(error){
             console.log(error.message)
           });          

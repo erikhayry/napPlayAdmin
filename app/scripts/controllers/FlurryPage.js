@@ -37,19 +37,20 @@ angular.module('napPlayAdminApp')
         $scope.format = 'dd-MMMM-yyyy';
     }
 
-
     $scope.getGraph = function(metrics, from, to){
-        var metricValues = '';
-        for (var i = 0; i < metrics.length; i++) {
-            metricValues += metrics[i].value + ',';
-        };
+        if(metrics.length > 0){
+            var metricValues = '';
+            for (var i = 0; i < metrics.length; i++) {
+                metricValues += metrics[i].value + ',';
+            };
 
-        $scope.graph = {
-            metrics : metricValues.substr(0, metricValues.length - 1), //remove last comma
-            from : from,
-            to : to
+            $scope.graph = {
+                metrics : metricValues.substr(0, metricValues.length - 1), //remove last comma
+                from : from,
+                to : to
+            }            
         }
-    }    
+    }
 
     /*
         date picker functions
@@ -58,7 +59,7 @@ angular.module('napPlayAdminApp')
     $scope.openFrom = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-
+        console.log(metrics)
         $scope.openedFrom = true;
     };
 
@@ -73,6 +74,8 @@ angular.module('napPlayAdminApp')
         $scope.dateFrom = new Date();
         $scope.dateTo = new Date();
         $scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
+        $scope.dateTo.setDate($scope.dateTo.getDate() - 1);
+
     };
 
     $scope.toggleMax = function() {

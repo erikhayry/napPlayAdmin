@@ -14,3 +14,47 @@ $baseFontPx: 16px;
         @content;
     }
 }
+
+/*
+	Animation helpers and mixins
+ */
+
+/*
+	mixins
+ */
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animation ($name, $duration, $count) {
+	-webkit-animation-name: $name;
+	-webkit-animation-duration: $duration;
+	-webkit-animation-iteration-count: $count;
+
+	animation-name: $name;
+	animation-duration: $duration;
+	animation-iteration-count: $count;
+}
+
+/*
+	includes
+ */
+
+@include keyframes(pulse-loading) {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+  	100% {
+		opacity: 0;
+	}
+}
+

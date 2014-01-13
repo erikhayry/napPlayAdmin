@@ -1,0 +1,15 @@
+@import "helpers";
+@import "settings";
+
+/*
+	forms
+ */
+
+
+input[type=text],
+input[type=textarea]{
+	background-color: lighten($c-1, 5%);
+	border: none;
+	padding: 5px 15px;
+	outline: none;
+}

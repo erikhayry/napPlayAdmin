@@ -4,7 +4,7 @@
  * @ngdoc service
  * @name napPlayAdminApp.FlurryFactory
  * @function
- * @requires $http
+ * @requires $http, $q, $cacheFactory, $timeout
  * @requires ChartFactory
  * @description
  * 
@@ -35,12 +35,17 @@
  */
 
 angular.module('napPlayAdminApp')
-  .service('FlurryFactory', ['$http', '$q', '$timeout', 'ChartFactory', function FlurryFactory($http, $q, $timeout, ChartFactory) {
+  .service('FlurryFactory', ['$http', '$q', '$cacheFactory', '$timeout', 'ChartFactory', function FlurryFactory($http, $q, $cacheFactory, $timeout, ChartFactory) {
   	var _apiKey = 'BRZXMJS2NRHDNN37CKQM',
         _accessCode = 'ENQZAUFQ5KQ2C24XKT7Z',
+        _cache = $cacheFactory('flurry'), //http://docs.angularjs.org/api/ng.$cacheFactory
         _baseUrl = function(metrics){
         	return 'http://api.flurry.com/appMetrics/' + metrics + '?apiAccessCode=' + _accessCode + '&apiKey=' + _apiKey;
         }
+
+_cache.put("key", "value");
+_cache.put("another key", "another value");
+console.log(_cache.info());
   
     return {
       /**
@@ -83,25 +88,43 @@ angular.module('napPlayAdminApp')
         var _deferred = $q.defer(),
             _metrics = attrs.metrics,
             _data = [];
+            
         
+        //loop through all metrics    
         for (var i = 0; i < _metrics.length; i++) {
-            (function(index){              
-              $timeout(function(){
-                $http.get(_baseUrl(_metrics[index]) + '&startDate=' + attrs.from + '&endDate=' + attrs.to)
-                .success(function(data){
-                  _data.push(data);
-                  
-                  if(_data.length >= _metrics.length) {
-                    _deferred.resolve(_data);
-                  }
+            var _cacheKey = _metrics[i] + attrs.from + attrs.to;
+            (function(index, cacheKey){ 
+              var _cacheData = _cache.get(cacheKey);            
+              
+              //check if data been cached
+              if(_cacheData){
+                _data.push(_cacheData)
+                if(_data.length >= _metrics.length) {                      
+                  _deferred.resolve(_data);
+                }
+              }
 
-                })
-                .error(function(data){
-                  console.log(data)
-                  _deferred.reject(data);
-                });                
-              }, 3000 * i); //need a timeout to not call the api too much
-            })(i);                
+              //if not cached make an http request
+              else{
+                $timeout(function(){
+                  $http.get(_baseUrl(_metrics[index]) + '&startDate=' + attrs.from + '&endDate=' + attrs.to)
+                  .success(function(data){
+                    _data.push(data);                    
+                    if(_data.length >= _metrics.length) {                      
+                      _cache.put(_cacheKey, data);
+                      _deferred.resolve(_data);
+                    }
+
+                  })
+                  .error(function(data){
+                    console.log(data)
+                    _deferred.reject(data);
+                  });                
+                }, 3000 * i); //need a timeout to not call the api too much                
+              }
+
+
+            })(i, _cacheKey);                
         };    
 
       	return _deferred.promise;

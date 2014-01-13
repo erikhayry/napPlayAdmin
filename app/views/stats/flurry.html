@@ -1,9 +1,8 @@
 <div class="l-content">
-	<h1 id="page-title">{{pageName}}</h1>
-	
-	<ul class="m-metrics-menu">
-		<li ng-repeat="metric in metrics">
-			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false" ng-change="change()"/>
+	<h1 id="page-title">{{pageName}}</h1>	
+	<ul class="m-metrics-nav">
+		<li class="m-metrics-nav-item" ng-repeat="metric in metrics">
+			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false"/>
 			<label for="{{metric.value}}">{{metric.name}}</label>
 		</li>		
 	</ul>
@@ -19,10 +18,10 @@
 		<button ng-click="openTo($event)">Show</button>
 	</div>	
 
-	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">Get graph</button>
+	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">Load graph</button>
 	
-	<h2>{{graph.metrics}}</h2>
-
+<!-- 	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
+ -->
 	<flurry-chart flurryFrom="{{graph.from}}" flurryTo="{{graph.to}}" flurryMetrics="{{graph.metrics}}" flurryType="line"></flurry-chart>
 
 </div>
