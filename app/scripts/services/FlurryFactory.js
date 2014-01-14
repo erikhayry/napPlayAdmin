@@ -35,17 +35,13 @@
  */
 
 angular.module('napPlayAdminApp')
-  .service('FlurryFactory', ['$http', '$q', '$cacheFactory', '$timeout', 'ChartFactory', function FlurryFactory($http, $q, $cacheFactory, $timeout, ChartFactory) {
+  .service('FlurryFactory', ['$http', '$q', '$cacheFactory', '$timeout', 'ChartFactory', 'AppConfig', function FlurryFactory($http, $q, $cacheFactory, $timeout, ChartFactory, AppConfig) {
   	var _apiKey = 'BRZXMJS2NRHDNN37CKQM',
         _accessCode = 'ENQZAUFQ5KQ2C24XKT7Z',
         _cache = $cacheFactory('flurry'), //http://docs.angularjs.org/api/ng.$cacheFactory
         _baseUrl = function(metrics){
         	return 'http://api.flurry.com/appMetrics/' + metrics + '?apiAccessCode=' + _accessCode + '&apiKey=' + _apiKey;
         }
-
-_cache.put("key", "value");
-_cache.put("another key", "another value");
-console.log(_cache.info());
   
     return {
       /**
@@ -80,53 +76,116 @@ console.log(_cache.info());
        * @description
        * Get Flurry data as a json file
        *
-       * @param {Object=} metrics, startDate and endDate for Flurry api url
+       * @param {Array} metrics
+       * @param {String} from date in format yyyy-MM-dd
+       * @param {String} to date in format yyyy-MM-dd
+       * @param {Object=} configure object
        * @returns {HttpPromise} Future object
        */
      
-      getGraphData: function(attrs) {
-        var _deferred = $q.defer(),
-            _metrics = attrs.metrics,
-            _data = [];
-            
-        
-        //loop through all metrics    
-        for (var i = 0; i < _metrics.length; i++) {
-            var _cacheKey = _metrics[i] + attrs.from + attrs.to;
-            (function(index, cacheKey){ 
-              var _cacheData = _cache.get(cacheKey);            
-              
-              //check if data been cached
-              if(_cacheData){
-                _data.push(_cacheData)
-                if(_data.length >= _metrics.length) {                      
-                  _deferred.resolve(_data);
-                }
-              }
+      getGraphData: function(metrics, from, to, configure) {
+        console.log("%c \u2764 getGraphData: " + from + " to " + to, "color:pink; background:black; font-size: 14px; padding: 2px 5px;");
 
-              //if not cached make an http request
-              else{
-                $timeout(function(){
-                  $http.get(_baseUrl(_metrics[index]) + '&startDate=' + attrs.from + '&endDate=' + attrs.to)
-                  .success(function(data){
-                    _data.push(data);                    
-                    if(_data.length >= _metrics.length) {                      
-                      _cache.put(_cacheKey, data);
-                      _deferred.resolve(_data);
+        var _deferred = $q.defer(),
+            _data = {
+              data : [],
+              errors : []
+            },
+            //count how many time one or more metrics failed
+            _failCount = 0,
+
+            _configure = configure || {},
+            _retries = _configure.retries || 0,
+
+            //get the number of metrics handled, both succeeded and failed
+            _getDataLength = function(){
+              return _data.data.length + _data.errors.length;
+            },
+
+            //try to resolve promise
+            _resolve = function(retries){
+              if(_getDataLength() >= metrics.length) {
+                  //resolve if no errors or
+                  if(_data.errors.length === 0 || _failCount >= retries){
+                    _deferred.resolve(_data);
+                  }
+                  else{
+                    console.log(_data.errors)
+                    _failCount++;
+                    _data.errors = [];
+                    _data.data = [];
+                    _getData();
+                  }
+              }
+            },
+
+            _getIndexIfObjWithOwnAttr = function(array, attr, value) {
+                for(var i = 0; i < array.length; i++) {
+                    if( array[i].hasOwnProperty(attr) && array[i][attr] === value) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+            _getData = function(){
+
+              //loop through all metrics
+              console.group("_getData");
+              console.count("_getData called");    
+              
+              for (var i = 0; i < metrics.length; i++) {
+                  var _cacheKey = metrics[i];
+
+                  (function(index, cacheKey){ 
+                    var _cacheData = _cache.get(cacheKey),
+                        _indexFrom, _indexTo;
+
+                    if(_cacheData) {
+                      _indexFrom = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', from);
+                      _indexTo = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', to);
+                    }
+                    console.group(_cacheKey);
+                    console.log(_cacheData)
+                    console.log(_indexFrom)
+                    console.log(_indexTo)
+
+                    //check if data been cached
+                    if(_indexFrom > -1 && _indexTo > -1){
+                      console.log('cache: ' + metrics[index])                      
+                      _cacheData.data.day = _cacheData.data.day.splice(_indexFrom, _indexTo)
+                      _data.data.push(_cacheData.data)
+                      _resolve(_retries);                
                     }
 
-                  })
-                  .error(function(data){
-                    console.log(data)
-                    _deferred.reject(data);
-                  });                
-                }, 3000 * i); //need a timeout to not call the api too much                
-              }
+                    //if not cached make an http request
+                    else{
+                      console.log('http: ' + metrics[index])
+                      $timeout(function(){
+                        $http.get(_baseUrl(metrics[index]) + '&startDate=' + from + '&endDate=' + to)
+                        .success(function(data){                    
+                          _data.data.push(data);
+                          _cache.put(cacheKey, {
+                            data : data,
+                            from : from,
+                            to : to
+                          });                    
+                          _resolve(_retries);
+                        })
+                        .error(function(data){                                     
+                          _data.errors.push(metrics[index]);
+                          _resolve(_retries);
+                        });                
+                      }, 1000 * i); //need a timeout to not call the api too much                
+                    }
+                    console.groupEnd();
+                  })(i, _cacheKey);                
+              }; 
+              console.groupEnd();              
+            };
 
-
-            })(i, _cacheKey);                
-        };    
-
+            _getData();
+        
       	return _deferred.promise;
       },
 

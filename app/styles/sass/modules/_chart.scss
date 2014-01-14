@@ -11,23 +11,38 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	display: none;
+	position: relative;
 
 	//states
 	&.is-loading{
 		display: block;
-	}
-	&.is-loading:after{
-		content: '';
-		display: block;
-		left: 50%;
-		top: 50%;
-		position: absolute;
-		background-color: $c-2;
-		width: 20px;
-		height: 20px;
-		border-radius: 100%;
 		@include animation(pulse-loading, 3s, infinite);	
 	}
+	//loading heart
+	$heart-w : 30px;
+	$heart-w50 : $heart-w / 2;
+	$heart-h : 50px;
+	$heart-h50 : $heart-h / 2;
+
+	&.is-loading:after,
+	&.is-loading:before{
+	    position: absolute;
+	    content: "";
+	    left: calc(50% + #{$heart-w50});
+	    top: calc(50% - #{$heart-h50});
+	    width: $heart-w;
+	    height: $heart-h;
+	    background: #E23434;
+	    border-radius: $heart-h $heart-h 0 0;
+		transform: rotate(-45deg);
+	    transform-origin: 0 100%;
+	}
+	&.is-loading:before{
+	    left: calc(50% - #{$heart-w50});
+	    transform: rotate(45deg);
+	    transform-origin :100% 100%;
+	}
+
 	&.is-loaded:after{
 		opacity: 0;
 	}
@@ -95,6 +110,8 @@
 //chart dots
 .m-chart-dot{
 	fill: $c-2;
+	stroke-width: 3px;
+	stroke: $c-1;
 }
 
 @for $i from 1 through length($ccs) {
@@ -110,6 +127,7 @@
 
 
 .m-chart-dot-label{
+	fill: $c-2;
 	display: none;
 	font-size: $fs-s;
 }

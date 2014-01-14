@@ -56,14 +56,14 @@ angular.module('napPlayAdminApp')
         date picker functions
      */
 
-    $scope.openFrom = function($event) {
+    $scope.openFromDropDown = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         console.log(metrics)
         $scope.openedFrom = true;
     };
 
-    $scope.openTo = function($event) {
+    $scope.openToDropDown = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
 

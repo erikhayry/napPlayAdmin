@@ -9,7 +9,6 @@ angular.module('napPlayAdminApp')
         var _script = $q.defer();
         
         if(_loaded.indexOf(name) > -1){
-          console.log(_loaded.indexOf(name))
           _script.resolve(window[name]);
           return _script.promise;
         }

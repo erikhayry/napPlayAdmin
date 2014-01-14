@@ -53,6 +53,7 @@ h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-
 /*
 	buttons */
 button { border: none; border-radius: 2px; background-color: #2f2f2f; color: #fefefe; padding: 5px 15px; cursor: pointer; outline: none; }
+button[disabled="disabled"] { opacity: 0.2; }
 
 /*
 	Animation helpers and mixins */
@@ -185,9 +186,10 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 /*
 	Module chart */
-.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; }
-.m-chart.is-loading { display: block; }
-.m-chart.is-loading:after { content: ''; display: block; left: 50%; top: 50%; position: absolute; background-color: #fefefe; width: 20px; height: 20px; border-radius: 100%; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
+.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; }
+.m-chart.is-loading { display: block; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
+.m-chart.is-loading:after, .m-chart.is-loading:before { position: absolute; content: ""; left: calc(50% + 15px); top: calc(50% - 25px); width: 30px; height: 50px; background: #E23434; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%; }
+.m-chart.is-loading:before { left: calc(50% - 15px); transform: rotate(45deg); transform-origin: 100% 100%; }
 .m-chart.is-loaded:after { opacity: 0; }
 .m-chart.is-loaded { display: block; }
 
@@ -210,6 +212,16 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-chart-label-4 { fill: #42e234; }
 
+.m-chart-label-5 { fill: #1ae2c2; }
+
+.m-chart-label-6 { fill: white; }
+
+.m-chart-label-7 { fill: #faab36; }
+
+.m-chart-label-8 { fill: #be30c4; }
+
+.m-chart-label-9 { fill: #747474; }
+
 .m-chart-line { fill: none; stroke: #fefefe; stroke-width: 2; }
 
 .m-chart-line-1 { stroke: #e23434; }
@@ -220,7 +232,17 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-chart-line-4 { stroke: #42e234; }
 
-.m-chart-dot { fill: #fefefe; }
+.m-chart-line-5 { stroke: #1ae2c2; }
+
+.m-chart-line-6 { stroke: white; }
+
+.m-chart-line-7 { stroke: #faab36; }
+
+.m-chart-line-8 { stroke: #be30c4; }
+
+.m-chart-line-9 { stroke: #747474; }
+
+.m-chart-dot { fill: #fefefe; stroke-width: 3px; stroke: #222222; }
 
 .m-chart-dots-1 .m-chart-dot { fill: #e23434; }
 .m-chart-dots-1 .m-chart-dot-label { fill: #e23434; }
@@ -234,7 +256,22 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 .m-chart-dots-4 .m-chart-dot { fill: #42e234; }
 .m-chart-dots-4 .m-chart-dot-label { fill: #42e234; }
 
-.m-chart-dot-label { display: none; font-size: 0.75em; }
+.m-chart-dots-5 .m-chart-dot { fill: #1ae2c2; }
+.m-chart-dots-5 .m-chart-dot-label { fill: #1ae2c2; }
+
+.m-chart-dots-6 .m-chart-dot { fill: white; }
+.m-chart-dots-6 .m-chart-dot-label { fill: white; }
+
+.m-chart-dots-7 .m-chart-dot { fill: #faab36; }
+.m-chart-dots-7 .m-chart-dot-label { fill: #faab36; }
+
+.m-chart-dots-8 .m-chart-dot { fill: #be30c4; }
+.m-chart-dots-8 .m-chart-dot-label { fill: #be30c4; }
+
+.m-chart-dots-9 .m-chart-dot { fill: #747474; }
+.m-chart-dots-9 .m-chart-dot-label { fill: #747474; }
+
+.m-chart-dot-label { fill: #fefefe; display: none; font-size: 0.75em; }
 
 .m-chart-dot:hover + .m-chart-dot-label { display: block; }
 
@@ -262,7 +299,24 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 .m-metrics-nav-item input:checked + label { background-color: #151515; }
 
 /*
+	Animation helpers and mixins */
+/*
+	mixins */
+/*
+	includes */
+@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; } }
+
+@keyframes pulse-loading { 0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; } }
+
+/*
 	module datepicker */
-.m-date-picker { margin-bottom: 20px; }
+.m-date-picker { margin-bottom: 20px; font-size: 0.75em; }
+.m-date-picker th { text-align: center; padding: 5px; }
+.m-date-picker th button { width: 100%; }
+.m-date-picker td { padding: 5px; }
 
 /*# sourceMappingURL=main.css.map */

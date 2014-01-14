@@ -68,15 +68,12 @@ angular.module('napPlayAdminApp')
           scope.status = 'is-loading';
           var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
 
-          FlurryFactory.getGraphData({
-            from : attrs.flurryfrom,
-            to : attrs.flurryto,
-            metrics : _metrics
-          })
+          FlurryFactory.getGraphData(_metrics, attrs.flurryfrom, attrs.flurryto, {retries : 2})
 
-          .then(function(data){
+          .then(function(flurryData){
+            var _data = flurryData.data;
+
             D3Factory.d3().then(function(d3) {
-            
 
             /*
               D3.js
@@ -128,15 +125,15 @@ angular.module('napPlayAdminApp')
 
                 _xScale = d3.time.scale()
                   .domain([
-                            d3.min(data, function(d) {return _getStartDay(d.day)}), 
-                            d3.max(data, function(d) {return _getEndDate(d.day)})
+                            d3.min(_data, function(d) {return _getStartDay(d.day)}), 
+                            d3.max(_data, function(d) {return _getEndDate(d.day)})
                            ])
                   .range([_padding.left, _chartWidth - _padding.right]),
 
                 _yScale = d3.scale.linear()
                   .domain([
                           0, 
-                          d3.max(data, function(d) {return _getMaxVal(d.day)})
+                          d3.max(_data, function(d) {return _getMaxVal(d.day)})
                          ])
                   .range([_chartHeight - _padding.bottom, _padding.top]),
                         
@@ -183,7 +180,7 @@ angular.module('napPlayAdminApp')
               .attr("class", "m-chart-labels")
               .attr("transform", "translate(0," + (_padding.top / 2) + ")")
               .selectAll(".m-chart-label")
-              .data(data)
+              .data(_data)
               .enter()
               .append("tspan")
                 .attr("class", function(d, i){
@@ -195,7 +192,7 @@ angular.module('napPlayAdminApp')
 
             //add lines                    
             _svg.selectAll(".m-chart-line")
-                .data(data)
+                .data(_data)
                 .enter()
                 .append("path")
                   .attr("class", function(d, i){
@@ -204,14 +201,14 @@ angular.module('napPlayAdminApp')
                   .attr("d", function(d){
                     return _lineFunction(d.day)
                   });
-            
+                            
             /**
              * emmet code for below: g.m-chart-dots>(g.m-chart-dot-holder[data-date data-value transform]>circle.m-chart-dot[r]+text.m-chart-dot-label[transform=translate(10,-10)])*x
              */
             
             //add dots
             _svg.selectAll(".m-chart-dots")
-                .data(data)
+                .data(_data)
                 .enter()
                 .append("g")
                 .attr("class", function(d, i){
@@ -250,7 +247,7 @@ angular.module('napPlayAdminApp')
             scope.status = 'is-loaded';
 
           }, function(error){
-            console.log(error.message)
+            console.log(error)
           });          
         }
 

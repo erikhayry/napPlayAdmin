@@ -10,12 +10,12 @@
 	<!-- http://angular-ui.github.io/bootstrap/#/datepicker -->
 	<div class="m-date-picker">
 		From: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-		<button ng-click="openFrom($event)">Show</button>
+		<button ng-click="openFromDropDown($event)">Show</button>
 	</div>
 
 	<div class="m-date-picker">
 		To: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-		<button ng-click="openTo($event)">Show</button>
+		<button ng-click="openToDropDown($event)">Show</button>
 	</div>	
 
 	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">Load graph</button>
