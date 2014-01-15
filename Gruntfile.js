@@ -39,7 +39,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/**/*.html',
           '.tmp/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -147,7 +147,8 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
             '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/styles/fonts/*',
+            '!<%= yeoman.dist %>/scripts/vendor/{,*/}*.js'
           ]
         }
       }
@@ -159,7 +160,7 @@ module.exports = function (grunt) {
       }
     },
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/**/*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
@@ -214,7 +215,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
+          src: ['*.html', ['views/**/*.html', 'templates/**/*.html']],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -232,7 +233,8 @@ module.exports = function (grunt) {
             '.htaccess',
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'scripts/vendor/d3.v3.min.js' //need to copy d3 seperatly as we call it async in the app
           ]
         }, {
           expand: true,
@@ -294,6 +296,14 @@ module.exports = function (grunt) {
     },
     uglify: {
       dist: {
+        options: {
+          compress: {
+            global_defs: {
+              DEBUG: false
+            },
+            dead_code: false
+          }
+        },
         files: {
           '<%= yeoman.dist %>/scripts/scripts.js': [
             '<%= yeoman.dist %>/scripts/scripts.js'
@@ -381,6 +391,15 @@ module.exports = function (grunt) {
           ext: '.css'
         }]       
       }
+    },
+
+    strip : {
+      main : {
+        src : '<%= yeoman.dist %>/scripts/**/*.js',
+        options : {
+          inline : true
+        }
+      }
     }
 
   });
@@ -420,6 +439,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
+    'strip',
     'preprocess:production' //added by E.P
   ]);
 
@@ -436,5 +456,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-ngdocs');
 
   grunt.loadNpmTasks('grunt-contrib-sass');
+
+  grunt.loadNpmTasks('grunt-strip');
 
 };

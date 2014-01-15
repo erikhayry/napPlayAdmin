@@ -186,8 +186,8 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 /*
 	Module chart */
-.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; }
-.m-chart.is-loading { display: block; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
+.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #151515; padding: 10px; border-radius: 5px; }
+.m-chart.is-loading { display: block; background-color: transparent; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
 .m-chart.is-loading:after, .m-chart.is-loading:before { position: absolute; content: ""; left: calc(50% + 15px); top: calc(50% - 25px); width: 30px; height: 50px; background: #E23434; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%; }
 .m-chart.is-loading:before { left: calc(50% - 15px); transform: rotate(45deg); transform-origin: 100% 100%; }
 .m-chart.is-loaded:after { opacity: 0; }
@@ -242,7 +242,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-chart-line-9 { stroke: #747474; }
 
-.m-chart-dot { fill: #fefefe; stroke-width: 3px; stroke: #222222; }
+.m-chart-dot { fill: #fefefe; stroke-width: 3px; stroke: #151515; }
 
 .m-chart-dots-1 .m-chart-dot { fill: #e23434; }
 .m-chart-dots-1 .m-chart-dot-label { fill: #e23434; }
@@ -274,6 +274,12 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 .m-chart-dot-label { fill: #fefefe; display: none; font-size: 0.75em; }
 
 .m-chart-dot:hover + .m-chart-dot-label { display: block; }
+
+.m-chart-error-holder { overflow: hidden; color: #e23434; font-size: 0.75em; }
+
+.m-chart-errors { overflow: hidden; float: left; }
+
+.m-chart-error, .m-chart-error-title { float: left; padding: 5px; }
 
 /*
 	Animation helpers and mixins */

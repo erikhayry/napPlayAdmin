@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/f930e47a.main.css">
+        <link rel="stylesheet" href="styles/7d0048c0.main.css">
 </head>
   <body ng-app="napPlayAdminApp" ng-controller="AppCtrl">
     <!--[if lt IE 7]>
@@ -25,7 +25,12 @@
 
     <div class="l-nav">
       <ul class="m-nav">
-        <li class="m-nav-item"><a href="{{hash}}/stats">Stats</a></li>
+        <li class="m-nav-item">
+          <a href="{{hash}}/stats">Stats</a>
+          <ul class="m-nav-sub">
+            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry">Flurry</a></li>
+          </ul>  
+        </li>
         <li class="m-nav-item"><a href="{{hash}}/user-relationships">User relationships</a></li>
         <li class="m-nav-item"><a href="{{hash}}/notifications">Notifications</a></li>
       <ul>  
@@ -53,7 +58,7 @@
 
         <script src="scripts/f8dc454d.modules.js"></script>
 
-        <script src="scripts/ade4c248.scripts.js"></script>
+        <script src="scripts/724b35a5.scripts.js"></script>
 
 </body>
 </html>

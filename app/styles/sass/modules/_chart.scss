@@ -4,6 +4,7 @@
 /*
 	Module chart
  */
+$chart-bg-c : darken($c-1, 5%);
 
 .m-chart {
 	margin: 20px 0;
@@ -12,12 +13,17 @@
 	overflow-y: hidden;
 	display: none;
 	position: relative;
+	background-color: $chart-bg-c;
+	padding: 10px;
+	border-radius: 5px;
 
 	//states
 	&.is-loading{
 		display: block;
+		background-color: transparent;
 		@include animation(pulse-loading, 3s, infinite);	
 	}
+
 	//loading heart
 	$heart-w : 30px;
 	$heart-w50 : $heart-w / 2;
@@ -111,7 +117,7 @@
 .m-chart-dot{
 	fill: $c-2;
 	stroke-width: 3px;
-	stroke: $c-1;
+	stroke: $chart-bg-c;
 }
 
 @for $i from 1 through length($ccs) {
@@ -125,7 +131,6 @@
 	}
 }
 
-
 .m-chart-dot-label{
 	fill: $c-2;
 	display: none;
@@ -135,4 +140,25 @@
 //show label when hovering over dot
 .m-chart-dot:hover + .m-chart-dot-label{
 	display: block;
+}
+
+//chart errors
+.m-chart-error-holder{
+	overflow: hidden;
+	color: $c-error;
+	font-size: $fs-s;
+}
+
+.m-chart-errors{
+	overflow: hidden;
+	float: left;
+}
+
+.m-chart-error{
+	float: left;
+	padding: 5px;	
+}
+
+.m-chart-error-title{
+	@extend .m-chart-error;
 }

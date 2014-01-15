@@ -41,8 +41,7 @@ angular.module('napPlayAdminApp')
         _cache = $cacheFactory('flurry'), //http://docs.angularjs.org/api/ng.$cacheFactory
         _baseUrl = function(metrics){
         	return 'http://api.flurry.com/appMetrics/' + metrics + '?apiAccessCode=' + _accessCode + '&apiKey=' + _apiKey;
-        }
-  
+        };    
     return {
       /**
        * @name napPlayAdminApp.FlurryFactory#getAppMetrics
@@ -89,13 +88,17 @@ angular.module('napPlayAdminApp')
         var _deferred = $q.defer(),
             _data = {
               data : [],
-              errors : []
+              errors : [],
+              timedout : []
             },
             //count how many time one or more metrics failed
             _failCount = 0,
+            _resolved = false,
 
+            //configure
             _configure = configure || {},
             _retries = _configure.retries || 0,
+            _timeout = _configure.timeout || 10000,
 
             //get the number of metrics handled, both succeeded and failed
             _getDataLength = function(){
@@ -107,7 +110,8 @@ angular.module('napPlayAdminApp')
               if(_getDataLength() >= metrics.length) {
                   //resolve if no errors or
                   if(_data.errors.length === 0 || _failCount >= retries){
-                    _deferred.resolve(_data);
+                    if(!_resolved) _deferred.resolve(_data);
+                    _resolved = true; 
                   }
                   else{
                     console.log(_data.errors)
@@ -128,14 +132,34 @@ angular.module('napPlayAdminApp')
                 return -1;
             },
 
+            _addData = function(metric, data, type){
+              _data.timedout.splice(_data.timedout.indexOf(metric),1);
+              if(type === 'error') _data.errors.push(data);
+              else _data.data.push(data)
+              
+            },
+
             _getData = function(){
 
               //loop through all metrics
               console.group("_getData");
-              console.count("_getData called");    
+              console.count("_getData called"); 
+
+              $timeout(function(){
+                if(!_resolved) _deferred.resolve({
+                  data : _data.data.slice(0),
+                  errors : _data.errors.slice(0),
+                  timedout : _data.timedout.slice(0)            
+                });
+
+                _resolved = true;
+
+              }, _timeout)   
               
               for (var i = 0; i < metrics.length; i++) {
                   var _cacheKey = metrics[i];
+                  
+                  _data.timedout.push(metrics[i]);
 
                   (function(index, cacheKey){ 
                     var _cacheData = _cache.get(cacheKey),
@@ -145,6 +169,7 @@ angular.module('napPlayAdminApp')
                       _indexFrom = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', from);
                       _indexTo = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', to);
                     }
+
                     console.group(_cacheKey);
                     console.log(_cacheData)
                     console.log(_indexFrom)
@@ -154,7 +179,7 @@ angular.module('napPlayAdminApp')
                     if(_indexFrom > -1 && _indexTo > -1){
                       console.log('cache: ' + metrics[index])                      
                       _cacheData.data.day = _cacheData.data.day.splice(_indexFrom, _indexTo)
-                      _data.data.push(_cacheData.data)
+                      _addData(metrics[index], _cacheData.data);
                       _resolve(_retries);                
                     }
 
@@ -164,7 +189,7 @@ angular.module('napPlayAdminApp')
                       $timeout(function(){
                         $http.get(_baseUrl(metrics[index]) + '&startDate=' + from + '&endDate=' + to)
                         .success(function(data){                    
-                          _data.data.push(data);
+                          _addData(metrics[index], data)
                           _cache.put(cacheKey, {
                             data : data,
                             from : from,
@@ -172,11 +197,11 @@ angular.module('napPlayAdminApp')
                           });                    
                           _resolve(_retries);
                         })
-                        .error(function(data){                                     
-                          _data.errors.push(metrics[index]);
+                        .error(function(data){
+                          _addData(metrics[index], metrics[index], 'error')                                     
                           _resolve(_retries);
                         });                
-                      }, 1000 * i); //need a timeout to not call the api too much                
+                      }, 3000 * i); //need a timeout to not call the api too much                
                     }
                     console.groupEnd();
                   })(i, _cacheKey);                
