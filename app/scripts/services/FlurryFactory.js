@@ -4,38 +4,77 @@
  * @ngdoc service
  * @name napPlayAdminApp.FlurryFactory
  * @function
- * @requires $http, $q, $cacheFactory, $timeout
- * @requires ChartFactory
+ * @requires $http
+ * @requires $q
+ * @requires $cacheFactory
+ * @requires $timeout
  * @description
  * 
- * #AppMetrics
- * Service talking to the {@link http://support.flurry.com/index.php?title=API/Code|The Flurry Metrics Api}
+ * ## AppMetrics
+ * 
+ * Service talking to the [The Flurry Metrics Api](http://support.flurry.com/index.php?title=API/Code)
+ * ### Metrics
+ * <table>
+    <tr>
+        <th>metric</th>
+        <th>description</th>
+    </tr>
+    <tr>
+      <td>ActiveUsers</td>
+      <td>Total number of unique users who accessed the application per day.</td>
+    </tr>
+    <tr>
+      <td>ActiveUsersByWeek</td>
+      <td>Total number of unique users who accessed the application per week. Only returns data for dates which specify at least a complete calendar week.</td>
+    </tr>
+    <tr>
+      <td>ActiveUsersByMonth</td>
+      <td>Total number of unique users who accessed the application per month. Only returns info for dates which specify at least a complete calendar month.</td>
+    </tr>
+    <tr>
+      <td>NewUsers Total number</td>
+      <td>of unique users who used the application for the first time per day.</td>
+    </tr>
+    <tr>
+      <td>MedianSessionLength</td>
+      <td>Median length of a user session per day.</td>
+    </tr>
+    <tr>
+      <td>AvgSessionLength</td>
+      <td>Average length of a user session per day.</td>
+    </tr>
+    <tr>
+      <td>Sessions</td>
+      <td>The total number of times users accessed the application per day.</td>
+    </tr>
+    <tr>
+      <td>RetainedUsers</td>
+      <td>Total number of users who remain active users of the application per day.</td>
+    </tr>
+    <tr>
+      <td>PageViews</td>
+      <td>Total number of page views per day.</td>
+    </tr>
+    <tr>
+      <td>AvgPageViewsPerSession</td>
+      <td>Average page views per session for each day.</td>
+    </tr>
+   </table>
  *
- * 	- ActiveUsers	 			    Total number of unique users who accessed the application per day.
- * 	- ActiveUsersByWeek	 		Total number of unique users who accessed the application per week. Only returns data for dates which specify at least a complete calendar week.
- * 	- ActiveUsersByMonth		Total number of unique users who accessed the application per month. Only returns info for dates which specify at least a complete calendar month.
- * 	- NewUsers	 				    Total number of unique users who used the application for the first time per day.
- * 	- MedianSessionLength		Median length of a user session per day.
- *  - AvgSessionLength	 		Average length of a user session per day.
- *  - Sessions	 				    The total number of times users accessed the application per day.
- *  - RetainedUsers	 			  Total number of users who remain active users of the application per day.
- *  - PageViews	 				    Total number of page views per day.
- *  - AvgPageViewsPerSession	Average page views per session for each day.
- *
- *  Flurry api restrictions:
+ *  ### Flurry api restrictions:
  *  - Start date cannot be before 2008-01-01
  *  - You can only request a year's worth of data at a time
  *
- * #App info
- * http://api.flurry.com/appInfo/getApplication?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM
+ * ## App info
+ * App info api [docs](http://api.flurry.com/appInfo/getApplication?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM)
  *
- * #Eventinfo
+ * ## Eventinfo
  * Should we include?
  * 
  */
 
 angular.module('napPlayAdminApp')
-  .service('FlurryFactory', ['$http', '$q', '$cacheFactory', '$timeout', 'ChartFactory', 'AppConfig', function FlurryFactory($http, $q, $cacheFactory, $timeout, ChartFactory, AppConfig) {
+  .service('FlurryFactory', ['$http', '$q', '$cacheFactory', '$timeout', 'AppConfig', function FlurryFactory($http, $q, $cacheFactory, $timeout, AppConfig) {
   	var _apiKey = 'BRZXMJS2NRHDNN37CKQM',
         _accessCode = 'ENQZAUFQ5KQ2C24XKT7Z',
         _cache = $cacheFactory('flurry'), //http://docs.angularjs.org/api/ng.$cacheFactory
@@ -44,13 +83,14 @@ angular.module('napPlayAdminApp')
         };    
     return {
       /**
+       * @ngdoc function
        * @name napPlayAdminApp.FlurryFactory#getAppMetrics
        * @methodOf napPlayAdminApp.FlurryFactory
        * 
        * @description
-       * Return all available flurry metrics (not sure this is the right way to go)
+       * Return all available flurry metrics
        *  
-       * @return {Array} flurry metrics
+       * @return {Array} metrics Array of flurry metrics formatted {value: 'VALUE', name : 'NAME'}
        */
       getAppMetrics: function(){
         return [
@@ -73,26 +113,35 @@ angular.module('napPlayAdminApp')
        * @methodOf napPlayAdminApp.FlurryFactory
        * 
        * @description
-       * Get Flurry data as a json file
+       * Get Flurry data
        *
-       * @param {Array} metrics
-       * @param {String} from date in format yyyy-MM-dd
-       * @param {String} to date in format yyyy-MM-dd
-       * @param {Object=} configure object
-       * @returns {HttpPromise} Future object
+       * ##Configure
+       * - retries : number of times function should try to get failed metrics. Default value is 0.
+       * - timeout : max of time (in milliseconds) until giving up trying to get data. Timeout is superior to retries. Default value is 10000.
+       *        
+       * @param {Array} metrics Array of metric ids
+       * @param {String} from From date value in format yyyy-MM-dd
+       * @param {String} to To date value in format yyyy-MM-dd
+       * @param {Object=} configure Configure object
+       * @returns {HttpPromise} Object containing arrays of data, failed metrics and timedout metrics. Format {data : [], timedout : [], errors : []}
        */
      
       getGraphData: function(metrics, from, to, configure) {
-        console.log("%c \u2764 getGraphData: " + from + " to " + to, "color:pink; background:black; font-size: 14px; padding: 2px 5px;");
+        console.groupCollapsed("%c getGraphData: " + from + " to " + to + " for " + metrics , AppConfig.debugHeading);
 
         var _deferred = $q.defer(),
+
+            //return data object
             _data = {
               data : [],
               errors : [],
               timedout : []
             },
+
             //count how many time one or more metrics failed
             _failCount = 0,
+            
+            //has the promise been resolved
             _resolved = false,
 
             //configure
@@ -106,23 +155,62 @@ angular.module('napPlayAdminApp')
             },
 
             //try to resolve promise
-            _resolve = function(retries){
-              if(_getDataLength() >= metrics.length) {
-                  //resolve if no errors or
+            _resolve = function(timedout, retries){
+              if(_resolved) return false;              
+              
+              if(timedout){
+                var _clonedData = {
+                  //slice(0) to make a clone of current data
+                  data : _data.data.slice(0),
+                  errors : _data.errors.slice(0),
+                  timedout : _data.timedout.slice(0)            
+                };
+
+                _deferred.resolve(_clonedData);
+                _resolved = true;
+
+                console.group('resolved')
+                console.log('reason: timedout') 
+                console.table(_data)
+                console.groupEnd()
+                console.groupEnd()
+              }
+
+              //if all metrics been handled
+              else if(_getDataLength() >= metrics.length) {
+                  
+                  //resolve if no errors or we reached maximum retries
                   if(_data.errors.length === 0 || _failCount >= retries){
                     if(!_resolved) _deferred.resolve(_data);
-                    _resolved = true; 
+                    _resolved = true;
+
+                    console.group('resolved');
+                    console.log('failCount: ' + _failCount); 
+                    console.table(_data);
+                    console.groupEnd();
+                    console.groupEnd();  
+  
                   }
+                  //else keep trying to get data
                   else{
-                    console.log(_data.errors)
                     _failCount++;
+
+                    console.group('failed')
+                    console.log('failCount: ' + _failCount) 
+                    console.log('errors: ' + _data.errors.length) 
+                    console.table('reason: still got retries or errors') 
+                    console.groupEnd();
+
+                    //empty all data arrays, as succesful metrics are beeing cached there wont be unnecessary http calls 
                     _data.errors = [];
-                    _data.data = [];
+                    _data.data = []; 
+                    
                     _getData();
                   }
               }
             },
 
+            // return index of object in array by checking the value of a key
             _getIndexIfObjWithOwnAttr = function(array, attr, value) {
                 for(var i = 0; i < array.length; i++) {
                     if( array[i].hasOwnProperty(attr) && array[i][attr] === value) {
@@ -132,52 +220,57 @@ angular.module('napPlayAdminApp')
                 return -1;
             },
 
+            // add data to either metric or error array
             _addData = function(metric, data, type){
-              _data.timedout.splice(_data.timedout.indexOf(metric),1);
-              if(type === 'error') _data.errors.push(data);
-              else _data.data.push(data)
+              _data.timedout.splice(_data.timedout.indexOf(metric),1); //remove from timedout array
               
+              console.group('got data for ' + metric);
+              console.log('type: ' + type);
+              console.log('data length: ' + data.length);
+              console.groupEnd();
+
+              if(type === 'error') _data.errors.push(data);
+              else _data.data.push(data)              
             },
 
+            // get data from api or cache
             _getData = function(){
-
-              //loop through all metrics
               console.group("_getData");
-              console.count("_getData called"); 
 
+              // timeout checking if maxium time is reached
               $timeout(function(){
-                if(!_resolved) _deferred.resolve({
-                  data : _data.data.slice(0),
-                  errors : _data.errors.slice(0),
-                  timedout : _data.timedout.slice(0)            
-                });
-
-                _resolved = true;
-
-              }, _timeout)   
+                _resolve(true);
+              }, _timeout);   
               
+              //get data for each metric
               for (var i = 0; i < metrics.length; i++) {
                   var _cacheKey = metrics[i];
                   
+                  //initially add metric to timedout array. Moved to error or data array later depending on result
                   _data.timedout.push(metrics[i]);
 
+                  //anonymous self calling function to be able to loop async  
                   (function(index, cacheKey){ 
                     var _cacheData = _cache.get(cacheKey),
                         _indexFrom, _indexTo;
 
+                    //if there is cached data for metric check if it is covering our current dates   
                     if(_cacheData) {
                       _indexFrom = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', from);
                       _indexTo = _getIndexIfObjWithOwnAttr(_cacheData.data.day, '@date', to);
                     }
 
                     console.group(_cacheKey);
-                    console.log(_cacheData)
                     console.log(_indexFrom)
                     console.log(_indexTo)
+                    console.table(_cacheData)
+                    
 
-                    //check if data been cached
+                    //if cached data covering our current dates use it
                     if(_indexFrom > -1 && _indexTo > -1){
-                      console.log('cache: ' + metrics[index])                      
+                      
+                      console.log('cached')                      
+                      
                       _cacheData.data.day = _cacheData.data.day.splice(_indexFrom, _indexTo)
                       _addData(metrics[index], _cacheData.data);
                       _resolve(_retries);                
@@ -185,11 +278,14 @@ angular.module('napPlayAdminApp')
 
                     //if not cached make an http request
                     else{
-                      console.log('http: ' + metrics[index])
+                      
+                      console.log('not cached')
+                      
                       $timeout(function(){
                         $http.get(_baseUrl(metrics[index]) + '&startDate=' + from + '&endDate=' + to)
                         .success(function(data){                    
-                          _addData(metrics[index], data)
+                          _addData(metrics[index], data, 'success');
+                          //add to cache
                           _cache.put(cacheKey, {
                             data : data,
                             from : from,
@@ -199,9 +295,9 @@ angular.module('napPlayAdminApp')
                         })
                         .error(function(data){
                           _addData(metrics[index], metrics[index], 'error')                                     
-                          _resolve(_retries);
+                          _resolve(false, _retries);
                         });                
-                      }, 3000 * i); //need a timeout to not call the api too much                
+                      }, 3000 * i); //need a timeout to not call the api too much.                 
                     }
                     console.groupEnd();
                   })(i, _cacheKey);                
@@ -212,55 +308,6 @@ angular.module('napPlayAdminApp')
             _getData();
         
       	return _deferred.promise;
-      },
-
-      /**
-       * @ngdoc function
-       * @name napPlayAdminApp.FlurryFactory#getInChartFormat
-       * @methodOf napPlayAdminApp.FlurryFactory
-       *
-       * @description
-       * Returns flurry data formatted for the Graph library
-       *
-       * @param {Array} Flurry data
-       * @param {string} ChartJS chart type (bar or line)
-       *
-       * @return {Object} ChartJS data
-       */
-
-      getChartJSData: function(data, type){
-        var _metrics = [],
-            _data = [],
-            _days = [],
-            _labels = [];
-
-        for (var i = 0; i < data.length; i++) {
-          _data = data[i];
-          _days = [];
-          _labels = [];
-
-          var _nth = Math.ceil(_data.day.length / 20); //show a maximum of;
-
-          for (var j = 0; j < _data.day.length; j++) {
-            if(j%_nth == 0){
-              _days.push(parseInt(_data.day[j]['@value']));
-              _labels.push(_data.day[j]['@date']);         
-            }
-          };
-
-          _metrics.push({
-            days: _days,
-            labels: _labels
-          });
-
-        };
-            
-      	return {
-          labels : _labels,
-          datasets : ChartFactory.getDataSet(_metrics, type)
-        };
-      }
+      }      
     }  
   }]);
-
-

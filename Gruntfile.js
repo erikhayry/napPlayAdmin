@@ -354,7 +354,7 @@ module.exports = function (grunt) {
         dest: 'docs',
         html5Mode: false,
         startPage: '/docs/#/api',
-        styles: ['app/styles/css/main.css'],
+        //styles: ['app/styles/css/main.css'],
         title: 'napplayadmin',
         titleLink: '/docs/#/api',
         bestMatch: true

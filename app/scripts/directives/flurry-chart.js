@@ -44,7 +44,7 @@
 */
 
 angular.module('napPlayAdminApp')
-  .directive('flurryChart', ['FlurryFactory', 'ChartFactory', 'D3Factory', function (FlurryFactory, ChartFactory, D3Factory) {
+  .directive('flurryChart', ['FlurryFactory', 'D3Factory', function (FlurryFactory, D3Factory) {
     return {
       templateUrl: 'templates/chart.html',
       restrict: 'E',
@@ -63,24 +63,23 @@ angular.module('napPlayAdminApp')
         });
 
         scope.refresh = function(){
-          scope.errors = [];
-          scope.timedOut = [];
           _drawGraph();
         }
 
         var _drawGraph = function(){
           if(attrs.flurrymetrics, attrs.flurryfrom, attrs.flurryto){
+            scope.errors = [];
+            scope.timedout = [];
             scope.status = 'is-loading';
             var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
 
             FlurryFactory.getGraphData(_metrics, attrs.flurryfrom, attrs.flurryto, {retries : 0, timeout : 15000})
 
             .then(function(flurryData){
-              console.log(flurryData)
               var _data = flurryData.data;
 
               scope.errors = flurryData.errors;
-              scope.timedOut = flurryData.timedout;
+              scope.timedout = flurryData.timedout;
 
               D3Factory.d3().then(function(d3) {
 

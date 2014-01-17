@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: Appconfig', function () {
+describe('Service: AppConfig', function () {
 
-/*  // load the service's module
+  // load the service's module
   beforeEach(module('napPlayAdminApp'));
 
   // instantiate service
-  var Appconfig;
-  beforeEach(inject(function(_Appconfig_) {
-    Appconfig = _Appconfig_;
+  var AppConfig;
+  beforeEach(inject(function(_AppConfig_) {
+    AppConfig = _AppConfig_;
   }));
 
-  it('should do something', function () {
-    expect(!!Appconfig).toBe(true);
+  it('should be defined', function () {
+    expect(!!AppConfig).toBe(true);
   });
-*/
+
 });

@@ -11,8 +11,9 @@ describe('Service: D3Factory', function () {
     D3Factory = _D3Factory_;
   }));
 
+
   it('should do something', function () {
+    console.log(D3Factory.d3)
     expect(!!D3Factory).toBe(true);
   });
-
 });

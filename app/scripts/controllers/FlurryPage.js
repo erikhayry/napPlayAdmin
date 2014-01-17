@@ -59,14 +59,12 @@ angular.module('napPlayAdminApp')
     $scope.openFromDropDown = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        console.log(metrics)
         $scope.openedFrom = true;
     };
 
     $scope.openToDropDown = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-
         $scope.openedTo = true;
     };
 
@@ -75,7 +73,6 @@ angular.module('napPlayAdminApp')
         $scope.dateTo = new Date();
         $scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
         $scope.dateTo.setDate($scope.dateTo.getDate() - 1);
-
     };
 
     $scope.toggleMax = function() {
