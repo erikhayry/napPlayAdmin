@@ -32,9 +32,9 @@
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; outline: none; }
 
-body { line-height: 1; padding: 0; color: #fefefe; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; background-color: #222222; font-weight: 300; letter-spacing: 2px; }
+body { line-height: 1; padding: 0; color: #ecf0f1; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; background-color: #1b1e24; font-weight: 300; letter-spacing: 2px; }
 
-a { color: #fefefe; }
+a { color: #ecf0f1; }
 a:hover { color: white; }
 
 ol, ul { list-style: none; }
@@ -48,11 +48,11 @@ table { border-collapse: collapse; border-spacing: 0; }
 /*
 	headings
 */
-h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #fefefe; text-align: center; }
+h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #ecf0f1; text-align: center; }
 
 /*
 	buttons */
-button { border: none; border-radius: 2px; background-color: #2f2f2f; color: #fefefe; padding: 5px 15px; cursor: pointer; outline: none; }
+button { border: none; border-radius: 2px; background-color: #262a33; color: #ecf0f1; padding: 5px 15px; cursor: pointer; outline: none; }
 button[disabled="disabled"] { opacity: 0.2; }
 
 /*
@@ -85,7 +85,7 @@ button[disabled="disabled"] { opacity: 0.2; }
 
 /*
 	forms */
-input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none; padding: 5px 15px; outline: none; }
+input[type=text], input[type=textarea] { background-color: #262a33; border: none; padding: 5px 15px; outline: none; }
 
 /*
 	Animation helpers and mixins */
@@ -151,7 +151,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 /*
 	module nav */
-.m-nav { font-size: 1em; overflow: hidden; background-color: #fefefe; text-transform: uppercase; text-align: center; padding: 10px 0; }
+.m-nav { font-size: 1em; overflow: hidden; background-color: #ecf0f1; text-transform: uppercase; text-align: center; padding: 10px 0; }
 
 .m-nav-item { margin-bottom: 10px; }
 .m-nav-item a { text-decoration: none; }
@@ -186,7 +186,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 /*
 	Module chart */
-.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #151515; padding: 10px; border-radius: 5px; }
+.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #101215; padding: 10px; border-radius: 5px; }
 .m-chart.is-loading { display: block; background-color: transparent; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
 .m-chart.is-loading:after, .m-chart.is-loading:before { position: absolute; content: ""; left: calc(50% + 15px); top: calc(50% - 25px); width: 30px; height: 50px; background: #E23434; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%; }
 .m-chart.is-loading:before { left: calc(50% - 15px); transform: rotate(45deg); transform-origin: 100% 100%; }
@@ -199,10 +199,10 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 .is-loaded .m-chart-data { opacity: 1; }
 
 .m-chart-axis-x, .m-chart-axis-y { font-size: 0.75em; }
-.m-chart-axis-x path, .m-chart-axis-x line, .m-chart-axis-y path, .m-chart-axis-y line { stroke: #fefefe; stroke-width: 1; shape-rendering: crispEdges; fill: none; color: #fefefe; }
-.m-chart-axis-x text, .m-chart-axis-y text { fill: #fefefe; }
+.m-chart-axis-x path, .m-chart-axis-x line, .m-chart-axis-y path, .m-chart-axis-y line { stroke: #ecf0f1; stroke-width: 1; shape-rendering: crispEdges; fill: none; color: #ecf0f1; }
+.m-chart-axis-x text, .m-chart-axis-y text { fill: #ecf0f1; }
 
-.m-chart-label { fill: #fefefe; font-size: 0.75em; }
+.m-chart-label { fill: #ecf0f1; font-size: 0.75em; }
 
 .m-chart-label-1 { fill: #e23434; }
 
@@ -222,7 +222,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-chart-label-9 { fill: #747474; }
 
-.m-chart-line { fill: none; stroke: #fefefe; stroke-width: 2; }
+.m-chart-line { fill: none; stroke: #ecf0f1; stroke-width: 2; }
 
 .m-chart-line-1 { stroke: #e23434; }
 
@@ -242,7 +242,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-chart-line-9 { stroke: #747474; }
 
-.m-chart-dot { fill: #fefefe; stroke-width: 3px; stroke: #151515; }
+.m-chart-dot { fill: #ecf0f1; stroke-width: 3px; stroke: #101215; }
 
 .m-chart-dots-1 .m-chart-dot { fill: #e23434; }
 .m-chart-dots-1 .m-chart-dot-label { fill: #e23434; }
@@ -271,7 +271,7 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 .m-chart-dots-9 .m-chart-dot { fill: #747474; }
 .m-chart-dots-9 .m-chart-dot-label { fill: #747474; }
 
-.m-chart-dot-label { fill: #fefefe; display: none; font-size: 0.75em; }
+.m-chart-dot-label { fill: #ecf0f1; display: none; font-size: 0.75em; }
 
 .m-chart-dot:hover + .m-chart-dot-label { display: block; }
 
@@ -301,8 +301,8 @@ input[type=text], input[type=textarea] { background-color: #2f2f2f; border: none
 
 .m-metrics-nav-item { float: left; margin: 2px 2px 0 0; }
 .m-metrics-nav-item input[type=checkbox] { display: none; }
-.m-metrics-nav-item label { background-color: #2f2f2f; padding: 5px; display: block; }
-.m-metrics-nav-item input:checked + label { background-color: #151515; }
+.m-metrics-nav-item label { background-color: #262a33; padding: 5px; display: block; }
+.m-metrics-nav-item input:checked + label { background-color: #101215; }
 
 /*
 	Animation helpers and mixins */
