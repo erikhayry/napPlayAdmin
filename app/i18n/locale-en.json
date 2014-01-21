@@ -1,0 +1,13 @@
+
+{
+  "back": "back",
+  "forward": "forward",
+  "to": "to",
+  "from": "from",
+  "show": "show",
+  "load graph": "load graph",
+  "close": "close",
+  "currentText": "today",
+  "toggleWeeksText": "weeks",
+  "clearText": "clear"
+}

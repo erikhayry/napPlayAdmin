@@ -261,18 +261,21 @@ angular.module('napPlayAdminApp')
                     }
 
                     console.group(_cacheKey);
-                    console.log(_indexFrom)
-                    console.log(_indexTo)
-                    console.table(_cacheData)
+                    console.log('from: ' + from + ' : index ' +_indexFrom)
+                    console.log('from: ' + to + ' : index ' +_indexTo)
+                    console.log(_cacheData)
                     
 
                     //if cached data covering our current dates use it
-                    if(_indexFrom > -1 && _indexTo > -1){
-                      
-                      console.log('cached')                      
-                      
-                      _cacheData.data.day = _cacheData.data.day.splice(_indexFrom, _indexTo)
-                      _addData(metrics[index], _cacheData.data);
+                    if(_indexFrom > -1 && _indexTo > -1){                                                                  
+                      _addData(metrics[index], {
+                        '@endDate': _cacheData.data['@endDate'],
+                        '@generatedDate': _cacheData.data['@generatedDate'],
+                        '@metric': _cacheData.data['@metric'],
+                        '@startDate': _cacheData.data['@startDate'],
+                        '@version': _cacheData.data['@version'],
+                        'day': _cacheData.data.day.slice(_indexFrom, _indexTo)
+                      });
                       _resolve(_retries);                
                     }
 
@@ -283,16 +286,21 @@ angular.module('napPlayAdminApp')
                       
                       $timeout(function(){
                         $http.get(_baseUrl(metrics[index]) + '&startDate=' + from + '&endDate=' + to)
+                        
                         .success(function(data){                    
                           _addData(metrics[index], data, 'success');
+                          console.log('Adding to cache:')
+                          console.log(data)
                           //add to cache
                           _cache.put(cacheKey, {
                             data : data,
                             from : from,
                             to : to
-                          });                    
+                          });
+
                           _resolve(_retries);
                         })
+
                         .error(function(data){
                           _addData(metrics[index], metrics[index], 'error')                                     
                           _resolve(false, _retries);

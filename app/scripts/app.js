@@ -19,7 +19,7 @@
  *
  */
 
-var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap'])
+var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap', 'pascalprecht.translate'])
   .config(function ($routeProvider, $locationProvider, AppConfig) {
     $locationProvider.html5Mode(!AppConfig.hash)
     
@@ -57,6 +57,20 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.b
 
   .config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  })
+
+
+  /*
+    translation
+    http://pascalprecht.github.io/angular-translate/docs/en/#/guide
+   */
+  .config(function ($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'i18n/locale-',
+        suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en'); 
+    $translateProvider.useLocalStorage(); 
   });
 
 
@@ -65,3 +79,9 @@ var app = angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.b
    */
   
   angular.module('d3', []);
+
+
+
+
+
+

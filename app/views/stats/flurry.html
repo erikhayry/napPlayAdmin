@@ -9,16 +9,16 @@
     
 	<!-- http://angular-ui.github.io/bootstrap/#/datepicker -->
 	<div class="m-date-picker">
-		From: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-		<button ng-click="openFromDropDown($event)">Show</button>
+		{{'from' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
+		<button ng-click="openFromDropDown($event)">{{'show' | translate}}</button>
 	</div>
 
 	<div class="m-date-picker">
-		To: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-		<button ng-click="openToDropDown($event)">Show</button>
+		{{'to' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
+		<button ng-click="openToDropDown($event)">{{'show' | translate}}</button>
 	</div>	
 
-	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">Load graph</button>
+	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'show graph' | translate}}</button>
 	
 <!-- 	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
  -->
