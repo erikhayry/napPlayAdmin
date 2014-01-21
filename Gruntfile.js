@@ -112,6 +112,21 @@ module.exports = function (grunt) {
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
+    jsbeautifier: {
+      modify: {
+        src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js'],
+        options: {
+          config: '.jsbeautifyrc'
+        }
+      },
+      verify: {
+        src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js', '!<%= yeoman.app %>/scripts/vendor/**/*.js'],
+        options: {
+          mode: 'VERIFY_ONLY',
+          config: '.jsbeautifyrc'
+        }
+      }
+    },
     coffee: {
       options: {
         sourceMap: true,
@@ -450,6 +465,16 @@ module.exports = function (grunt) {
     'build'
   ]);
 
+  grunt.registerTask('cleanup', [
+    'jsbeautifier:modify',
+    'jshint'
+  ]);
+
+  grunt.registerTask('verify', [
+    'jsbeautifier:verify',
+    'jshint'
+  ]);
+
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.loadNpmTasks('grunt-preprocess');
@@ -459,5 +484,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.loadNpmTasks('grunt-strip');
+
+  grunt.loadNpmTasks('grunt-jsbeautifier');
 
 };
