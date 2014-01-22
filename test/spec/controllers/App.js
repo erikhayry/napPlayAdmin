@@ -2,17 +2,17 @@
 
 describe('Controller: AppCtrl', function () {
 
-  // load the controller's module
-  beforeEach(module('napPlayAdminApp'));
+	// load the controller's module
+	beforeEach(module('napPlayAdminApp'));
 
-  var AppCtrl,
-    scope;
+	var AppCtrl,
+		scope;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    AppCtrl = $controller('AppCtrl', {
-      $scope: scope
-    });
-  }));
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+		scope = $rootScope.$new();
+		AppCtrl = $controller('AppCtrl', {
+			$scope: scope
+		});
+	}));
 });

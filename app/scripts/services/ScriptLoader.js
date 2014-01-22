@@ -1,39 +1,41 @@
 'use strict';
 
-angular.module('napPlayAdminApp')  
-  .factory('ScriptLoader', ['$document', '$q', '$rootScope', function ScriptLoader($document, $q, $rootScope) {
-    var _loaded = [];
+angular.module('napPlayAdminApp')
+	.factory('ScriptLoader', ['$document', '$q', '$rootScope',
+		function ScriptLoader($document, $q, $rootScope) {
+			var _loaded = [];
 
-    return {
-      load: function(src, name) {
-        var _script = $q.defer();
-        
-        if(_loaded.indexOf(name) > -1){
-          _script.resolve(window[name]);
-          return _script.promise;
-        }
+			return {
+				load: function (src, name) {
+					var _script = $q.defer();
 
-        var _onScriptLoad = function() {
-            // Load client in the browser
-            $rootScope.$apply(function() {
-               _loaded.push(name); 
-              _script.resolve(window[name]); 
-            });
-          },
+					if (_loaded.indexOf(name) > -1) {
+						_script.resolve(window[name]);
+						return _script.promise;
+					}
 
-          _scriptTag = $document[0].createElement('script');
-        
-        _scriptTag.type = 'text/javascript'; 
-        _scriptTag.async = true;
-        _scriptTag.src = src;
-        _scriptTag.onreadystatechange = function () {
-          if (this.readyState == 'complete') _onScriptLoad();
-        }
-        _scriptTag.onload = _onScriptLoad;
+					var _onScriptLoad = function () {
+						// Load client in the browser
+						$rootScope.$apply(function () {
+							_loaded.push(name);
+							_script.resolve(window[name]);
+						});
+					},
 
-        $document[0].getElementsByTagName('body')[0].appendChild(_scriptTag);
+						_scriptTag = $document[0].createElement('script');
 
-        return _script.promise;
-      }
-    };
-  }]);
+					_scriptTag.type = 'text/javascript';
+					_scriptTag.async = true;
+					_scriptTag.src = src;
+					_scriptTag.onreadystatechange = function () {
+						if (this.readyState === 'complete') _onScriptLoad();
+					};
+					_scriptTag.onload = _onScriptLoad;
+
+					$document[0].getElementsByTagName('body')[0].appendChild(_scriptTag);
+
+					return _script.promise;
+				}
+			};
+		}
+	]);
