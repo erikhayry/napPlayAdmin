@@ -181,8 +181,7 @@ angular.module('napPlayAdminApp')
 									/*
                 build the chart
                */
-
-									var _svg = d3.select('svg')
+									var _svg = d3.select(element[0]).select('svg')
 										.attr('width', _svgWidth)
 										.attr('height', _svgHeight)
 										.append('g')

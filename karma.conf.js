@@ -19,6 +19,8 @@ module.exports = function(config) {
       'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/angular-translate/angular-translate.js',
       'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+      'app/bower_components/angular-translate-storage-local/angular-translate-storage-local.js',
+      'app/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       //'test/mock/**/*.js',
