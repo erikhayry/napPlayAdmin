@@ -109,12 +109,13 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '!<%= yeoman.app %>/scripts/vendor/**/*.js'
       ]
     },
     jsbeautifier: {
       modify: {
-        src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js'],
+        src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js', '!<%= yeoman.app %>/scripts/vendor/**/*.js'],
         options: {
           config: '.jsbeautifyrc'
         }
