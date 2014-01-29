@@ -114,10 +114,18 @@ $chart-bg-c : darken($c-1, 5%);
 }
 
 //chart dots
+.m-chart-dot-holder{
+	position: relative;
+	&:hover{
+		z-index: 2;
+	}
+}
+
 .m-chart-dot{
 	fill: $c-2;
 	stroke-width: 3px;
 	stroke: $chart-bg-c;
+	z-index: 1;
 }
 
 @for $i from 1 through length($ccs) {
@@ -131,15 +139,13 @@ $chart-bg-c : darken($c-1, 5%);
 	}
 }
 
-.m-chart-dot-label{
+.m-chart-tool-tip{
 	fill: $c-2;
-	display: none;
 	font-size: $fs-s;
-}
-
-//show label when hovering over dot
-.m-chart-dot:hover + .m-chart-dot-label{
-	display: block;
+	display: none;
+	&.is-visible{
+		display: block;
+	}
 }
 
 //chart errors

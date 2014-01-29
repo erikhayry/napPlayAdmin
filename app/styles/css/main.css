@@ -242,7 +242,10 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 
 .m-chart-line-9 { stroke: #747474; }
 
-.m-chart-dot { fill: #ecf0f1; stroke-width: 3px; stroke: #101215; }
+.m-chart-dot-holder { position: relative; }
+.m-chart-dot-holder:hover { z-index: 2; }
+
+.m-chart-dot { fill: #ecf0f1; stroke-width: 3px; stroke: #101215; z-index: 1; }
 
 .m-chart-dots-1 .m-chart-dot { fill: #e23434; }
 .m-chart-dots-1 .m-chart-dot-label { fill: #e23434; }
@@ -271,9 +274,8 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .m-chart-dots-9 .m-chart-dot { fill: #747474; }
 .m-chart-dots-9 .m-chart-dot-label { fill: #747474; }
 
-.m-chart-dot-label { fill: #ecf0f1; display: none; font-size: 0.75em; }
-
-.m-chart-dot:hover + .m-chart-dot-label { display: block; }
+.m-chart-tool-tip { fill: #ecf0f1; font-size: 0.75em; display: none; }
+.m-chart-tool-tip.is-visible { display: block; }
 
 .m-chart-error-holder { overflow: hidden; color: #e23434; font-size: 0.75em; }
 

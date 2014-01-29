@@ -21,7 +21,8 @@ describe('Service: FlurryFactory', function () {
 		flurryApiUrl_Sessions = 'http://api.flurry.com/appMetrics/Sessions?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_PageViews = 'http://api.flurry.com/appMetrics/PageViews?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 
-		flurryData = [{"@endDate": "2013-11-12",
+		flurryData = [{
+			"@endDate": "2013-11-12",
 			"@metric": "ActiveUsersByDay",
 			"@startDate": "2013-10-01",
 			"@generatedDate": "11/21/13 6:26 AM",

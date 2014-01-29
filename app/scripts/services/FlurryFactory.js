@@ -79,9 +79,27 @@ angular.module('napPlayAdminApp')
 			var _apiKey = 'BRZXMJS2NRHDNN37CKQM',
 				_accessCode = 'ENQZAUFQ5KQ2C24XKT7Z',
 				_cache = $cacheFactory('flurry'), //http://docs.angularjs.org/api/ng.$cacheFactory
+
+				// return flurry url
 				_baseUrl = function (metrics) {
 					return 'http://api.flurry.com/appMetrics/' + metrics + '?apiAccessCode=' + _accessCode + '&apiKey=' + _apiKey;
+				},
+
+				// return index of object in array by checking the value of a key
+				_getIndexIfObjWithOwnAttr = function (array, attr, value) {
+					for (var i = 0; i < array.length; i++) {
+						if (array[i].hasOwnProperty(attr) && array[i][attr] === value) {
+							return i;
+						}
+					}
+					return -1;
+				},
+
+				//get the number of metrics handled, both succeeded and failed
+				_getDataLength = function (data) {
+					return data.data.length + data.errors.length;
 				};
+
 			return {
 				/**
 				 * @ngdoc function
@@ -169,11 +187,6 @@ angular.module('napPlayAdminApp')
 						_retries = _configure.retries || 0,
 						_timeout = _configure.timeout || 10000,
 
-						//get the number of metrics handled, both succeeded and failed
-						_getDataLength = function () {
-							return _data.data.length + _data.errors.length;
-						},
-
 						//try to resolve promise
 						_resolve = function (timedout, retries) {
 							if (_resolved) return false;
@@ -197,7 +210,7 @@ angular.module('napPlayAdminApp')
 							}
 
 							//if all metrics been handled
-							else if (_getDataLength() >= metrics.length) {
+							else if (_getDataLength(_data) >= metrics.length) {
 
 								//resolve if no errors or we reached maximum retries
 								if (_data.errors.length === 0 || _failCount >= retries) {
@@ -230,16 +243,6 @@ angular.module('napPlayAdminApp')
 							}
 						},
 
-						// return index of object in array by checking the value of a key
-						_getIndexIfObjWithOwnAttr = function (array, attr, value) {
-							for (var i = 0; i < array.length; i++) {
-								if (array[i].hasOwnProperty(attr) && array[i][attr] === value) {
-									return i;
-								}
-							}
-							return -1;
-						},
-
 						// add data to either metric or error array
 						_addData = function (metric, data, type) {
 							_data.timedout.splice(_data.timedout.indexOf(metric), 1); //remove from timedout array
@@ -262,7 +265,7 @@ angular.module('napPlayAdminApp')
 								_resolve(true);
 							}, _timeout);
 
-							//get data for each metric
+							//get data for each metric (alternatively could use $q.all)
 							for (var i = 0; i < metrics.length; i++) {
 								var _cacheKey = metrics[i];
 

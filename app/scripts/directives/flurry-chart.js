@@ -87,10 +87,7 @@ angular.module('napPlayAdminApp')
 
 								D3Factory.d3().then(function (d3) {
 
-									/*
-                D3.js
-               */
-
+									//D3.js
 									var _svgEl = element[0].querySelectorAll('svg')[0];
 
 									//delete any previous chart
@@ -98,10 +95,7 @@ angular.module('napPlayAdminApp')
 										_svgEl.removeChild(_svgEl.firstChild);
 									}
 
-									/*
-                chart variables
-               */
-
+									//chart variables
 									var _svgWidth = 1500,
 										_svgHeight = 600,
 										_padding = {
@@ -113,10 +107,7 @@ angular.module('napPlayAdminApp')
 										_chartWidth = _svgWidth - _padding.right - _padding.left,
 										_chartHeight = _svgHeight - _padding.top - _padding.bottom;
 
-									/*
-                helper function
-               */
-
+									//helper function
 									var _format = d3.time.format('%Y-%m-%d'),
 
 										_getStartDay = function (days) {
@@ -178,9 +169,8 @@ angular.module('napPlayAdminApp')
 											.scale(_yScale)
 											.orient('left')
 											.ticks(5);
-									/*
-                build the chart
-               */
+
+									//build the chart
 									var _svg = d3.select(element[0]).select('svg')
 										.attr('width', _svgWidth)
 										.attr('height', _svgHeight)
@@ -235,6 +225,7 @@ angular.module('napPlayAdminApp')
 									/**
 									 * emmet code for below: g.m-chart-dots>(g.m-chart-dot-holder[data-date data-value transform]>circle.m-chart-dot[r]+text.m-chart-dot-label[transform=translate(10,-10)])*x
 									 */
+									var toolTipEl;
 
 									//add dots
 									_svg.selectAll('.m-chart-dots')
@@ -260,22 +251,21 @@ angular.module('napPlayAdminApp')
 										.attr('transform', function (d) {
 											return 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d['@value']) + ')';
 										})
+										.on('mouseover', function (d) {
+											toolTipEl.html('<text>' + d['@date'] + '</text>');
+											toolTipEl.classed('is-visible', true);
+											toolTipEl.attr('transform', 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d['@value']) + ')');
+										})
+										.on('mouseout', function () {
+											toolTipEl.classed('is-visible', false);
+										})
 										.append('circle')
 										.attr('class', 'm-chart-dot')
 										.attr('r', 5);
 
-									//add dot label            
-									_svg.selectAll('.m-chart-dots')
-										.selectAll('.m-chart-dot-holder')
-										.data(function (d) {
-											return d.day;
-										})
-										.append('text')
-										.attr('class', 'm-chart-dot-label')
-										.attr('transform', 'translate(10,-10)')
-										.text(function (d) {
-											return d['@date'] + ' : ' + d['@value'];
-										});
+									toolTipEl = _svg.append('g')
+										.attr('class', 'm-chart-tool-tip');
+
 								});
 
 								scope.status = 'is-loaded';
