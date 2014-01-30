@@ -3,29 +3,9 @@
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	Animation helpers and mixins */
 /*
 	mixins */
-/*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
 /* http://meyerweb.com/eric/tools/css/reset/  v2.0 | 20110126 License: none (public domain)
 */
 * { box-sizing: border-box; }
@@ -60,29 +40,9 @@ button[disabled="disabled"] { opacity: 0.2; }
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	Animation helpers and mixins */
 /*
 	mixins */
-/*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
 /*
 	forms */
 input[type=text], input[type=textarea] { background-color: #262a33; border: none; padding: 5px 15px; outline: none; }
@@ -92,29 +52,9 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	Animation helpers and mixins */
 /*
 	mixins */
-/*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
 .l-nav { display: none; padding: 20px; }
 @media (min-width: 580px) { .l-nav { float: left; width: 0%; } }
 
@@ -126,29 +66,9 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	Animation helpers and mixins */
 /*
 	mixins */
-/*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
 /*
 	module nav */
 .m-nav { font-size: 1em; overflow: hidden; background-color: #ecf0f1; text-transform: uppercase; text-align: center; padding: 10px 0; }
@@ -161,20 +81,12 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	Animation helpers and mixins */
 /*
 	mixins */
 /*
+	Module chart */
+/*
 	includes */
 @-webkit-keyframes pulse-loading { 0% { opacity: 0; }
   50% { opacity: 1; }
@@ -184,8 +96,6 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
   50% { opacity: 1; }
   100% { opacity: 0; } }
 
-/*
-	Module chart */
 .m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #101215; padding: 10px; border-radius: 5px; }
 .m-chart.is-loading { display: block; background-color: transparent; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
 .m-chart.is-loading:after, .m-chart.is-loading:before { position: absolute; content: ""; left: calc(50% + 15px); top: calc(50% - 25px); width: 30px; height: 50px; background: #E23434; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%; }
@@ -274,7 +184,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .m-chart-dots-9 .m-chart-dot { fill: #747474; }
 .m-chart-dots-9 .m-chart-dot-label { fill: #747474; }
 
-.m-chart-tool-tip { fill: #ecf0f1; font-size: 0.75em; display: none; }
+.m-chart-tool-tip { fill: #ecf0f1; font-size: 0.75em; display: none; text-anchor: middle; dominant-baseline: hanging; }
 .m-chart-tool-tip.is-visible { display: block; }
 
 .m-chart-error-holder { overflow: hidden; color: #e23434; font-size: 0.75em; }
@@ -288,16 +198,6 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 /*
 	mixins */
 /*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-/*
 	metric nav */
 .m-metrics-nav { overflow: hidden; font-size: 0.75em; padding: 20px 0; }
 
@@ -310,16 +210,6 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 	Animation helpers and mixins */
 /*
 	mixins */
-/*
-	includes */
-@-webkit-keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
-@keyframes pulse-loading { 0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; } }
-
 /*
 	module datepicker */
 .m-date-picker { margin-bottom: 20px; font-size: 0.75em; }

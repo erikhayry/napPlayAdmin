@@ -74,21 +74,27 @@ angular.module('napPlayAdminApp')
 							scope.status = 'is-loading';
 							var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
 
+							console.time('Get graph data total time');
+
 							FlurryFactory.getGraphData(_metrics, attrs.flurryfrom, attrs.flurryto, {
 								retries: 0,
 								timeout: 15000
 							})
 
 							.then(function (flurryData) {
+								console.group('Flurry data returned');
+								console.timeEnd('Get graph data total time');
+								console.groupEnd();
+
 								var _data = flurryData.data;
 
 								scope.errors = flurryData.errors;
 								scope.timedout = flurryData.timedout;
 
 								D3Factory.d3().then(function (d3) {
-
+									console.profile('Draw graph');
 									//D3.js
-									var _svgEl = element[0].querySelectorAll('svg')[0];
+									var _svgEl = element[0].querySelector('svg');
 
 									//delete any previous chart
 									while (_svgEl.firstChild) {
@@ -251,20 +257,31 @@ angular.module('napPlayAdminApp')
 										.attr('transform', function (d) {
 											return 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d['@value']) + ')';
 										})
-										.on('mouseover', function (d) {
-											toolTipEl.html('<text>' + d['@date'] + '</text>');
-											toolTipEl.classed('is-visible', true);
-											toolTipEl.attr('transform', 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d['@value']) + ')');
-										})
+
+									//show and hide tooltip
+									.on('mouseover', function (d) {
+										toolTipEl.html(
+											'<text>' +
+											'<tspan x="0">' + d['@date'] + '</tspan>' +
+											'<tspan x="0" y="15">' + d['@value'] + '</tspan>' +
+											'</text>');
+										toolTipEl.classed('is-visible', true);
+										toolTipEl.attr('transform', 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + (_yScale(d['@value']) - 30) + ')');
+									})
 										.on('mouseout', function () {
 											toolTipEl.classed('is-visible', false);
 										})
-										.append('circle')
+
+									//add dot
+									.append('circle')
 										.attr('class', 'm-chart-dot')
 										.attr('r', 5);
 
+									//append tooltip last so it has the highest z-index, strore as a variable to be able to manipulate it	
 									toolTipEl = _svg.append('g')
 										.attr('class', 'm-chart-tool-tip');
+
+									console.profileEnd('Draw graph');
 
 								});
 

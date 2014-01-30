@@ -1,8 +1,8 @@
 {
   "name": "angular-scenario",
-  "version": "1.2.6-build.2009+sha.26d43ca",
+  "version": "1.2.11-build.2189+sha.95f0bf9",
   "main": "./angular-scenario.js",
   "dependencies": {
-    "angular": "1.2.6-build.2009+sha.26d43ca"
+    "angular": "1.2.11-build.2189+sha.95f0bf9"
   }
 }

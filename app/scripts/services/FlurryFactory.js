@@ -166,7 +166,7 @@ angular.module('napPlayAdminApp')
 
 				getGraphData: function (metrics, from, to, configure) {
 					console.groupCollapsed('%c getGraphData: ' + from + ' to ' + to + ' for ' + metrics, AppConfig.debugHeading);
-
+					console.profile('getGraphData');
 					var _deferred = $q.defer(),
 
 						//return data object
@@ -205,6 +205,7 @@ angular.module('napPlayAdminApp')
 								console.group('resolved');
 								console.log('reason: timedout');
 								console.table(_data);
+								console.profileEnd('getGraphData');
 								console.groupEnd();
 								console.groupEnd();
 							}
@@ -220,6 +221,7 @@ angular.module('napPlayAdminApp')
 									console.group('resolved');
 									console.log('failCount: ' + _failCount);
 									console.table(_data);
+									console.profileEnd('getGraphData');
 									console.groupEnd();
 									console.groupEnd();
 
