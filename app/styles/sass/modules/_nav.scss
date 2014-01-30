@@ -1,0 +1,25 @@
+@import "base/settings";
+@import "helpers";
+
+/*
+	module nav
+ */
+
+.m-nav{
+	font-size: $fs-m;
+	overflow: hidden;
+	background-color: $c-2;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.m-nav-item{
+	margin-bottom: 10px;
+	a{
+		text-decoration: none;
+	}
+	&.is-active{
+		
+	}
+}

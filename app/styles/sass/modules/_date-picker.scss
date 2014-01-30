@@ -1,0 +1,24 @@
+@import "base/settings";
+/*
+	module datepicker
+ */
+.m-date-picker{
+	margin-bottom: 20px;
+	font-size: $fs-s;
+	th{
+		text-align: center;
+		padding: 5px;
+		button{	
+			width: 100%;
+		}
+	}
+	td{
+		padding: 5px;
+	}
+	.pull-right{
+		&::after,
+		&::before{
+			
+		}
+	}
+}

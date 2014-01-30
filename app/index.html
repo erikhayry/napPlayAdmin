@@ -12,10 +12,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/css/main.css">
         <!-- endbuild -->
 </head>
-  <body ng-app="napPlayAdminApp">
+  <body ng-app="napPlayAdminApp" ng-controller="AppCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -24,9 +24,24 @@
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
+    <div class="l-nav">
+      <ul class="m-nav">
+        <li class="m-nav-item">
+          <a href="{{hash}}/stats">Stats</a>
+          <ul class="m-nav-sub">
+            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry">Flurry</a></li>
+          </ul>  
+        </li>
+        <li class="m-nav-item"><a href="{{hash}}/user-relationships">User relationships</a></li>
+        <li class="m-nav-item"><a href="{{hash}}/notifications">Notifications</a></li>
+      <ul>  
+    </div>
+  
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="l-view" ng-view="">
+      
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -46,16 +61,29 @@
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-translate/angular-translate.js"></script>
+        <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+        <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+        <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+
+        <script src="scripts/vendor/EDITED-ui-bootstrap-custom-tpls-0.10.0.js"></script>
+
         <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <!-- endbuild -->
 
-        <!-- @if ENV='dev' -->
-        <script src="scripts/urltests.js"></script>
-        <!-- @endif -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/FlurryPage.js"></script>
+        <script src="scripts/services/FlurryFactory.js"></script>
+        <script src="scripts/directives/flurry-chart.js"></script>
+        <script src="scripts/services/D3Factory.js"></script>
+        <script src="scripts/services/ScriptLoader.js"></script>
+        <script src="scripts/controllers/UserRelationshipsPage.js"></script>
+        <script src="scripts/controllers/NotificationsPage.js"></script>
+        <script src="scripts/controllers/App.js"></script>
+        <script src="scripts/services/AppConfig.js"></script>
+        <!-- endbuild -->
 
 </body>
 </html>

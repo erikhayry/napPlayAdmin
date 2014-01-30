@@ -1,0 +1,189 @@
+@import "helpers";
+@import "base/settings";
+
+/*
+	Module chart
+ */
+
+/*
+	includes
+ */
+
+@include keyframes(pulse-loading) {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+  	100% {
+		opacity: 0;
+	}
+}
+
+$chart-bg-c : darken($c-1, 5%);
+
+.m-chart {
+	margin: 20px 0;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: none;
+	position: relative;
+	background-color: $chart-bg-c;
+	padding: 10px;
+	border-radius: 5px;
+
+	//states
+	&.is-loading{
+		display: block;
+		background-color: transparent;
+		@include animation(pulse-loading, 3s, infinite);	
+	}
+
+	//loading heart
+	$heart-w : 30px;
+	$heart-w50 : $heart-w / 2;
+	$heart-h : 50px;
+	$heart-h50 : $heart-h / 2;
+
+	&.is-loading:after,
+	&.is-loading:before{
+	    position: absolute;
+	    content: "";
+	    left: calc(50% + #{$heart-w50});
+	    top: calc(50% - #{$heart-h50});
+	    width: $heart-w;
+	    height: $heart-h;
+	    background: #E23434;
+	    border-radius: $heart-h $heart-h 0 0;
+		transform: rotate(-45deg);
+	    transform-origin: 0 100%;
+	}
+	&.is-loading:before{
+	    left: calc(50% - #{$heart-w50});
+	    transform: rotate(45deg);
+	    transform-origin :100% 100%;
+	}
+
+	&.is-loaded:after{
+		opacity: 0;
+	}
+	&.is-loaded{
+		display: block;
+	}
+}
+
+.m-chart-title{
+	margin-bottom: 20px;
+}
+
+
+//chart line, labels and axis etc. (currently the svg)
+.m-chart-data{
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	.is-loaded &{
+		opacity: 1;
+	}
+}
+
+//chart axis
+.m-chart-axis-x, 
+.m-chart-axis-y{
+	font-size: $fs-s;
+	path, line{
+	  	stroke: $c-2;
+  		stroke-width: 1;
+  		shape-rendering: crispEdges;
+  		fill: none;
+  		color: $c-2;
+	}
+	text{
+		fill: $c-2;
+	}
+}
+
+//chart labels
+.m-chart-label{
+  fill: $c-2;
+  font-size: $fs-s;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-label-#{$i}{
+        fill: nth($ccs, $i);
+    }
+}
+
+
+//chart line
+.m-chart-line{
+	fill: none;
+	stroke: $c-2;
+	stroke-width: 2;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-line-#{$i}{
+        stroke: nth($ccs, $i);
+    }
+}
+
+//chart dots
+.m-chart-dot-holder{
+	position: relative;
+	&:hover{
+		z-index: 2;
+	}
+}
+
+.m-chart-dot{
+	fill: $c-2;
+	stroke-width: 3px;
+	stroke: $chart-bg-c;
+	z-index: 1;
+}
+
+@for $i from 1 through length($ccs) {
+    .m-chart-dots-#{$i} {
+    	.m-chart-dot{
+        	fill: nth($ccs, $i);
+    	}
+	    .m-chart-dot-label{
+	    	fill: nth($ccs, $i);
+	    }
+	}
+}
+
+.m-chart-tool-tip{
+	fill: $c-2;
+	font-size: $fs-s;
+	display: none;
+	text-anchor: middle; 
+	dominant-baseline: hanging;
+	&.is-visible{
+		display: block;
+	}
+}
+
+//chart errors
+.m-chart-error-holder{
+	overflow: hidden;
+	color: $c-error;
+	font-size: $fs-s;
+}
+
+.m-chart-errors{
+	overflow: hidden;
+	float: left;
+}
+
+.m-chart-error{
+	float: left;
+	padding: 5px;	
+}
+
+.m-chart-error-title{
+	@extend .m-chart-error;
+}

@@ -1,4 +1,13 @@
 node_modules
+app/bower_components
+dist
 .tmp
 .sass-cache
 .DS_Store
+screenshots-viewports
+screenshots
+docs
+npm-debug.log
+.editorconfig
+.jshintrc
+.travis.yml

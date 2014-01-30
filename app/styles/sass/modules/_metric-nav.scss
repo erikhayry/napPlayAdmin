@@ -1,0 +1,26 @@
+@import "base/settings";
+/*
+	metric nav
+ */
+
+.m-metrics-nav{
+	overflow: hidden;
+	font-size: $fs-s;
+	padding: 20px 0;
+}
+
+.m-metrics-nav-item{
+	float: left;
+	margin: 2px 2px 0 0;
+	input[type=checkbox]{
+		display: none;
+	}
+	label{
+		background-color: lighten($c-1, 5%);
+		padding: 5px;
+		display: block;
+	}
+	input:checked + label{
+		background-color: darken($c-1, 5%);
+	}
+}

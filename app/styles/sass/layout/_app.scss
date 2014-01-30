@@ -1,0 +1,22 @@
+@import 'helpers';
+@import 'base/settings';
+
+$body-padding : 20px;
+$nav-width: 0%;
+
+.l-nav{
+	display: none;
+	padding: $body-padding;
+	@include screen($bp-s) {
+		float: left;
+		width: $nav-width;
+	}
+}
+
+.l-view{
+	padding: $body-padding;
+	@include screen($bp-s) {
+		float: left;
+		width: calc(100% - #{$nav-width});
+	}
+}
