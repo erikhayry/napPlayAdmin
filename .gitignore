@@ -9,5 +9,4 @@ screenshots
 docs
 npm-debug.log
 .editorconfig
-.jshintrc
 .travis.yml
