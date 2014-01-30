@@ -187,45 +187,30 @@ angular.module('napPlayAdminApp')
 						_retries = _configure.retries || 0,
 						_timeout = _configure.timeout || 10000,
 
-						//try to resolve promise
-						_resolve = function (timedout, retries) {
-							if (_resolved) return false;
-
-							if (timedout) {
-								var _clonedData = {
-									//slice(0) to make a clone of current data
-									data: _data.data.slice(0),
-									errors: _data.errors.slice(0),
-									timedout: _data.timedout.slice(0)
-								};
-
-								_deferred.resolve(_clonedData);
-								_resolved = true;
-
+						_resolve = function (data) {
+							if (!_resolved) {
+								_deferred.resolve(data);
 								console.group('resolved');
-								console.log('reason: timedout');
+								console.log('failCount: ' + _failCount);
 								console.table(_data);
 								console.profileEnd('getGraphData');
 								console.groupEnd();
 								console.groupEnd();
 							}
+							_resolved = true;
+						},
+
+						//try to resolve promise
+						_tryResolve = function (retries) {
 
 							//if all metrics been handled
-							else if (_getDataLength(_data) >= metrics.length) {
+							if ((_getDataLength(_data) >= metrics.length)) {
 
-								//resolve if no errors or we reached maximum retries
-								if (_data.errors.length === 0 || _failCount >= retries) {
-									if (!_resolved) _deferred.resolve(_data);
-									_resolved = true;
-
-									console.group('resolved');
-									console.log('failCount: ' + _failCount);
-									console.table(_data);
-									console.profileEnd('getGraphData');
-									console.groupEnd();
-									console.groupEnd();
-
+								//if no errors or we reached maximum retries
+								if ((_data.errors.length === 0 || _failCount >= retries)) {
+									_resolve(_data);
 								}
+
 								//else keep trying to get data
 								else {
 									_failCount++;
@@ -242,7 +227,9 @@ angular.module('napPlayAdminApp')
 
 									_getData();
 								}
+
 							}
+
 						},
 
 						// add data to either metric or error array
@@ -264,7 +251,23 @@ angular.module('napPlayAdminApp')
 
 							// timeout checking if maxium time is reached
 							$timeout(function () {
-								_resolve(true);
+
+								var _clonedData = {
+									//slice(0) to make a clone of current data
+									data: _data.data.slice(0),
+									errors: _data.errors.slice(0),
+									timedout: _data.timedout.slice(0)
+								};
+
+								_resolve(_clonedData);
+
+								console.group('resolved');
+								console.log('reason: timedout');
+								console.table(_data);
+								console.profileEnd('getGraphData');
+								console.groupEnd();
+								console.groupEnd();
+
 							}, _timeout);
 
 							//get data for each metric (alternatively could use $q.all)
@@ -300,7 +303,7 @@ angular.module('napPlayAdminApp')
 											'@version': _cacheData.data['@version'],
 											'day': _cacheData.data.day.slice(_indexFrom, _indexTo)
 										});
-										_resolve(_retries);
+										_tryResolve(_retries);
 									}
 
 									//if not cached make an http request
@@ -322,12 +325,12 @@ angular.module('napPlayAdminApp')
 													to: to
 												});
 
-												_resolve(_retries);
+												_tryResolve(_retries);
 											})
 
 											.error(function () {
 												_addData(metrics[index], metrics[index], 'error');
-												_resolve(false, _retries);
+												_tryResolve(_retries);
 											});
 										}, 3000 * i); //need a timeout to not call the api too much.                 
 									}

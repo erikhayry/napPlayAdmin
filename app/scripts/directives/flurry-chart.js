@@ -144,23 +144,17 @@ angular.module('napPlayAdminApp')
 											.interpolate('monotone'),
 
 										_xScale = d3.time.scale()
-											.domain([
-												d3.min(_data, function (d) {
-													return _getStartDay(d.day);
-												}),
-												d3.max(_data, function (d) {
-													return _getEndDate(d.day);
-												})
-											])
+											.domain([d3.min(_data, function (d) {
+												return _getStartDay(d.day);
+											}), d3.max(_data, function (d) {
+												return _getEndDate(d.day);
+											})])
 											.range([_padding.left, _chartWidth - _padding.right]),
 
 										_yScale = d3.scale.linear()
-											.domain([
-												0,
-												d3.max(_data, function (d) {
-													return _getMaxVal(d.day);
-												})
-											])
+											.domain([0, d3.max(_data, function (d) {
+												return _getMaxVal(d.day);
+											})])
 											.range([_chartHeight - _padding.bottom, _padding.top]),
 
 										_xAxis = d3.svg.axis()
