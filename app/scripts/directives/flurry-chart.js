@@ -53,13 +53,14 @@ angular.module('napPlayAdminApp')
 				scope: {
 					flurrymetrics: '@',
 					flurryfrom: '@',
-					flurryto: '@'
+					flurryto: '@',
+					flurrytype: '@'
 				},
 				link: function postLink(scope, element, attrs) {
 					scope.status = '';
 
 					// watch the attributes for any changes        
-					scope.$watch('flurrymetrics + flurryfrom + flurryto', function () {
+					scope.$watch('flurrymetrics + flurryfrom + flurryto + flurrytype', function () {
 						_drawGraph();
 					});
 
@@ -72,16 +73,18 @@ angular.module('napPlayAdminApp')
 							scope.errors = [];
 							scope.timedout = [];
 							scope.status = 'is-loading';
-							var _metrics = attrs.flurrymetrics.replace(' ', '').split(',');
+
+							var _metrics = attrs.flurrymetrics.replace(', ', ',').split(',');
 
 							console.time('Get graph data total time');
 
-							FlurryFactory.getGraphData(_metrics, attrs.flurryfrom, attrs.flurryto, {
+							FlurryFactory.getGraphData(_metrics, attrs.flurryfrom, attrs.flurryto, attrs.flurrytype, {
 								retries: 0,
 								timeout: 15000
 							})
 
 							.then(function (flurryData) {
+
 								console.group('Flurry data returned');
 								console.timeEnd('Get graph data total time');
 								console.groupEnd();
@@ -90,6 +93,20 @@ angular.module('napPlayAdminApp')
 
 								scope.errors = flurryData.errors;
 								scope.timedout = flurryData.timedout;
+
+								var _quantity = '',
+									_metric = '';
+
+								switch (attrs.flurrytype) {
+								case 'app':
+									_quantity = '@value';
+									_metric = '@metric';
+									break;
+								case 'event':
+									_quantity = '@totalCount';
+									_metric = '@eventName';
+									break;
+								}
 
 								D3Factory.d3().then(function (d3) {
 									console.profile('Draw graph');
@@ -130,7 +147,7 @@ angular.module('napPlayAdminApp')
 
 										_getMaxVal = function (days) {
 											return d3.max(days, function (d) {
-												return +d['@value'];
+												return +d[_quantity];
 											}); // + converts stringt to int
 										},
 
@@ -139,7 +156,7 @@ angular.module('napPlayAdminApp')
 												return _xScale(_format.parse(d['@date']));
 											})
 											.y(function (d) {
-												return _yScale(d['@value']);
+												return _yScale(d[_quantity]);
 											})
 											.interpolate('monotone'),
 
@@ -207,7 +224,7 @@ angular.module('napPlayAdminApp')
 											return 'm-chart-label m-chart-label-' + (i + 1); // add one to make it easier to use in sass which loops from index 1
 										})
 										.text(function (d) {
-											return d['@metric'] + ' ';
+											return d[_metric] + ' ';
 										});
 
 									//add lines                    
@@ -246,10 +263,10 @@ angular.module('napPlayAdminApp')
 											return d['@date'];
 										})
 										.attr('data-value', function (d) {
-											return d['@value'];
+											return d[_quantity];
 										})
 										.attr('transform', function (d) {
-											return 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d['@value']) + ')';
+											return 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + _yScale(d[_quantity]) + ')';
 										})
 
 									//show and hide tooltip
@@ -257,10 +274,10 @@ angular.module('napPlayAdminApp')
 										toolTipEl.html(
 											'<text>' +
 											'<tspan x="0">' + d['@date'] + '</tspan>' +
-											'<tspan x="0" y="15">' + d['@value'] + '</tspan>' +
+											'<tspan x="0" y="15">' + d[_quantity] + '</tspan>' +
 											'</text>');
 										toolTipEl.classed('is-visible', true);
-										toolTipEl.attr('transform', 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + (_yScale(d['@value']) - 30) + ')');
+										toolTipEl.attr('transform', 'translate(' + _xScale(_format.parse(d['@date'])) + ',' + (_yScale(d[_quantity]) - 30) + ')');
 									})
 										.on('mouseout', function () {
 											toolTipEl.classed('is-visible', false);

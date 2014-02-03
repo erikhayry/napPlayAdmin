@@ -16,6 +16,8 @@ describe('Service: FlurryFactory', function () {
 	var $httpBackend,
 		$timeout, $cacheFactory, $translate,
 		FlurryFactory, Cache,
+
+		// app metrics
 		flurryApiUrl_ActiveUsers = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_ActiveUsersDateLater = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-13',
 		flurryApiUrl_Sessions = 'http://api.flurry.com/appMetrics/Sessions?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
@@ -293,7 +295,14 @@ describe('Service: FlurryFactory', function () {
 				"@date": "2013-11-12",
 				"@value": "294"
 			}]
-		}];
+		}],
+
+		// event metrics
+		flurryEventMetricsSummaryUrl = 'http://api.flurry.com/eventMetrics/Summary?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-12-11&endDate=2014-01-10',
+
+		flurryEventMetricsSummaryData = [
+			'some data'
+		];
 
 	//use empy language object to prevent the $translateProvider make http calls
 	beforeEach(module('pascalprecht.translate', function ($translateProvider) {
@@ -318,6 +327,20 @@ describe('Service: FlurryFactory', function () {
 	/*
     tests
    */
+
+	describe('getEventMetricsSummary', function () {
+		it('should return an object of a flurry metrics summary', function () {
+			var flurryEventMetrics;
+
+			FlurryFactory.getEventMetricsSummary('2013-12-11', '2014-01-10').success(function (data) {
+				var flurryEventMetrics = data;
+				expect(flurryEventMetrics.length).toBe(1);
+			});
+
+			$httpBackend.expectGET(flurryEventMetricsSummaryUrl).respond(200, flurryEventMetricsSummaryData);
+			$httpBackend.flush();
+		});
+	});
 
 	describe('getAppMetrics', function () {
 		it('should return an array of flurry metrics', function () {
@@ -358,7 +381,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['ActiveUsers', 'Sessions', 'PageViews'], '2013-10-01', '2013-11-12', {
+				FlurryFactory.getGraphData(['ActiveUsers', 'Sessions', 'PageViews'], '2013-10-01', '2013-11-12', 'app', {
 					retries: 0,
 					timeout: 15000
 				})
@@ -389,7 +412,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['ActiveUsers'], '2013-10-01', '2013-11-13', {
+				FlurryFactory.getGraphData(['ActiveUsers'], '2013-10-01', '2013-11-13', 'app', {
 					retries: 0,
 					timeout: 15000
 				})
@@ -420,7 +443,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', {
+				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', 'app', {
 					retries: 0,
 					timeout: 15000
 				})
@@ -451,7 +474,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', {
+				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', 'app', {
 					retries: 0,
 					timeout: 15000
 				})
@@ -482,7 +505,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', {
+				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', 'app', {
 					retries: 0,
 					timeout: 100
 				})
@@ -517,7 +540,7 @@ describe('Service: FlurryFactory', function () {
 			runs(function () {
 				flag = false;
 
-				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', {
+				FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-12', 'app', {
 					retries: 0,
 					timeout: 15000
 				})
@@ -548,7 +571,7 @@ describe('Service: FlurryFactory', function () {
 				runs(function () {
 					flag = false;
 
-					FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-11', {
+					FlurryFactory.getGraphData(['Sessions'], '2013-10-01', '2013-11-11', 'app', {
 						retries: 0,
 						timeout: 15000
 					})
@@ -578,7 +601,7 @@ describe('Service: FlurryFactory', function () {
 					runs(function () {
 						flag = false;
 
-						FlurryFactory.getGraphData(['Sessions'], '2013-10-02', '2013-11-12', {
+						FlurryFactory.getGraphData(['Sessions'], '2013-10-02', '2013-11-12', 'app', {
 							retries: 0,
 							timeout: 15000
 						})

@@ -14,7 +14,7 @@ describe('Directive: flurry-chart', function () {
 	beforeEach(module('templates/chart.html'));
 
 	beforeEach(inject(function ($rootScope, $compile) {
-		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="line"></flurry-chart>');
+		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="app"></flurry-chart>');
 		scope = $rootScope;
 		$compile(element)(scope);
 		scope.$digest();
