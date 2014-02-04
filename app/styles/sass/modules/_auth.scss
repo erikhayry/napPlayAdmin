@@ -1,0 +1,17 @@
+@import "helpers";
+@import "base/settings";
+
+/*
+	Module auth
+ */
+
+.m-auth{
+
+}
+
+.m-auth-logout{
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	padding: 5px;
+}

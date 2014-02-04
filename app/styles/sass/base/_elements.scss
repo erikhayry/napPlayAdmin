@@ -80,7 +80,7 @@ h1{
 	buttons
  */
 
-button{
+button, input[type="submit"]{
 	border: none;
 	border-radius: 2px;
 	background-color: lighten($c-1, 5%);

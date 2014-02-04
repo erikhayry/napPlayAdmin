@@ -421,6 +421,12 @@ module.exports = function (grunt) {
 					inline: true
 				}
 			}
+		},
+
+		exec: {
+			authServer: {
+      			cmd: 'node app/auth.server.js'
+    		},
 		}
 
 	});
@@ -430,6 +436,15 @@ module.exports = function (grunt) {
 			return grunt.task.run(['build', 'connect:dist:keepalive']);
 		}
 
+		if (target === 'auth'){
+			return grunt.task.run([
+				'clean:server',
+				'concurrent:server',
+				'autoprefixer',
+				'exec:authServer',
+				'watch'
+			]);
+		}
 		grunt.task.run([
 			'clean:server',
 			'concurrent:server',
@@ -438,6 +453,8 @@ module.exports = function (grunt) {
 			'watch'
 		]);
 	});
+
+
 
 	grunt.registerTask('test', [
 		'verify',

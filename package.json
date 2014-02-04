@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "gzippo": "~0.2.0",
-    "express": "~3.4.2"
+    "express": "~3.4.7",
+    "express-jwt":  "~0.1.0",
+    "jsonwebtoken": "~0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

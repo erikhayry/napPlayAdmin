@@ -75,6 +75,10 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
 	});
 	$translateProvider.preferredLanguage('en');
 	$translateProvider.useLocalStorage();
+})
+
+.config(function ($httpProvider) {
+  $httpProvider.interceptors.push('authInterceptor');
 });
 
 /*

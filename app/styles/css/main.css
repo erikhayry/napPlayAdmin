@@ -12,9 +12,9 @@
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; outline: none; }
 
-body { line-height: 1; padding: 0; color: #ecf0f1; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; background-color: #1b1e24; font-weight: 300; letter-spacing: 2px; }
+body { line-height: 1; padding: 0; color: #dddddd; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; background-color: #242424; font-weight: 300; letter-spacing: 2px; }
 
-a { color: #ecf0f1; }
+a { color: #dddddd; }
 a:hover { color: white; }
 
 ol, ul { list-style: none; }
@@ -28,12 +28,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 /*
 	headings
 */
-h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #ecf0f1; text-align: center; }
+h1 { font-size: 1.25em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #dddddd; text-align: center; }
 
 /*
 	buttons */
-button { border: none; border-radius: 2px; background-color: #262a33; color: #ecf0f1; padding: 5px 15px; cursor: pointer; outline: none; }
-button[disabled="disabled"] { opacity: 0.2; }
+button, input[type="submit"] { border: none; border-radius: 2px; background-color: #313131; color: #dddddd; padding: 5px 15px; cursor: pointer; outline: none; }
+button[disabled="disabled"], input[type="submit"][disabled="disabled"] { opacity: 0.2; }
 
 /*
 	Animation helpers and mixins */
@@ -45,7 +45,7 @@ button[disabled="disabled"] { opacity: 0.2; }
 	mixins */
 /*
 	forms */
-input[type=text], input[type=textarea] { background-color: #262a33; border: none; padding: 5px 15px; outline: none; }
+input[type=text], input[type=textarea], input[type=password] { background-color: #313131; color: #dddddd; border: none; padding: 5px 15px; outline: none; }
 
 /*
 	Animation helpers and mixins */
@@ -62,6 +62,13 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 @media (min-width: 580px) { .l-view { float: left; width: calc(100% - 300px); } }
 
 /*
+	http://docs.angularjs.org/api/ng.directive:ngCloak
+
+	For the best result, the angular.js script must be loaded in the head section of the html document; alternatively, 
+	the css rule above must be included in the external stylesheet of the application. */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak] .ng-cloak, .x-ng-cloak, .ng-hide { display: none !important; }
+
+/*
 	Animation helpers and mixins */
 /*
 	mixins */
@@ -71,7 +78,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 	mixins */
 /*
 	module nav */
-.m-nav { font-size: 1em; overflow: hidden; background-color: #101215; text-transform: uppercase; text-align: center; padding: 10px; }
+.m-nav { font-size: 1em; overflow: hidden; background-color: #171717; text-transform: uppercase; text-align: center; padding: 10px; }
 @media (min-width: 580px) { .m-nav { text-align: left; min-height: 100%; } }
 
 .m-nav-item { margin-bottom: 10px; font-size: 0.75em; }
@@ -99,7 +106,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
   50% { opacity: 1; }
   100% { opacity: 0; } }
 
-.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #101215; padding: 10px; border-radius: 5px; }
+.m-chart { margin: 20px 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: none; position: relative; background-color: #171717; padding: 10px; border-radius: 5px; }
 .m-chart.is-loading { display: block; background-color: transparent; -webkit-animation-name: pulse-loading; -webkit-animation-duration: 3s; -webkit-animation-iteration-count: infinite; animation-name: pulse-loading; animation-duration: 3s; animation-iteration-count: infinite; }
 .m-chart.is-loading:after, .m-chart.is-loading:before { position: absolute; content: ""; left: calc(50% + 15px); top: calc(50% - 25px); width: 30px; height: 50px; background: #E23434; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%; }
 .m-chart.is-loading:before { left: calc(50% - 15px); transform: rotate(45deg); transform-origin: 100% 100%; }
@@ -112,10 +119,10 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .is-loaded .m-chart-data { opacity: 1; }
 
 .m-chart-axis-x, .m-chart-axis-y { font-size: 0.75em; }
-.m-chart-axis-x path, .m-chart-axis-x line, .m-chart-axis-y path, .m-chart-axis-y line { stroke: #ecf0f1; stroke-width: 1; shape-rendering: crispEdges; fill: none; color: #ecf0f1; }
-.m-chart-axis-x text, .m-chart-axis-y text { fill: #ecf0f1; }
+.m-chart-axis-x path, .m-chart-axis-x line, .m-chart-axis-y path, .m-chart-axis-y line { stroke: #dddddd; stroke-width: 1; shape-rendering: crispEdges; fill: none; color: #dddddd; }
+.m-chart-axis-x text, .m-chart-axis-y text { fill: #dddddd; }
 
-.m-chart-label { fill: #ecf0f1; font-size: 0.75em; }
+.m-chart-label { fill: #dddddd; font-size: 0.75em; }
 
 .m-chart-label-1 { fill: #e23434; }
 
@@ -135,7 +142,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 
 .m-chart-label-9 { fill: #747474; }
 
-.m-chart-line { fill: none; stroke: #ecf0f1; stroke-width: 2; }
+.m-chart-line { fill: none; stroke: #dddddd; stroke-width: 2; }
 
 .m-chart-line-1 { stroke: #e23434; }
 
@@ -158,7 +165,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .m-chart-dot-holder { position: relative; }
 .m-chart-dot-holder:hover { z-index: 2; }
 
-.m-chart-dot { fill: #ecf0f1; stroke-width: 3px; stroke: #101215; z-index: 1; }
+.m-chart-dot { fill: #dddddd; stroke-width: 3px; stroke: #171717; z-index: 1; }
 
 .m-chart-dots-1 .m-chart-dot { fill: #e23434; }
 .m-chart-dots-1 .m-chart-dot-label { fill: #e23434; }
@@ -187,7 +194,7 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .m-chart-dots-9 .m-chart-dot { fill: #747474; }
 .m-chart-dots-9 .m-chart-dot-label { fill: #747474; }
 
-.m-chart-tool-tip { fill: #ecf0f1; font-size: 0.75em; display: none; text-anchor: middle; dominant-baseline: hanging; }
+.m-chart-tool-tip { fill: #dddddd; font-size: 0.75em; display: none; text-anchor: middle; dominant-baseline: hanging; }
 .m-chart-tool-tip.is-visible { display: block; }
 
 .m-chart-error-holder { overflow: hidden; color: #e23434; font-size: 0.75em; }
@@ -206,8 +213,8 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 
 .m-metrics-nav-item { float: left; margin: 2px 2px 0 0; }
 .m-metrics-nav-item input[type=checkbox] { display: none; }
-.m-metrics-nav-item label { background-color: #262a33; padding: 5px; display: block; }
-.m-metrics-nav-item input:checked + label { background-color: #101215; }
+.m-metrics-nav-item label { background-color: #313131; padding: 5px; display: block; }
+.m-metrics-nav-item input:checked + label { background-color: #171717; }
 
 /*
 	Animation helpers and mixins */
@@ -231,5 +238,17 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 /*
 	Module search */
 .m-search-input { margin: 10px 0; }
+
+/*
+	Animation helpers and mixins */
+/*
+	mixins */
+/*
+	Animation helpers and mixins */
+/*
+	mixins */
+/*
+	Module auth */
+.m-auth-logout { position: fixed; top: 10px; right: 10px; padding: 5px; }
 
 /*# sourceMappingURL=main.css.map */
