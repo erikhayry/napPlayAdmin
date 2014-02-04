@@ -223,7 +223,6 @@ angular.module('napPlayAdminApp')
 				getGraphData: function (metrics, from, to, metricType, configure) {
 					console.groupCollapsed('%c getGraphData: ' + from + ' to ' + to + ' for ' + metrics, AppConfig.debugHeading);
 					console.profile('getGraphData');
-					console.log('-----------' + metricType);
 					var _urlFunc = _url(metricType),
 						_deferred = $q.defer(),
 

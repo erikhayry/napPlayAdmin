@@ -29,6 +29,13 @@ describe('Service: FlurryFactory', function () {
 		flurryApiUrl_Login = 'http://api.flurry.com/eventMetrics/Event?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&eventName=Login&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_Logout = 'http://api.flurry.com/eventMetrics/Event?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&eventName=Logout&startDate=2013-10-01&endDate=2013-11-12',
 
+		// event metrics summary
+		flurryEventMetricsSummaryUrl = 'http://api.flurry.com/eventMetrics/Summary?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-12-11&endDate=2014-01-10',
+
+		flurryEventMetricsSummaryData = [
+			'some data'
+		],
+
 		flurryData = [{
 			"@endDate": "2013-11-12",
 			"@metric": "ActiveUsersByDay",
@@ -301,7 +308,8 @@ describe('Service: FlurryFactory', function () {
 				"@date": "2013-11-12",
 				"@value": "294"
 			}]
-		}],
+		}];
+
 
 
 	//use empy language object to prevent the $translateProvider make http calls
