@@ -10,7 +10,7 @@ describe('app scenario Test', function () {
 		});
 
 		it('redirects to stats page as default', function () {
-			expect(browser().location().url()).toEqual('/stats/flurry');
+			expect(browser().location().url()).toEqual('/stats/flurry/app-metrics');
 		});
 	});
 
@@ -19,10 +19,18 @@ describe('app scenario Test', function () {
     */
 
 	describe('Pages', function () {
-		describe('Stats Page', function () {
+		
+		describe('App metrics Page', function () {
 			it('Should have the correct title', function () {
-				browser().navigateTo('/#/stats');
-				expect(element('#page-title').text()).toEqual('Stats - Flurry');
+				browser().navigateTo('/#/stats/flurry/app-metrics');
+				expect(element('#page-title').text()).toEqual('Stats - Flurry - App metrics');
+			});
+		});
+
+		describe('Event metrics Page', function () {
+			it('Should have the correct title', function () {
+				browser().navigateTo('/#/stats/flurry/event-metrics');
+				expect(element('#page-title').text()).toEqual('Stats - Flurry - Event metrics');
 			});
 		});
 	})

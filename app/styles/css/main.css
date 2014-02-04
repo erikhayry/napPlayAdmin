@@ -55,11 +55,11 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 	Animation helpers and mixins */
 /*
 	mixins */
-.l-nav { display: none; padding: 20px; }
-@media (min-width: 580px) { .l-nav { float: left; width: 0%; } }
+.l-nav { padding: 20px; }
+@media (min-width: 580px) { .l-nav { float: left; width: 300px; } }
 
 .l-view { padding: 20px; }
-@media (min-width: 580px) { .l-view { float: left; width: calc(100% - 0%); } }
+@media (min-width: 580px) { .l-view { float: left; width: calc(100% - 300px); } }
 
 /*
 	Animation helpers and mixins */
@@ -71,10 +71,13 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 	mixins */
 /*
 	module nav */
-.m-nav { font-size: 1em; overflow: hidden; background-color: #ecf0f1; text-transform: uppercase; text-align: center; padding: 10px 0; }
+.m-nav { font-size: 1em; overflow: hidden; background-color: #101215; text-transform: uppercase; text-align: center; padding: 10px; }
+@media (min-width: 580px) { .m-nav { text-align: left; min-height: 100%; } }
 
-.m-nav-item { margin-bottom: 10px; }
+.m-nav-item { margin-bottom: 10px; font-size: 0.75em; }
 .m-nav-item a { text-decoration: none; }
+
+.m-nav-sub-item { padding-left: 20px; margin: 10px 0; }
 
 /*
 	Animation helpers and mixins */
@@ -216,5 +219,17 @@ input[type=text], input[type=textarea] { background-color: #262a33; border: none
 .m-date-picker th { text-align: center; padding: 5px; }
 .m-date-picker th button { width: 100%; }
 .m-date-picker td { padding: 5px; }
+
+/*
+	Animation helpers and mixins */
+/*
+	mixins */
+/*
+	Animation helpers and mixins */
+/*
+	mixins */
+/*
+	Module search */
+.m-search-input { margin: 10px 0; }
 
 /*# sourceMappingURL=main.css.map */

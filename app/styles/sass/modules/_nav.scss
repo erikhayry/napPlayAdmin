@@ -8,18 +8,28 @@
 .m-nav{
 	font-size: $fs-m;
 	overflow: hidden;
-	background-color: $c-2;
+	background-color: darken($c-1, 5%);
 	text-transform: uppercase;
 	text-align: center;
-	padding: 10px 0;
+	padding: 10px;
+	@include screen($bp-s) {
+		text-align: left;
+		min-height: 100%;
+	}
 }
 
 .m-nav-item{
 	margin-bottom: 10px;
+	font-size: $fs-s;
 	a{
 		text-decoration: none;
 	}
 	&.is-active{
 		
 	}
+}
+
+.m-nav-sub-item{
+	padding-left: 20px;
+	margin: 10px 0;
 }
