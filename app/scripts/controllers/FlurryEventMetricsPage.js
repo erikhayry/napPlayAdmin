@@ -8,7 +8,7 @@
 
 /**
  * @ngdoc service
- * @name napPlayAdminApp.FlurryPageCtrl
+ * @name napPlayAdminApp.FlurryEventMetricsPageCtrl
  * @function
  *
  * @description
@@ -17,17 +17,13 @@
  */
 
 angular.module('napPlayAdminApp')
-	.controller('FlurryPageCtrl', ['$scope', 'FlurryFactory',
+	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory',
 		function ($scope, FlurryFactory) {
 			var _init = function () {
-				$scope.pageName = 'Stats - Flurry';
-				$scope.metrics = FlurryFactory.getAppMetrics();
-				$scope.isGettingData = '';
+				$scope.pageName = 'Stats - Flurry - Event metrics';
+				$scope.metrics = [];
 
-				/*
-            http://angular-ui.github.io/bootstrap/#/datepicker
-        */
-
+				//http://angular-ui.github.io/bootstrap/#/datepicker
 				$scope.today();
 				$scope.toggleMax();
 				$scope.dateOptions = {
@@ -35,6 +31,17 @@ angular.module('napPlayAdminApp')
 					'starting-day': 1
 				};
 				$scope.format = 'dd-MMMM-yyyy';
+			};
+
+			$scope.getMetrics = function (from, to) {
+				FlurryFactory.getEventMetricsSummary(from, to).success(function (data) {
+					for (var i = 0; i < data.event.length; i++) {
+						$scope.metrics.push({
+							'value': data.event[i]['@eventName'],
+							'name': data.event[i]['@eventName'],
+						});
+					}
+				});
 			};
 
 			$scope.getGraph = function (metrics, from, to) {
@@ -47,7 +54,8 @@ angular.module('napPlayAdminApp')
 					$scope.graph = {
 						metrics: metricValues.substr(0, metricValues.length - 1), //remove last comma
 						from: from,
-						to: to
+						to: to,
+						type: 'event'
 					};
 				}
 			};

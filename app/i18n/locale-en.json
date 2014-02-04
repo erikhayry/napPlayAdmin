@@ -6,6 +6,7 @@
   "from": "from",
   "show": "show",
   "load graph": "load graph",
+  "get metrics" : "get metrics",
   "close": "close",
   "currentText": "today",
   "toggleWeeksText": "weeks",

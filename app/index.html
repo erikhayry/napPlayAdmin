@@ -27,9 +27,10 @@
     <div class="l-nav">
       <ul class="m-nav">
         <li class="m-nav-item">
-          <a href="{{hash}}/stats">Stats</a>
+          <a href="{{hash}}/stats">Flurry</a>
           <ul class="m-nav-sub">
-            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry">Flurry</a></li>
+            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry/app-metrics">App Metrics</a></li>
+            <li class="m-nav-sub-item"><a href="{{hash}}/stats/flurry/event-metrics">Event Metrics</a></li>
           </ul>  
         </li>
         <li class="m-nav-item"><a href="{{hash}}/user-relationships">User relationships</a></li>
@@ -74,7 +75,8 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/FlurryPage.js"></script>
+        <script src="scripts/controllers/FlurryAppMetricsPage.js"></script>
+        <script src="scripts/controllers/FlurryEventMetricsPage.js"></script>
         <script src="scripts/services/FlurryFactory.js"></script>
         <script src="scripts/directives/flurry-chart.js"></script>
         <script src="scripts/services/D3Factory.js"></script>

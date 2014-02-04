@@ -1,7 +1,10 @@
 <div class="l-content">
 	<h1 id="page-title">{{pageName}}</h1>	
+	
+	<input type="text" ng-show="metrics.length > 0" ng-model="search" class="m-search-input" placeholder="Search">
+
 	<ul class="m-metrics-nav">
-		<li class="m-metrics-nav-item" ng-repeat="metric in metrics">
+		<li class="m-metrics-nav-item" ng-repeat="metric in (metrics | filter: search)">
 			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false"/>
 			<label for="{{metric.value}}">{{metric.name}}</label>
 		</li>		
@@ -17,24 +20,12 @@
 		{{'to' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
 		<button ng-click="openToDropDown($event)">{{'show' | translate}}</button>
 	</div>	
-
-	<button class="m-button" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'show graph' | translate}}</button>
 	
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
-	<flurry-chart flurryFrom="2013-12-11" flurryTo="2014-01-10" flurryMetrics="ActiveUsers,ActiveUsersByWeek" flurryType="line"></flurry-chart>
+	<button class="m-button" ng-show="metrics.length === 0" ng-click="getMetrics((dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'get metrics' | translate}}</button>
 
-	<flurry-chart flurryFrom="{{graph.from}}" flurryTo="{{graph.to}}" flurryMetrics="{{graph.metrics}}" flurryType="line"></flurry-chart>
+	<button class="m-button" ng-show="metrics.length > 0" ng-disabled="(metrics | filter: {checked : 'true'}).length <= 0" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'show graph' | translate}}</button>
+	
+	<flurry-chart flurryFrom="{{graph.from}}" flurryTo="{{graph.to}}" flurryMetrics="{{graph.metrics}}" flurryType="{{graph.type}}"></flurry-chart>
 
 </div>
 <!-- /.l-content -->

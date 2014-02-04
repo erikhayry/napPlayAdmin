@@ -26,9 +26,14 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
 		/*
         Stats Pages
       */
-		$routeProvider.when('/stats/flurry', {
+		$routeProvider.when('/stats/flurry/app-metrics', {
 			templateUrl: 'views/stats/flurry.html',
-			controller: 'FlurryPageCtrl'
+			controller: 'FlurryAppMetricsPageCtrl'
+		})
+
+		.when('/stats/flurry/event-metrics', {
+			templateUrl: 'views/stats/flurry.html',
+			controller: 'FlurryEventMetricsPageCtrl'
 		})
 
 		/*
@@ -46,7 +51,7 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
 		})
 
 		.otherwise({
-			redirectTo: '/stats/flurry'
+			redirectTo: '/stats/flurry/app-metrics'
 		});
 	})
 

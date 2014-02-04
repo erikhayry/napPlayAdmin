@@ -14,10 +14,11 @@ describe('Directive: flurry-chart', function () {
 	beforeEach(module('templates/chart.html'));
 
 	beforeEach(inject(function ($rootScope, $compile) {
-		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="line"></flurry-chart>');
-		scope = $rootScope;
-		$compile(element)(scope);
-		scope.$digest();
+		//add an element for each type of metrics (app and event)
+		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="app"></flurry-chart><flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="account registration, Login" flurryType="event"></flurry-chart>');		
+		scope = $rootScope;		
+		$compile(element)(scope);		
+		scope.$digest();		
 		isolateScope = element.isolateScope();
 	}));
 
@@ -28,10 +29,16 @@ describe('Directive: flurry-chart', function () {
 	var flag, data, $httpBackend,
 		$timeout, $cacheFactory,
 		FlurryFactory, Cache,
+		
+		//app urls
 		flurryApiUrl_ActiveUsers = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_ActiveUsersDateLater = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-13',
 		flurryApiUrl_Sessions = 'http://api.flurry.com/appMetrics/Sessions?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_PageViews = 'http://api.flurry.com/appMetrics/PageViews?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
+
+		//event urls
+		flurryApiUrl_AccReg = 'http://api.flurry.com/eventMetrics/Event?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&eventName=account registration&startDate=2013-10-01&endDate=2013-11-12',
+		flurryApiUrl_Login = 'http://api.flurry.com/eventMetrics/Event?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&eventName=Login&startDate=2013-10-01&endDate=2013-11-12',
 
 		flurryData = [{
 			"@endDate": "2013-11-12",
@@ -322,9 +329,11 @@ describe('Directive: flurry-chart', function () {
 		$httpBackend.verifyNoOutstandingRequest();
 	});
 
-	it("should have the correct status strings", function () {
+	it("should have the correct status strings", function () {		
 		$httpBackend.expectGET(flurryApiUrl_ActiveUsers).respond(200, flurryData[0]);
+		$httpBackend.expectGET(flurryApiUrl_AccReg).respond(200, []);
 		$httpBackend.expectGET(flurryApiUrl_Sessions).respond(200, flurryData[1]);
+		$httpBackend.expectGET(flurryApiUrl_Login).respond(200, []);
 
 		expect(isolateScope.status).toEqual('is-loading');
 
@@ -347,7 +356,9 @@ describe('Directive: flurry-chart', function () {
 
 	it("should have timedout data", function () {
 		$httpBackend.expectGET(flurryApiUrl_ActiveUsers).respond(200, flurryData[0]);
+		$httpBackend.expectGET(flurryApiUrl_AccReg).respond(200, []);
 		$httpBackend.expectGET(flurryApiUrl_Sessions).respond(200, flurryData[1]);
+		$httpBackend.expectGET(flurryApiUrl_Login).respond(200, []);
 
 		expect(isolateScope.timedout.length).toBe(0);
 		expect(isolateScope.errors.length).toBe(0);
@@ -371,7 +382,9 @@ describe('Directive: flurry-chart', function () {
 
 	it("should have error data", function () {
 		$httpBackend.expectGET(flurryApiUrl_ActiveUsers).respond(302, flurryData[0]);
+		$httpBackend.expectGET(flurryApiUrl_AccReg).respond(302, []);
 		$httpBackend.expectGET(flurryApiUrl_Sessions).respond(302, flurryData[1]);
+		$httpBackend.expectGET(flurryApiUrl_Login).respond(302, []);
 
 		expect(isolateScope.timedout.length).toBe(0);
 		expect(isolateScope.errors.length).toBe(0);
