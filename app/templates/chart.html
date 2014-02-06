@@ -1,17 +1,17 @@
 <div class="m-chart {{status}}" ng-class="">
 	<div class="m-chart-error-holder" ng-show="errors.length > 0">		
 		<ul class="m-chart-errors">
-			<li class="m-chart-error-title">Failed metrics</li>
+			<li class="m-chart-error-title">{{"failedMetrics" | translate}}</li>
 			<li class="m-chart-error" ng-repeat="error in errors">{{error}}</li>
 		</ul>
-		<button ng-click="refresh()">Refresh</button>
+		<button ng-click="refresh()">{{"refresh" | translate}}</button>
 	</div>
 	<div class="m-chart-error-holder" ng-show="timedOut.length > 0">		
 		<ul class="m-chart-errors">
-			<li class="m-chart-error-title">Timed Out metrics</li>
+			<li class="m-chart-error-title">{{"timedOutMetrics" | translate}}</li>
 			<li class="m-chart-error" ng-repeat="timeOut in timedOut">{{timeOut}}</li>
 		</ul>
-		<button ng-click="refresh()">Refresh</button>
+		<button ng-click="refresh()">{{"refresh" | translate}}</button>
 	</div>		
 	<svg class="m-chart-data"></svg>
 </div>	

@@ -1,12 +1,9 @@
 'use strict';
 
 angular.module('napPlayAdminApp')
-	.controller('UserRelationshipsPageCtrl', ['$scope',
-		function ($scope) {
-			$scope.awesomeThings = [
-				'HTML5 Boilerplate',
-				'AngularJS',
-				'Karma'
-			];
+	.controller('UserRelationshipsPageCtrl', ['$scope', '$routeParams',
+		function ($scope, $routeParams) {
+			$scope.pageName = 'User relationships';
+			$scope.userId = $routeParams.userId;
 		}
 	]);

@@ -23,10 +23,7 @@ angular.module('napPlayAdminApp')
 				$scope.pageName = 'Stats - Flurry - App metrics';
 				$scope.metrics = FlurryFactory.getAppMetrics();
 
-				/*
-            http://angular-ui.github.io/bootstrap/#/datepicker
-        */
-
+				//http://angular-ui.github.io/bootstrap/#/datepicker
 				$scope.today();
 				$scope.toggleMax();
 				$scope.dateOptions = {
@@ -52,9 +49,7 @@ angular.module('napPlayAdminApp')
 				}
 			};
 
-			/*
-        date picker functions
-     */
+			//date picker functions
 
 			$scope.openFromDropDown = function ($event) {
 				$event.preventDefault();

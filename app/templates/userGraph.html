@@ -1,0 +1,10 @@
+<div class="m-user-graph {{status}}" hash="hash">
+	<user-data user-id="{{userId}}"></user-data>
+	<hr/>
+	
+	<input type="text" ng-show="followers.length > 0" ng-model="search" class="m-search-input" placeholder="Search">
+	<ul class="m-user-graph-followers" >
+		<li class="m-user-graph-follower" ng-repeat="follower in (followers | filter:search)"><a href="{{hash}}/user-relationships/{{follower.id}}">{{follower.name}}</a></li>
+	</ul>	
+
+</div>

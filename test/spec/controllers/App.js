@@ -6,7 +6,8 @@ describe('Controller: AppCtrl', function () {
 	beforeEach(module('napPlayAdminApp'));
 
 	var AppCtrl,
-		scope;
+		scope,
+		rootScope;
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
@@ -15,4 +16,8 @@ describe('Controller: AppCtrl', function () {
 			$scope: scope
 		});
 	}));
+
+	it('should set the hash variable on the rootScope', function(){
+		expect(scope.hash).toBeDefined();
+	})
 });

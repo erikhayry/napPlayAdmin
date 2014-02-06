@@ -15,10 +15,10 @@ describe('Directive: flurry-chart', function () {
 
 	beforeEach(inject(function ($rootScope, $compile) {
 		//add an element for each type of metrics (app and event)
-		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="app"></flurry-chart><flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="account registration, Login" flurryType="event"></flurry-chart>');		
-		scope = $rootScope;		
-		$compile(element)(scope);		
-		scope.$digest();		
+		element = angular.element('<flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="ActiveUsers, Sessions" flurryType="app"></flurry-chart><flurry-chart flurryFrom="2013-10-01" flurryTo="2013-11-12" flurryMetrics="account registration, Login" flurryType="event"></flurry-chart>');
+		scope = $rootScope;
+		$compile(element)(scope);
+		scope.$digest();
 		isolateScope = element.isolateScope();
 	}));
 
@@ -29,7 +29,7 @@ describe('Directive: flurry-chart', function () {
 	var flag, data, $httpBackend,
 		$timeout, $cacheFactory,
 		FlurryFactory, Cache,
-		
+
 		//app urls
 		flurryApiUrl_ActiveUsers = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-12',
 		flurryApiUrl_ActiveUsersDateLater = 'http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=ENQZAUFQ5KQ2C24XKT7Z&apiKey=BRZXMJS2NRHDNN37CKQM&startDate=2013-10-01&endDate=2013-11-13',
@@ -329,7 +329,7 @@ describe('Directive: flurry-chart', function () {
 		$httpBackend.verifyNoOutstandingRequest();
 	});
 
-	it("should have the correct status strings", function () {		
+	it("should have the correct status strings", function () {
 		$httpBackend.expectGET(flurryApiUrl_ActiveUsers).respond(200, flurryData[0]);
 		$httpBackend.expectGET(flurryApiUrl_AccReg).respond(200, []);
 		$httpBackend.expectGET(flurryApiUrl_Sessions).respond(200, flurryData[1]);

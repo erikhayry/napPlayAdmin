@@ -40,7 +40,7 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
         Other pages
       */
 
-		.when('/user-relationships', {
+		.when('/user-relationships/:userId', {
 			templateUrl: 'views/user-relationships.html',
 			controller: 'UserRelationshipsPageCtrl'
 		})

@@ -19,7 +19,7 @@ describe('app scenario Test', function () {
     */
 
 	describe('Pages', function () {
-		
+
 		describe('App metrics Page', function () {
 			it('Should have the correct title', function () {
 				browser().navigateTo('/#/stats/flurry/app-metrics');

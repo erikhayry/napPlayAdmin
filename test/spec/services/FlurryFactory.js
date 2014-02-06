@@ -310,8 +310,6 @@ describe('Service: FlurryFactory', function () {
 			}]
 		}];
 
-
-
 	//use empy language object to prevent the $translateProvider make http calls
 	beforeEach(module('pascalprecht.translate', function ($translateProvider) {
 		$translateProvider.translations('en', {});

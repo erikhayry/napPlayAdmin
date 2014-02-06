@@ -10,5 +10,16 @@
   "close": "close",
   "currentText": "today",
   "toggleWeeksText": "weeks",
-  "clearText": "clear"
+  "clearText": "clear",
+  "admirees": "admirees",
+  "admirers": "admirers",
+  "count": "count",
+  "view": "view",
+  "appMetrics": "App Metrics",
+  "eventMetrics": "Event Metrics",
+  "notifications": "Notifications",
+  "userRelationships": "User Relationships",
+  "failedMetrics" : "Failed Metrics",
+  "timedOutMetrics" : "Timed Out Metrics",
+  "refresh" : "refresh"
 }

@@ -17,8 +17,8 @@
  */
 
 angular.module('napPlayAdminApp')
-	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory',
-		function ($scope, FlurryFactory) {
+	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory', '$filter',
+		function ($scope, FlurryFactory, $filter) {
 			var _init = function () {
 				$scope.pageName = 'Stats - Flurry - Event metrics';
 				$scope.metrics = [];
@@ -31,9 +31,12 @@ angular.module('napPlayAdminApp')
 					'starting-day': 1
 				};
 				$scope.format = 'dd-MMMM-yyyy';
+
+				$scope.getMetrics($filter('date')($scope.dateFrom, 'yyyy-MM-dd'), $filter('date')($scope.dateTo, 'yyyy-MM-dd'));
 			};
 
 			$scope.getMetrics = function (from, to) {
+				$scope.metrics = [];
 				FlurryFactory.getEventMetricsSummary(from, to).success(function (data) {
 					for (var i = 0; i < data.event.length; i++) {
 						$scope.metrics.push({
@@ -60,9 +63,7 @@ angular.module('napPlayAdminApp')
 				}
 			};
 
-			/*
-        date picker functions
-     */
+			//date picker functions
 
 			$scope.openFromDropDown = function ($event) {
 				$event.preventDefault();

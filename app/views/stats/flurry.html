@@ -3,13 +3,14 @@
 	
 	<input type="text" ng-show="metrics.length > 0" ng-model="search" class="m-search-input" placeholder="Search">
 
-	<ul class="m-metrics-nav">
+	<ul class="m-metrics-nav">		
 		<li class="m-metrics-nav-item" ng-repeat="metric in (metrics | filter: search)">
 			<input id="{{metric.value}}" type="checkbox" ng-model="metric.checked" ng-true-value="true" ng-false-value="false"/>
 			<label for="{{metric.value}}">{{metric.name}}</label>
 		</li>		
 	</ul>
     
+	
 	<!-- http://angular-ui.github.io/bootstrap/#/datepicker -->
 	<div class="m-date-picker">
 		{{'from' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />

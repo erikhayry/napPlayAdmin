@@ -1,0 +1,10 @@
+<div class="m-user">
+	<ul class="m-user-details">
+		<li class="m-user-detail">{{name}} ({{username}})</li>
+		<li class="m-user-detail"><img class="m-user-detail-image" title="{{name}}" ng-src="{{avatar}}" /></li>
+		<li class="m-user-detail">{{bio}}</li>
+		<li class="m-user-detail">{{'admirees' | translate}}: {{countOfAdmirees}} <button ng-click="getAdmirees(id)">{{'view' | translate}}</button></li>
+		<li class="m-user-detail">{{'admirers' | translate}}: {{countOfAdmirers}} <button ng-click="getAdmirers(id)">{{'view' | translate}}</button></li>
+		<li class="m-user-detail">&#9829; {{'count' | translate}}: {{countOfLoves}} <button ng-click="getLoves(id)">{{'view' | translate}}</button></li>
+	</ul>
+</div>	
