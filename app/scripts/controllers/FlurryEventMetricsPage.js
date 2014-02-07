@@ -17,10 +17,10 @@
  */
 
 angular.module('napPlayAdminApp')
-	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory', '$filter',
-		function ($scope, FlurryFactory, $filter) {
+	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory', '$filter', '$translate',
+		function ($scope, FlurryFactory, $filter, $translate) {
 			var _init = function () {
-				$scope.pageName = 'Stats - Flurry - Event metrics';
+				$scope.pageName = $translate('stats') + ' - Flurry - ' + $translate('eventMetrics');
 				$scope.metrics = [];
 
 				var _from = new Date();
@@ -30,6 +30,10 @@ angular.module('napPlayAdminApp')
 
 				$scope.getMetrics($filter('date')(_from, 'yyyy-MM-dd'), $filter('date')(_to, 'yyyy-MM-dd'));
 			};
+
+			$scope.$on('$translateChangeSuccess', function () {
+				$scope.pageName = $translate('stats') + ' - Flurry - ' + $translate('eventMetrics');
+			});
 
 			$scope.getMetrics = function (from, to) {
 				$scope.metrics = [];

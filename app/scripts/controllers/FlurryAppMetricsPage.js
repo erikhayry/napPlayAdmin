@@ -17,12 +17,16 @@
  */
 
 angular.module('napPlayAdminApp')
-	.controller('FlurryAppMetricsPageCtrl', ['$scope', 'FlurryFactory',
-		function ($scope, FlurryFactory) {
+	.controller('FlurryAppMetricsPageCtrl', ['$scope', 'FlurryFactory', '$translate',
+		function ($scope, FlurryFactory, $translate) {
 			var _init = function () {
-				$scope.pageName = 'Stats - Flurry - App metrics';
+				$scope.pageName = $translate('stats') + ' - Flurry - '  + $translate('appMetrics');
 				$scope.metrics = FlurryFactory.getAppMetrics();
 			};
+
+			$scope.$on('$translateChangeSuccess', function () {
+				$scope.pageName = $translate('stats') + ' - Flurry - '  + $translate('appMetrics');
+			});
 
 			$scope.getGraph = function (metrics, from, to) {
 				if (metrics.length > 0) {

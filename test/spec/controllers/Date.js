@@ -9,9 +9,20 @@ describe('Controller: DateCtrl', function () {
 		scope,
 		mockEvent;
 
+	// load the service's module
+	beforeEach(module('pascalprecht.translate', function ($translateProvider) {
+		$translateProvider.preferredLanguage();
+	}));
+
+	//use empy language object to prevent the $translateProvider make http calls
+	beforeEach(module('pascalprecht.translate', function ($translateProvider) {
+		$translateProvider.translations('en', {});
+	}));
+
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
 		scope = $rootScope.$new();
+
 		DateCtrl = $controller('DateCtrl', {
 			$scope: scope
 		});
@@ -42,6 +53,14 @@ describe('Controller: DateCtrl', function () {
 
 	it('should set date format', function () {
 		expect(scope.format).toBe('dd-MMMM-yyyy');
+	});
+
+	it('should watch dateFrom and dateTo and apply value to parent scope', function () {
+		scope.dateFrom = '02-02-1999';
+		scope.dateTo = '02-02-2000';
+		scope.$apply()
+		expect(scope.$parent.dateFrom).toBe('02-02-1999');
+		expect(scope.$parent.dateTo).toBe('02-02-2000');
 	});
 
 	describe('$scope.openFromDropDown', function () {

@@ -1,7 +1,7 @@
 <div class="l-content">
 	<h1 id="page-title">{{pageName}}</h1>	
 	
-	<input type="text" ng-show="metrics.length > 0" ng-model="search" class="m-search-input" placeholder="Search">
+	<input type="text" ng-show="metrics.length > 0" ng-model="search" class="m-search-input" placeholder="{{'search' | translate}}">
 
 	<ul class="m-metrics-nav">		
 		<li class="m-metrics-nav-item" ng-repeat="metric in (metrics | filter: search)">
@@ -24,9 +24,9 @@
 		</div>	
 	</div>
 	
-	<button class="m-button" ng-show="metrics.length === 0" ng-click="getMetrics((dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'get metrics' | translate}}</button>
+	<button class="m-button" ng-show="metrics.length === 0" ng-click="getMetrics((dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'getMetrics' | translate}}</button>
 
-	<button class="m-button" ng-show="metrics.length > 0" ng-disabled="(metrics | filter: {checked : 'true'}).length <= 0" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'show graph' | translate}}</button>
+	<button class="m-button" ng-show="metrics.length > 0" ng-disabled="(metrics | filter: {checked : 'true'}).length <= 0" ng-click="getGraph((metrics | filter: {checked : 'true'}), (dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'showGraph' | translate}}</button>
 	
 	<flurry-chart flurryFrom="{{graph.from}}" flurryTo="{{graph.to}}" flurryMetrics="{{graph.metrics}}" flurryType="{{graph.type}}"></flurry-chart>
 
