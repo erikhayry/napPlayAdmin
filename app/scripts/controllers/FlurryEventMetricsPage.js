@@ -23,16 +23,12 @@ angular.module('napPlayAdminApp')
 				$scope.pageName = 'Stats - Flurry - Event metrics';
 				$scope.metrics = [];
 
-				//http://angular-ui.github.io/bootstrap/#/datepicker
-				$scope.today();
-				$scope.toggleMax();
-				$scope.dateOptions = {
-					'year-format': '"yy"',
-					'starting-day': 1
-				};
-				$scope.format = 'dd-MMMM-yyyy';
+				var _from = new Date();
+				var _to = new Date();
+				_to.setDate(_to.getDate() - 1);
+				_from.setDate(_from.getDate() - 30);
 
-				$scope.getMetrics($filter('date')($scope.dateFrom, 'yyyy-MM-dd'), $filter('date')($scope.dateTo, 'yyyy-MM-dd'));
+				$scope.getMetrics($filter('date')(_from, 'yyyy-MM-dd'), $filter('date')(_to, 'yyyy-MM-dd'));
 			};
 
 			$scope.getMetrics = function (from, to) {
@@ -61,31 +57,6 @@ angular.module('napPlayAdminApp')
 						type: 'event'
 					};
 				}
-			};
-
-			//date picker functions
-
-			$scope.openFromDropDown = function ($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-				$scope.openedFrom = true;
-			};
-
-			$scope.openToDropDown = function ($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-				$scope.openedTo = true;
-			};
-
-			$scope.today = function () {
-				$scope.dateFrom = new Date();
-				$scope.dateTo = new Date();
-				$scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
-				$scope.dateTo.setDate($scope.dateTo.getDate() - 1);
-			};
-
-			$scope.toggleMax = function () {
-				$scope.maxDate = ($scope.maxDate) ? null : new Date();
 			};
 
 			_init();

@@ -25,7 +25,7 @@ describe('Directive: user-data', function () {
     setup async mocks
    */
 
-	var flag, $httpBackend;
+	var $httpBackend;
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($injector) {

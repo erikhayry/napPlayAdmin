@@ -7,7 +7,7 @@ describe('Directive: userGraph', function () {
 		$translateProvider.translations('en', {});
 	}));
 
-	var element, scope, isolateScope;
+	var element, scope, isolateScope, $httpBackend, $cacheFactory, $timeout, UserFactory;
 
 	beforeEach(module('templates/user-graph.html'));
 

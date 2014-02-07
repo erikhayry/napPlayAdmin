@@ -12,15 +12,17 @@
     
 	
 	<!-- http://angular-ui.github.io/bootstrap/#/datepicker -->
-	<div class="m-date-picker">
-		{{'from' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
-		<button ng-click="openFromDropDown($event)">{{'show' | translate}}</button>
-	</div>
+	<div class="m-date-picker-holder" ng-controller="DateCtrl">
+		<div class="m-date-picker">
+			{{'from' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateFrom" is-open="openedFrom" max="dateTo" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
+			<button ng-click="openFromDropDown($event)">{{'show' | translate}}</button>
+		</div>
 
-	<div class="m-date-picker">
-		{{'to' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
-		<button ng-click="openToDropDown($event)">{{'show' | translate}}</button>
-	</div>	
+		<div class="m-date-picker">
+			{{'to' | translate}}: <input type="text" datepicker-popup="{{format}}" ng-model="dateTo" is-open="openedTo" min="dateFrom" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="{{'close' | translate}}" current-text="{{'currentText' | translate}}" toggle-weeks-text="{{'toggleWeeksText' | translate}}" clear-text="{{'clearText' | translate}}" />
+			<button ng-click="openToDropDown($event)">{{'show' | translate}}</button>
+		</div>	
+	</div>
 	
 	<button class="m-button" ng-show="metrics.length === 0" ng-click="getMetrics((dateFrom | date:'yyyy-MM-dd'), (dateTo | date:'yyyy-MM-dd'))">{{'get metrics' | translate}}</button>
 

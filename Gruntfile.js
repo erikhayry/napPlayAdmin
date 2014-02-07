@@ -110,7 +110,8 @@ module.exports = function (grunt) {
 			all: [
 				'Gruntfile.js',
 				'<%= yeoman.app %>/scripts/{,*/}*.js',
-				'!<%= yeoman.app %>/scripts/vendor/**/*.js'
+				'!<%= yeoman.app %>/scripts/vendor/**/*.js',
+				'test/**/*.js'
 			]
 		},
 		jsbeautifier: {
@@ -121,7 +122,7 @@ module.exports = function (grunt) {
 				}
 			},
 			verify: {
-				src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js', '!<%= yeoman.app %>/scripts/vendor/**/*.js'],
+				src: ['Gruntfile.js', '<%= yeoman.app %>/scripts/**/*.js', '!<%= yeoman.app %>/scripts/vendor/**/*.js', 'test/**/*.js'],
 				options: {
 					mode: 'VERIFY_ONLY',
 					config: '.jsbeautifyrc'

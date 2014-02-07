@@ -11,8 +11,8 @@ describe('Service: UserFactory', function () {
 	}));
 
 	var $httpBackend,
-		$timeout, $cacheFactory, $translate,
-		UserFactory, Cache,
+		$timeout, $cacheFactory,
+		UserFactory,
 
 		subGraphUrl = 'https://nap-play.herokuapp.com/api/subgraph/51702d54e4b0679b9dc83075?depth=1&country=GB&authToken=ccd14408da968eae1faf54f982c0ae8f10063a48dc0ff282d6e82a6282b7e4e032d3b82059c4271081ba582fb32a358bbea13c3d29ccc4b5ed0ec9991164120a',
 		userDataUrl = 'https://nap-play.herokuapp.com/api/users/51702d54e4b0679b9dc83075?country=GB&authToken=ccd14408da968eae1faf54f982c0ae8f10063a48dc0ff282d6e82a6282b7e4e032d3b82059c4271081ba582fb32a358bbea13c3d29ccc4b5ed0ec9991164120a',
@@ -34,17 +34,13 @@ describe('Service: UserFactory', function () {
 	});
 
 	// instantiate service
-	var UserFactory;
 	beforeEach(inject(function (_UserFactory_) {
 		UserFactory = _UserFactory_;
 	}));
 
-
 	//tests
 	describe('getUserData', function () {
 		it('should return user data', function () {
-			var userData;
-
 			UserFactory.getUserData('51702d54e4b0679b9dc83075').success(function (data) {
 				var userData = data;
 				expect(userData.length).toBe(1);
@@ -57,8 +53,6 @@ describe('Service: UserFactory', function () {
 
 	describe('getSubGraph', function () {
 		it('should return user data', function () {
-			var subGraphData;
-
 			UserFactory.getSubGraph('51702d54e4b0679b9dc83075').success(function (data) {
 				var subGraphData = data;
 				expect(subGraphData.length).toBe(1);

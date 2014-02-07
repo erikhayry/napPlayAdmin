@@ -1,3 +1,5 @@
+'use strict';
+
 describe('app scenario Test', function () {
 
 	/*
@@ -33,5 +35,5 @@ describe('app scenario Test', function () {
 				expect(element('#page-title').text()).toEqual('Stats - Flurry - Event metrics');
 			});
 		});
-	})
+	});
 });
