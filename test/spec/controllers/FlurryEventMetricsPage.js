@@ -118,11 +118,6 @@ describe('Controller: FlurryEventMetricsPageCtrl', function () {
 		$httpBackend.verifyNoOutstandingRequest();
 	});
 
-	it('should set the page name', function () {
-		_onEach();
-		expect(scope.pageName).toBe('Stats - Flurry - Event metrics');
-	});
-
 	it('should get flurry app metrics', function () {
 		_onEach();
 		expect(scope.metrics.length).toBe(2);

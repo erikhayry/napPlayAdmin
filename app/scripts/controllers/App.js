@@ -14,9 +14,8 @@ angular.module('napPlayAdminApp')
 
 				console.groupCollapsed('%c AppCtrl', AppConfig.debugHeading);
 				console.log('path: ' + $scope.path);
-				console.log('lang: ' + $rootScope.lang);
+				console.log('lang: ' + $routeParams.lang);
 				console.groupEnd();
 			});
-
 		}
 	]);

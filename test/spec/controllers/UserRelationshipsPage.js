@@ -16,13 +16,9 @@ describe('Controller: UserRelationshipsPageCtrl', function () {
 
 		UserRelationshipsPageCtrl = $controller('UserRelationshipsPageCtrl', {
 			$scope: scope,
-			$routeParams : routeParams
+			$routeParams: routeParams
 		});
 	}));
-
-	it('should set the page title', function () {
-		expect(scope.pageName).toBe('User relationships');
-	});
 
 	it('should set the user id', function () {
 		expect(scope.userId).toBe('123456');

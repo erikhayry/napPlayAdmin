@@ -58,7 +58,7 @@ describe('Controller: DateCtrl', function () {
 	it('should watch dateFrom and dateTo and apply value to parent scope', function () {
 		scope.dateFrom = '02-02-1999';
 		scope.dateTo = '02-02-2000';
-		scope.$apply()
+		scope.$apply();
 		expect(scope.$parent.dateFrom).toBe('02-02-1999');
 		expect(scope.$parent.dateTo).toBe('02-02-2000');
 	});

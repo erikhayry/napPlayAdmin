@@ -22,7 +22,6 @@
 angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap', 'pascalprecht.translate'])
 	.config(function ($routeProvider, $locationProvider, AppConfig) {
 		$locationProvider.html5Mode(!AppConfig.hash);
-		console.log(AppConfig.lang)
 		/*
         Stats Pages
       */
@@ -51,7 +50,7 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
 		})
 
 		.otherwise({
-			redirectTo: '/' + AppConfig.lang +'/stats/flurry/app-metrics'
+			redirectTo: '/' + AppConfig.lang + '/stats/flurry/app-metrics'
 		});
 	})
 
@@ -62,6 +61,21 @@ angular.module('napPlayAdminApp', ['ngCookies', 'ngRoute', 'd3', 'ui.bootstrap',
 
 .config(function ($httpProvider) {
 	delete $httpProvider.defaults.headers.common['X-Requested-With'];
+})
+
+.run(function ($rootScope, $location, AppConfig) {
+	// register listener to watch route changes
+	$rootScope.$on('$routeChangeStart', function (event, next) {
+		//if language not supported redirect to preffered language		
+		if (next.params.lang && AppConfig.langs.indexOf(next.params.lang) < 0) {
+			next.params.lang = AppConfig.lang;
+			next.pathParams.lang = AppConfig.lang;
+
+			var _param = ':lang',
+				_path = next.$$route.originalPath;
+			$location.path(_path.replace(_param, AppConfig.lang));
+		}
+	});
 })
 
 /*

@@ -39,10 +39,6 @@ describe('Controller: FlurryAppMetricsPageCtrl', function () {
 		$httpBackend.verifyNoOutstandingRequest();
 	});
 
-	it('should set the page name', function () {
-		expect(scope.pageName).toBe('Stats - Flurry - App metrics');
-	});
-
 	it('should get flurry app metrics', function () {
 		expect(scope.metrics.length).toBe(10);
 	});
