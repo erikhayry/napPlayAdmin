@@ -1,14 +1,26 @@
-
 {
   "back": "back",
   "forward": "forward",
   "to": "to",
   "from": "from",
   "show": "show",
-  "load graph": "load graph",
-  "get metrics" : "get metrics",
+  "getMetrics" : "get metrics",
   "close": "close",
   "currentText": "today",
   "toggleWeeksText": "weeks",
-  "clearText": "clear"
+  "clearText": "clear",
+  "admirees": "admirees",
+  "admirers": "admirers",
+  "count": "count",
+  "view": "view",
+  "appMetrics": "App Metrics",
+  "eventMetrics": "Event Metrics",
+  "notifications": "Notifications",
+  "userRelationships": "User Relationships",
+  "failedMetrics" : "Failed Metrics",
+  "timedOutMetrics" : "Timed Out Metrics",
+  "refresh" : "refresh",
+  "showGraph" : "show Graph",
+  "search" : "search",
+  "stats" : "Stats"
 }

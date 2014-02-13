@@ -102,6 +102,8 @@
       "jQuery",
       "grunt",
       "phantom",
-      "WebPage"
+      "WebPage",
+      "Event",
+      "by"
     ]
 }

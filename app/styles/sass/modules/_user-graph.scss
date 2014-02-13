@@ -1,0 +1,15 @@
+@import "helpers";
+@import "base/settings";
+
+/*
+	Module user graph
+ */
+
+.m-user-graph-followers{
+	overflow: hidden;
+}
+
+.m-user-graph-follower{
+	float: left;
+	padding: 10px;
+}

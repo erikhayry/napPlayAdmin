@@ -6,17 +6,21 @@ describe('Controller: UserRelationshipsPageCtrl', function () {
 	beforeEach(module('napPlayAdminApp'));
 
 	var UserRelationshipsPageCtrl,
-		scope;
+		scope, routeParams = {
+			userId: '123456'
+		};
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
 		scope = $rootScope.$new();
+
 		UserRelationshipsPageCtrl = $controller('UserRelationshipsPageCtrl', {
-			$scope: scope
+			$scope: scope,
+			$routeParams: routeParams
 		});
 	}));
 
-	it('should attach a list of awesomeThings to the scope', function () {
-		expect(scope.awesomeThings.length).toBe(3);
+	it('should set the user id', function () {
+		expect(scope.userId).toBe('123456');
 	});
 });

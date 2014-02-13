@@ -25,7 +25,6 @@ module.exports = function(config) {
       'app/scripts/**/*.js',
       //'test/mock/**/*.js',
       'test/spec/**/*.js',
-      // if you wanna load template files in nested directories, you must use this
       'app/templates/*.html'
     ],
 
@@ -67,6 +66,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true
+    singleRun: false
   });
 };

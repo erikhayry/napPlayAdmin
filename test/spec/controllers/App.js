@@ -15,4 +15,8 @@ describe('Controller: AppCtrl', function () {
 			$scope: scope
 		});
 	}));
+
+	it('should set the hash variable on the rootScope', function () {
+		expect(scope.hash).toBeDefined();
+	});
 });

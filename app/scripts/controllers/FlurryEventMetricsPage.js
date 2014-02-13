@@ -17,23 +17,26 @@
  */
 
 angular.module('napPlayAdminApp')
-	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory',
-		function ($scope, FlurryFactory) {
+	.controller('FlurryEventMetricsPageCtrl', ['$scope', 'FlurryFactory', '$filter', '$translate',
+		function ($scope, FlurryFactory, $filter, $translate) {
 			var _init = function () {
-				$scope.pageName = 'Stats - Flurry - Event metrics';
+				$scope.pageName = $translate('stats') + ' - Flurry - ' + $translate('eventMetrics');
 				$scope.metrics = [];
 
-				//http://angular-ui.github.io/bootstrap/#/datepicker
-				$scope.today();
-				$scope.toggleMax();
-				$scope.dateOptions = {
-					'year-format': '"yy"',
-					'starting-day': 1
-				};
-				$scope.format = 'dd-MMMM-yyyy';
+				var _from = new Date();
+				var _to = new Date();
+				_to.setDate(_to.getDate() - 1);
+				_from.setDate(_from.getDate() - 30);
+
+				$scope.getMetrics($filter('date')(_from, 'yyyy-MM-dd'), $filter('date')(_to, 'yyyy-MM-dd'));
 			};
 
+			$scope.$on('$translateChangeSuccess', function () {
+				$scope.pageName = $translate('stats') + ' - Flurry - ' + $translate('eventMetrics');
+			});
+
 			$scope.getMetrics = function (from, to) {
+				$scope.metrics = [];
 				FlurryFactory.getEventMetricsSummary(from, to).success(function (data) {
 					for (var i = 0; i < data.event.length; i++) {
 						$scope.metrics.push({
@@ -58,33 +61,6 @@ angular.module('napPlayAdminApp')
 						type: 'event'
 					};
 				}
-			};
-
-			/*
-        date picker functions
-     */
-
-			$scope.openFromDropDown = function ($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-				$scope.openedFrom = true;
-			};
-
-			$scope.openToDropDown = function ($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-				$scope.openedTo = true;
-			};
-
-			$scope.today = function () {
-				$scope.dateFrom = new Date();
-				$scope.dateTo = new Date();
-				$scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
-				$scope.dateTo.setDate($scope.dateTo.getDate() - 1);
-			};
-
-			$scope.toggleMax = function () {
-				$scope.maxDate = ($scope.maxDate) ? null : new Date();
 			};
 
 			_init();

@@ -46,7 +46,10 @@
     "grunt-contrib-sass": "~0.6.0",
     "grunt-autoprefixer": "~0.6.4",
     "grunt-strip": "~0.2.1",
-    "grunt-jsbeautifier": "~0.2.6"
+    "grunt-jsbeautifier": "~0.2.6",
+    "grunt-protractor-runner": "~0.2.3",
+    "protractor": "~0.18.1",
+    "grunt-protractor-webdriver": "~0.1.4"
   },
   "engines": {
     "node": "~=0.8.0"
