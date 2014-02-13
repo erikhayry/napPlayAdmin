@@ -8,19 +8,19 @@ describe('app scenario url tests', function () {
 
 	describe('app navigation', function () {
 		it('should redirect to stats page as default', function () {
-			browser().navigateTo('/');
-			expect(browser().location().url()).toEqual('/en/stats/flurry/app-metrics');
-		});
+			browser.get('/');
+			expect(browser.getCurrentUrl()).toContain('/en/stats/flurry/app-metrics');
+		}, 30000);
 
 		it('should redirect preferd language if language not supported', function () {
-			browser().navigateTo('/#/madeuplang/stats/flurry/event-metrics');
-			expect(browser().location().url()).toEqual('/en/stats/flurry/event-metrics');
-		});
+			browser.get('/#/madeuplang/stats/flurry/event-metrics');
+			expect(browser.getCurrentUrl()).toContain('/en/stats/flurry/event-metrics');
+		}, 30000);
 
 		it('should redirect to stats page as default if language missing', function () {
-			browser().navigateTo('/#/stats/flurry/event-metrics');
-			expect(browser().location().url()).toEqual('/en/stats/flurry/app-metrics');
-		});
+			browser.get('/#/stats/flurry/event-metrics');
+			expect(browser.getCurrentUrl()).toContain('/en/stats/flurry/app-metrics');
+		}, 30000);
 	});
 
 });

@@ -84,6 +84,16 @@ module.exports = function (grunt) {
 					]
 				}
 			},
+			e2e: {
+				options: {
+					port: 9000,
+					base: [
+						'.tmp',
+						'test',
+						'<%= yeoman.app %>'
+					]
+				}
+			},
 			dist: {
 				options: {
 					base: '<%= yeoman.dist %>'
@@ -108,7 +118,7 @@ module.exports = function (grunt) {
 				jshintrc: '.jshintrc'
 			},
 			all: [
-				'Gruntfile.js',
+				'!Gruntfile.js',
 				'<%= yeoman.app %>/scripts/{,*/}*.js',
 				'!<%= yeoman.app %>/scripts/vendor/**/*.js',
 				'test/**/*.js'
@@ -297,6 +307,20 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
+		protractor: {
+			options: {
+				keepAlive: true,
+				configFile: 'protractor.conf.js'
+			},
+			run: {}
+		},
+		protractor_webdriver: {
+			e2e: {
+				options: {
+					command: 'webdriver-manager start',
+				},
+			},
+		},
 		cdnify: {
 			dist: {
 				html: ['<%= yeoman.dist %>/*.html']
@@ -446,7 +470,13 @@ module.exports = function (grunt) {
 		'concurrent:test',
 		'autoprefixer',
 		'connect:test',
-		'karma'
+		'karma:unit',
+		'clean:server',
+		'concurrent:server',
+		'autoprefixer',
+		'connect:e2e',
+		'protractor_webdriver',
+		'protractor:run'
 	]);
 
 	grunt.registerTask('build', [
@@ -493,5 +523,9 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-strip');
 
 	grunt.loadNpmTasks('grunt-jsbeautifier');
+
+	grunt.loadNpmTasks('grunt-protractor-runner');
+
+	grunt.loadNpmTasks('grunt-protractor-webdriver');
 
 };
